@@ -1,0 +1,34 @@
+<div *ngFor="let venList of vendorList;let i=index">          
+    <div class="p-grid">
+        <div class="p-col-12">
+            <p-card header="{{i+1}})">
+                <div class="p-grid p-ai-stretch vertical-container">
+                    <div class="p-col-2">
+                        <span class="displayed ">
+                            <p-skeleton shape="circle" size="50px"></p-skeleton>
+                        </span>
+                    </div>
+                    <div class="p-col-1">
+                        <p-divider layout="vertical"></p-divider>
+                    </div>
+                    <div class="p-col-9">
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                {{venList.vendorName}}
+                            </div>
+                            <div class="p-col-12">
+                                {{venList.vendorDescription}}
+                            </div>
+                            <div class="p-col-10">
+                                <p-rating [(ngModel)]="venList.vendorRating" [cancel]="false" [readonly]="true"></p-rating>
+                            </div>
+                            <div class="p-col-2"> 
+                                <button pButton pRipple type="button" label="View Menu" class="p-button-outlined" (click)="callMenuList(venList.vendorId)"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+    </div>    
+</div>
