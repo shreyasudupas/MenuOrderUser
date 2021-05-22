@@ -1,11 +1,13 @@
 <div class="card">
     <h5>Menu Items</h5>
-    <p-table [value]="menuItems" sortField="menuType" sortMode="single" (onSort)="onSort()">
+    <p-table [value]="menuDisplay" sortField="menuType" sortMode="single" (onSort)="onSort()">
         <ng-template pTemplate="header">
             <tr>
                 <th>Image</th>
                 <th>Item</th>
                 <th>Price</th>
+                <th></th>
+                <th>Quantity</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-menu let-rowIndex="rowIndex">
@@ -25,6 +27,11 @@
                 <td>
                     {{menu.price}}
                 </td>
+                <td>
+                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-text"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
+                </td>
+                <td>{{menu.quantity}}</td>
             </tr>
         </ng-template>
     </p-table>

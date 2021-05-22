@@ -7,6 +7,7 @@ import {DividerModule} from 'primeng/divider';
 import {SkeletonModule} from 'primeng/skeleton';
 import {RatingModule} from 'primeng/rating';
 import {TableModule} from 'primeng/table';
+import {BadgeModule} from 'primeng/badge';
 
 @NgModule({
     imports:[ButtonModule,
@@ -17,7 +18,8 @@ import {TableModule} from 'primeng/table';
         SkeletonModule,
         RatingModule,
         TabMenuModule,
-        TableModule],
+        TableModule,
+        BadgeModule],
     exports:[ButtonModule,
         TabMenuModule,
         MessageModule,
@@ -26,7 +28,8 @@ import {TableModule} from 'primeng/table';
         SkeletonModule,
         RatingModule,
         TabMenuModule,
-        TableModule]
+        TableModule,
+        BadgeModule]
 })
 
 export class PrimeNGModule{ }

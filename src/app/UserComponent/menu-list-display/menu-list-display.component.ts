@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { menuCart } from 'src/app/Models/menuCart';
 import { MenuItemList } from 'src/app/Models/MenuItemList';
 import { MenuItems } from 'src/app/Models/MenuItems';
 import { MenuList } from 'src/app/Models/MenuList';
@@ -19,8 +20,9 @@ export class MenuListDisplayComponent implements OnInit {
   menuItems:MenuItems[];
   menuTypeList:MenuItemList[];
   rowGroupMetadata: any;
+  menuDisplay:Array<menuCart>;
 
-  constructor(private router:Router,private route:ActivatedRoute,private dataService:DataServiceService,private share:DataSharingService) { }
+  constructor(private router:Router,private route:ActivatedRoute,private dataService:DataServiceService,private share:DataSharingService,private ngZone:NgZone) { }
 
   ngOnInit(): void {
     
@@ -35,7 +37,21 @@ export class MenuListDisplayComponent implements OnInit {
 
             this.menuItems = this.itemList.menuItemList;
             this.menuTypeList = this.itemList.menuItemDetails;
+
+            let menuObj:Array<menuCart> = [];
+            //assign the menuItems to menuList
+            this.menuItems.forEach((item)=>{
+              menuObj.push({
+                menuId:item.menuId,menuItem:item.menuItem,price:item.price,vendorId:item.vendorId,menuType:item.menuType,imagePath:item.imagePath,
+                offerPrice:item.offerPrice,createdDate:item.createdDate,quantity:0
+              });
+            });
+
+            this.menuDisplay = menuObj;
+
+            console.log(this.menuDisplay);
             this.updateRowGroupMetaData();
+
         });
       }
     });
