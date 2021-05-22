@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { DataServiceService } from 'src/app/Services/data-service.service';
@@ -17,7 +17,7 @@ headername:string="Ventura";
 vendorList:Vendor[];
 activeItem: MenuItem;
 
-  constructor(private router: Router,private dataService:DataServiceService,private sharing:DataSharingService) { }
+  constructor(private router: Router,private dataService:DataServiceService,private sharing:DataSharingService,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     //console.log(this.router.url);
@@ -36,7 +36,7 @@ activeItem: MenuItem;
 
   //call menu-list-Display component
   callMenuList(menuId:number):void{
-    this.router.navigateByUrl("/user/menulist/"+menuId);
+    this.router.navigate(['../menulist',menuId],{relativeTo:this.route})
   }
 
 

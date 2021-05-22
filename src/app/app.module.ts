@@ -9,13 +9,10 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { FirstComponent } from './first/first.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    FirstComponent
   ],
   imports: [
     BrowserModule,
