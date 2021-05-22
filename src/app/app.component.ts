@@ -15,4 +15,8 @@ export class AppComponent implements OnInit {
    
   }
 
+  navigateToDashboad(path:string):void{
+    this.router.navigate([path]);
+  }
+
 }
