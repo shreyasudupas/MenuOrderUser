@@ -36,7 +36,7 @@ activeItem: MenuItem;
 
   //call menu-list-Display component
   callMenuList(menuId:number):void{
-    this.router.navigate(['menulist',menuId]);
+    this.router.navigateByUrl("/user/menulist/"+menuId);
   }
 
 

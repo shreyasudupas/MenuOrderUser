@@ -19,8 +19,8 @@ export class MenuBarComponent implements OnInit {
   ngOnInit(): void {
 
     this.items = [
-      {label: 'Home', icon: 'pi pi-fw pi-home',routerLink: ['/home']},
-      {label: 'Vendor', icon: 'pi pi-fw pi-calendar',routerLink:['/vendorlist']},
+      {label: 'Home', icon: 'pi pi-fw pi-home',routerLink: ['./home']},
+      {label: 'Vendor', icon: 'pi pi-fw pi-calendar',routerLink:['./vendorlist']},
       {label: 'Menu', icon: 'pi pi-fw pi-calendar',visible:false},
       {label: 'Profile', icon: 'pi pi-fw pi-pencil'},
       {label: 'Payment', icon: 'pi pi-fw pi-file'},
