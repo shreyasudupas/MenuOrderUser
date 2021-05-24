@@ -1,3 +1,4 @@
+<p-toast position="top-right" key="tl"></p-toast>
 <div class="card">
     <h5>Menu Items</h5>
     <p-table [value]="menuDisplay" sortField="menuType" sortMode="single" (onSort)="onSort()">
@@ -28,8 +29,8 @@
                     {{menu.price}}
                 </td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-text"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text"></button>
+                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-text" (click)="addItemsoCart(menu)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" (click)="removeItemsFromCart(menu)"></button>
                 </td>
                 <td>{{menu.quantity}}</td>
             </tr>

@@ -8,6 +8,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 import {RatingModule} from 'primeng/rating';
 import {TableModule} from 'primeng/table';
 import {BadgeModule} from 'primeng/badge';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
     imports:[ButtonModule,
@@ -19,7 +20,8 @@ import {BadgeModule} from 'primeng/badge';
         RatingModule,
         TabMenuModule,
         TableModule,
-        BadgeModule],
+        BadgeModule,
+        ToastModule],
     exports:[ButtonModule,
         TabMenuModule,
         MessageModule,
@@ -29,7 +31,9 @@ import {BadgeModule} from 'primeng/badge';
         RatingModule,
         TabMenuModule,
         TableModule,
-        BadgeModule]
+        BadgeModule,
+        ToastModule
+    ]
 })
 
 export class PrimeNGModule{ }
