@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router,NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { menuCart } from 'src/app/Models/menuCart';
 import { MenuItemList } from 'src/app/Models/MenuItemList';
@@ -24,19 +24,29 @@ export class MenuListDisplayComponent implements OnInit {
   rowGroupMetadata: any;
   menuDisplay:Array<menuCart>;
   itemsInCart:menuCart[]=[];
+  nav:any|null;
 
   constructor(private router:Router,private route:ActivatedRoute,private dataService:DataServiceService,private share:DataSharingService,
-    private messageService:MessageService) { }
+    private messageService:MessageService) {
+     }
 
   ngOnInit(): void {
+
+    //this.nav = history.state.VendorDetails;
     
-    this.subscription = this.route.paramMap.subscribe((param)=>{
-      //console.log(param);
-      var id = param.get('menuId') || '';
-      if(id != '')
-      {
-        var vendorId = parseInt(id);
-        this.dataService.getMenuListFromVendorId(vendorId).subscribe((response)=>{
+    // this.subscription = this.route.paramMap.subscribe((param)=>{
+    //   //console.log(param);
+    //   var id = param.get('menuId') || '';
+    //   if(id != '')
+    //   {
+        
+    //   }
+    // });
+
+        var vendorId = history.state.vendorId;
+        var vendorName = history.state.vendorName;
+
+        this.subscription=this.dataService.getMenuListFromVendorId(vendorId).subscribe((response)=>{
             this.itemList = response;
 
             this.menuItems = this.itemList.menuItemList;
@@ -47,7 +57,7 @@ export class MenuListDisplayComponent implements OnInit {
             this.menuItems.forEach((item)=>{
               menuObj.push({
                 menuId:item.menuId,menuItem:item.menuItem,price:item.price,vendorId:item.vendorId,menuType:item.menuType,imagePath:item.imagePath,
-                offerPrice:item.offerPrice,createdDate:item.createdDate,quantity:0
+                offerPrice:item.offerPrice,createdDate:item.createdDate,quantity:0,vendorName:vendorName
               });
             });
 
@@ -59,8 +69,6 @@ export class MenuListDisplayComponent implements OnInit {
             this.updateRowGroupMetaData();
 
         });
-      }
-    });
 
     //setting the active item in menu bar
     this.share.getActiveItem("Menu");

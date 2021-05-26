@@ -10,7 +10,7 @@ const routes: Routes = [
   {path:'',component:UserFirstComponent,children:[
     {path:'home',component:HomeComponent},
     {path:'vendorlist',component:VendorListComponent},
-    {path:'menulist/:menuId',component:MenuListDisplayComponent},
+    {path:'menulist',component:MenuListDisplayComponent},
     {path:'cart-information',component:CartInformationComponent},
     {path:'',redirectTo:'home',pathMatch:'full'}
   ]}

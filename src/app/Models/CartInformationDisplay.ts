@@ -1,4 +1,5 @@
 export class CartInformationDisplay{
+    vendorId:number;
     vendorName:string;
     itemList:CartItems[];
     

@@ -3,6 +3,7 @@ export class menuCart{
     menuItem:string;
     price:number;
     vendorId:number;
+    vendorName:string;
     menuType:string;
     imagePath:string;
     offerPrice:number;
