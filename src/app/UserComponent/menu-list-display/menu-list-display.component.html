@@ -1,4 +1,6 @@
 <p-toast position="top-right" key="tl"></p-toast>
+<button pButton type="button" label="Back to Menu" class="p-button-outlined" (click)="backToVendor()" icon="pi pi-angle-left" iconPos="left"></button>
+
 <div class="card">
     <h5>Menu Items</h5>
     <p-table [value]="menuDisplay" sortField="menuType" sortMode="single" (onSort)="onSort()">
@@ -37,3 +39,23 @@
         </ng-template>
     </p-table>
 </div>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>

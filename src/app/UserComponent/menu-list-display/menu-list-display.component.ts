@@ -46,7 +46,13 @@ export class MenuListDisplayComponent implements OnInit {
         var vendorId = history.state.vendorId;
         var vendorName = history.state.vendorName;
 
-        this.subscription=this.dataService.getMenuListFromVendorId(vendorId).subscribe((response)=>{
+        if(vendorId == undefined || vendorId == null){
+          //route back to vendor
+          this.router.navigateByUrl('/user/vendorlist');
+
+        }else{
+
+          this.dataService.getMenuListFromVendorId(vendorId).subscribe((response)=>{
             this.itemList = response;
 
             this.menuItems = this.itemList.menuItemList;
@@ -70,8 +76,11 @@ export class MenuListDisplayComponent implements OnInit {
 
         });
 
-    //setting the active item in menu bar
-    this.share.getActiveItem("Menu");
+          //setting the active item in menu bar
+          this.share.getActiveItem("Menu");
+          
+        }
+    
   }
 
   onSort() {
@@ -123,6 +132,7 @@ export class MenuListDisplayComponent implements OnInit {
       }
     }else{
       //remove the items from the list of diffrent vendors before adding them users will be asked before that
+      this.showConfirm();
     }
     
   }
@@ -212,15 +222,23 @@ export class MenuListDisplayComponent implements OnInit {
       currentItemInCart.forEach((elements)=>{
         var index = this.menuDisplay.findIndex(x=>x.menuId == elements.menuId && x.vendorId == elements.vendorId);
         
+        count += elements.quantity;
+        //update the count of cart item
+        this.share.updateCartCountWithvalue(count);
         //if item is of the vendor then replace it with current item
         if(index!=-1){
-          count += elements.quantity;
+          //count += elements.quantity;
           this.menuDisplay.splice(index,1,elements);
           //update the count of cart item
-          this.share.updateCartCountWithvalue(count);
+          //this.share.updateCartCountWithvalue(count);
         }
       });
     }
+  }
+
+  backToVendor():void{
+    //route back to vendor
+    this.router.navigateByUrl('/user/vendorlist');
   }
 
   showSuccess(messageContent:string) {
@@ -235,8 +253,29 @@ export class MenuListDisplayComponent implements OnInit {
       this.messageService.add({key: 'tl',severity:'error', summary: 'Error', detail: messageContent});
   }
 
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({key: 'c', sticky: true, severity:'warn', summary:'Are you sure?', detail:'Please remove the item from diffrent vendor in order to Proceed?'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('c');
+
+    //clear the cart storage
+    sessionStorage.removeItem('cartDetails');
+    this.share.updateCartCountWithvalue(0);
+  }
+
+  clear() {
+    this.messageService.clear();
+  }
+
+  onReject() {
+    this.messageService.clear('c');
+  }
+
   ngOnDestroy():void{
-    this.subscription.unsubscribe();
+    
   }
 
 }
