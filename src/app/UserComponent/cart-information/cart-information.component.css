@@ -1,0 +1,11 @@
+.bottomright {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+  }
+#div-container{
+    position: relative;
+}
+#cardcart{
+  margin-top: 12px;
+}

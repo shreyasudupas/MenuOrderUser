@@ -9,6 +9,8 @@ import { UserFirstComponent } from './user-first/user-first.component';
 import { PrimeNGModule } from '../primeng.module';
 import { FormsModule } from '@angular/forms';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
+import { CartIconComponent } from './cart-icon/cart-icon.component';
+import { CartInformationComponent } from './cart-information/cart-information.component';
 
 
 
@@ -18,7 +20,9 @@ import { MenuBarComponent } from './menu-bar/menu-bar.component';
     VendorListComponent,
     MenuListDisplayComponent,
     UserFirstComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    CartIconComponent,
+    CartInformationComponent
   ],
   imports: [
     CommonModule,

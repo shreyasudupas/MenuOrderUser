@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { VendorDetails } from 'src/app/Models/VendorDetails';
 import { DataServiceService } from 'src/app/Services/data-service.service';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import {Vendor} from '../../Models/Vendor';
@@ -35,8 +36,12 @@ activeItem: MenuItem;
   }
 
   //call menu-list-Display component
-  callMenuList(menuId:number):void{
-    this.router.navigate(['../menulist',menuId],{relativeTo:this.route})
+  callMenuList(menuId:number,vendorName:string):void{
+    //this.router.navigate(['../menulist',menuId],{relativeTo:this.route})
+    let VedorDetails = new VendorDetails();
+    VedorDetails.vendorId=menuId;
+    VedorDetails.vendorName = vendorName;
+    this.router.navigateByUrl("/user/menulist",{state:VedorDetails});
   }
 
 
