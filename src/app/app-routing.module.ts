@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginlogoutComponent } from './OtherComponents/loginlogout/loginlogout.component';
 
 const routes: Routes = [
   //{path:'',component:FirstComponent},
-  {path:'user',loadChildren:()=> import('./UserComponent/user.module').then(m=>m.UserModule)}//,
+  {path:'user',loadChildren:()=> import('./UserComponent/user.module').then(m=>m.UserModule)},
+  {path:'login',component:LoginlogoutComponent}
   //{path:'',redirectTo:'dashboard',pathMatch:'full'}
 ];
 
