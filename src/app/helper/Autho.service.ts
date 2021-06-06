@@ -80,6 +80,7 @@ export class AuthService {
     sessionStorage.removeItem('id_token');
     sessionStorage.removeItem('expires_at');
     sessionStorage.removeItem('scopes');
+    sessionStorage.removeItem('userInfo');
 
     //logout from app only if it contains the session variables
     if(session_variables){
@@ -121,6 +122,10 @@ export class AuthService {
     let getuserDetails = JSON.parse(sessionStorage.getItem('userInfo')||'{}');
     userProfile = getuserDetails;
     return userProfile;
+  }
+
+  getToken(){
+    return sessionStorage.getItem('access_token');
   }
 
 }

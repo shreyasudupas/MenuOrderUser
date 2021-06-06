@@ -27,12 +27,15 @@ export class LoginlogoutComponent implements OnInit {
       this.auth.handleAuthentication().then((result)=>{
         console.log(result);
         if(result == 'success'){
-          this.userInfo = this.auth.getUserInformation();
+          //this.userInfo = this.auth.getUserInformation();
         }
         LoginlogoutComponent.i+=1; //counter to keep track of home may times page have loaded
         this.refreshPage();
         this.progressspinner = true;
       });
+    }else{
+      //This is called again because we need the userInfo once the page reload haappens 
+      this.userInfo = this.auth.getUserInformation(); 
     }
 
   }

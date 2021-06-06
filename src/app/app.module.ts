@@ -11,7 +11,8 @@ import { AppComponent } from './app.component';
 import { LoginlogoutComponent } from './OtherComponents/loginlogout/loginlogout.component';
 //import { AuthModule } from '@auth0/auth0-angular';
 //import { environment as env } from '../environments/environment';
-//import { AuthInterceptor } from './helper/auth-interceptor';
+import { AuthInterceptor } from './helper/auth-interceptor';
+
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import { LoginlogoutComponent } from './OtherComponents/loginlogout/loginlogout.
     // })
   ],
   providers: [/*DataServiceService*/
-  //{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

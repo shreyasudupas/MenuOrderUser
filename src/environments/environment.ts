@@ -8,7 +8,9 @@ export const environment = {
     redirectUri: window.location.origin,
     audience
 
-  }
+  },
+  baseV1Url:"http://localhost:5000/api/v1/",
+  baseV2Url:"http://localhost:5000/api/v2/"
 };
 
 
