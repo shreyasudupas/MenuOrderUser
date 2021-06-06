@@ -9,6 +9,7 @@ import {RatingModule} from 'primeng/rating';
 import {TableModule} from 'primeng/table';
 import {BadgeModule} from 'primeng/badge';
 import {ToastModule} from 'primeng/toast';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 
 @NgModule({
     imports:[ButtonModule,
@@ -21,7 +22,8 @@ import {ToastModule} from 'primeng/toast';
         TabMenuModule,
         TableModule,
         BadgeModule,
-        ToastModule],
+        ToastModule,
+        ProgressSpinnerModule],
     exports:[ButtonModule,
         TabMenuModule,
         MessageModule,
@@ -32,7 +34,8 @@ import {ToastModule} from 'primeng/toast';
         TabMenuModule,
         TableModule,
         BadgeModule,
-        ToastModule
+        ToastModule,
+        ProgressSpinnerModule
     ]
 })
 

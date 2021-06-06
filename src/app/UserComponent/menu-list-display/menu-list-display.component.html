@@ -15,7 +15,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-menu let-rowIndex="rowIndex">
             <tr *ngIf="rowGroupMetadata[menu.menuType].index === rowIndex">
-                <td colspan="3">
+                <td colspan="5">
                     <img [alt]="menu.menuType" src="assets/{{rowGroupMetadata[menu.menuType].imgPath}}" width="32" style="vertical-align: middle" />
                     <span class="p-text-bold p-ml-2">{{menu.menuType}}</span>
                 </td>

@@ -1,0 +1,40 @@
+<div class="p-grid">
+    <div class="p-col-2">
+        <div *ngIf="userInfo">
+            <img [src]="userInfo.picture" style="height: 30px;width: 30px;float: right;" alt="userImage"/>
+        </div>
+    </div>
+    <div class="p-col-2">
+        <div *ngIf="userInfo">
+            Welcome {{userInfo.nickname}}
+        </div> 
+    </div>
+    <div class="p-col-6">
+        <span style="float: right;">
+            <div #loggedOut>
+                <button pButton pRipple type="button" label="Login To User" class="p-button-raised" (click)="navigateToDashboad('user')"></button>
+            </div>
+        </span>
+    </div>
+    <div class="p-col-2">
+        <span style="float: left;">
+            <div #logOutButton>
+                <button pButton pRipple type="button"  label="Logout" class="p-button-raised p-button-secondary" (click)="logout()"></button>
+            </div>
+        </span>
+        
+    </div>
+</div>
+<!-- <div *ngIf="!userInfo">
+    <img src="assets/MenuDisplayImages/menuPage.png" alt="menuLogin"/>
+</div> -->
+
+
+
+
+
+<!-- <div *ngIf=progressspinner>
+    <p-progressSpinner></p-progressSpinner>
+</div> -->
+
+
