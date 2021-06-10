@@ -1,10 +1,20 @@
 <div class="p-grid">
-    <div class="p-col-4"><span class="custom-header-height">4</span></div>
-    <!-- <div class="p-col-8"></div> -->
-    <div class="p-col-8 p-offset-2">
+    <div class="p-col-2">
+      <!-- <span class="custom-header-height">4</span> -->
+    </div>
+    <div class="p-col-8">
       <app-menu-bar></app-menu-bar>
     </div>
-    <div class="p-col-8 p-offset-2">
+    <div class="p-col-2">
+      <!-- leave here blank-->
+    </div>
+    <div class="p-col-2">
+      <app-user-profile [InputUserProfile]="UserProfile"></app-user-profile>
+    </div>
+    <div class="p-col-8">
         <router-outlet></router-outlet>
+    </div>
+    <div class="p-col-2">
+        <!-- leave here blank-->
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { menuCart } from '../Models/menuCart';
+import { UserInfo } from '../Models/UserProfile';
+//import { menuCart } from '../Models/menuCart';
 
 @Injectable({providedIn: 'root'})
 
@@ -12,6 +13,8 @@ export class DataSharingService {
 
   //cart count
   private itemsAddedToCartCount = new BehaviorSubject<number>(0);
+  //userProfile
+  private userProfile = new BehaviorSubject<UserInfo>(new UserInfo());
 
   constructor() { }
 
@@ -41,5 +44,11 @@ export class DataSharingService {
     this.itemsAddedToCartCount.next(value);
   }
 
+  getCurrentUserInfo(){
+    return this.userProfile.asObservable();
+  }
 
+  updateUserInfo(value:UserInfo){
+    this.userProfile.next(value);
+  }
 }

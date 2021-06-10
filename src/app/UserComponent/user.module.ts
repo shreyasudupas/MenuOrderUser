@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { CartInformationComponent } from './cart-information/cart-information.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserProfileComponent } from '../OtherComponents/user-profile/user-profile.component';
 
 
 
@@ -22,7 +24,9 @@ import { CartInformationComponent } from './cart-information/cart-information.co
     UserFirstComponent,
     MenuBarComponent,
     CartIconComponent,
-    CartInformationComponent
+    CartInformationComponent,
+    ProfileComponent,
+    UserProfileComponent
   ],
   imports: [
     CommonModule,

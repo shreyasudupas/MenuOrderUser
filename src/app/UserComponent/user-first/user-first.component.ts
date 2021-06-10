@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/helper/Autho.service';
+import { UserInfo } from 'src/app/Models/UserProfile';
 
 @Component({
   selector: 'app-user-first',
@@ -6,11 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-first.component.css']
 })
 export class UserFirstComponent implements OnInit {
+  UserProfile:UserInfo;
 
-  constructor() { }
+  constructor(private AuthService:AuthService) { }
 
   ngOnInit(): void {
-    var message ="hello";
+    
+    this.UserProfile = this.AuthService.getUserInformation();
   }
 
 }

@@ -1,13 +1,24 @@
 <div class="p-grid">
     <div class="p-col-2">
-        <div *ngIf="userInfo">
-            <img [src]="userInfo.picture" style="height: 30px;width: 30px;float: right;" alt="userImage"/>
-        </div>
+        <!-- <div *ngIf="userInfo">
+            <div style="float: right;">
+                <div class="p-grid">
+                    <div class="p-col">
+                        <button pButton pRipple type="button" class="p-button-rounded p-button-text">
+                            <img [src]="userInfo.picture" style="height: 30px;width: 30px;float: right;" alt="userImage"/>
+                        </button>
+                    </div>
+                    <div class="p-col">
+                        <div *ngIf="userInfo">
+                            Welcome {{userInfo.nickname}}
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div> -->
     </div>
     <div class="p-col-2">
-        <div *ngIf="userInfo">
-            Welcome {{userInfo.nickname}}
-        </div> 
+        
     </div>
     <div class="p-col-6">
         <span style="float: right;">
