@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/helper/Autho.service';
 import { UserInfo } from 'src/app/Models/UserProfile';
+import { DataServiceService } from 'src/app/Services/data-service.service';
 
 @Component({
   selector: 'app-user-first',
@@ -13,7 +14,7 @@ export class UserFirstComponent implements OnInit {
   MenuItems: MenuItem[];
   CurrentUserRole:string;
 
-  constructor(private AuthService:AuthService) { }
+  constructor(private AuthService:AuthService,private DataService:DataServiceService) { }
 
   ngOnInit(): void {
     
@@ -29,6 +30,17 @@ export class UserFirstComponent implements OnInit {
       {label: 'Payment', icon: 'pi pi-fw pi-file'},
       {label: 'Settings', icon: 'pi pi-fw pi-cog'}
     ];
+
+    //get user Info
+    this.DataService.getUserInfo(this.UserProfile).subscribe((response)=>{
+      if(response!=null){
+        this.UserProfile.points = response.points;
+        this.UserProfile.wallet = response.cartAmount;
+        this.UserProfile.roleId = response.roleId;
+        console.log(this.UserProfile);
+      }
+    },
+    (err)=>console.log(err));
   }
 
 }

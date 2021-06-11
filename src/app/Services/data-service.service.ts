@@ -5,6 +5,8 @@ import { APIResponse } from '../Models/APIResponse';
 import { map, catchError } from 'rxjs/operators';
 import { MenuList } from '../Models/MenuList';
 import { environment as env } from '../../environments/environment';
+import { UserInfo } from '../Models/UserProfile';
+import { createElementCssSelector } from '@angular/compiler';
 
 @Injectable()
 
@@ -54,5 +56,19 @@ menuList:MenuList;
       errorMessage = "Error Occurred in API item not found ";
     }
     window.alert(errorMessage);
+  }
+
+  public getUserInfo(userInfo:UserInfo):Observable<any>{
+    return this.http.post<any>(this.urlv1+'User/GetOrUpdateUserDetails',userInfo)
+    .pipe(map((result:APIResponse)=>{
+      //if success
+      if(result.response == 200){
+        return result.content;
+      }
+      else{
+        this.handleCustomErrorSentByAPI(result);
+        return null;
+      }
+    }));
   }
 }

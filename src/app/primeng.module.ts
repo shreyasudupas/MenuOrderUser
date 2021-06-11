@@ -10,6 +10,7 @@ import {TableModule} from 'primeng/table';
 import {BadgeModule} from 'primeng/badge';
 import {ToastModule} from 'primeng/toast';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {TooltipModule} from 'primeng/tooltip';
 
 @NgModule({
     imports:[ButtonModule,
@@ -23,7 +24,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
         TableModule,
         BadgeModule,
         ToastModule,
-        ProgressSpinnerModule],
+        ProgressSpinnerModule,
+        TooltipModule],
     exports:[ButtonModule,
         TabMenuModule,
         MessageModule,
@@ -35,7 +37,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
         TableModule,
         BadgeModule,
         ToastModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        TooltipModule
     ]
 })
 

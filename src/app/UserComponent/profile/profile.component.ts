@@ -8,12 +8,12 @@ import { DataSharingService } from 'src/app/Services/data-sharing.service';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private share:DataSharingService) { }
+  constructor(private BroadcastService:DataSharingService) { }
 
   ngOnInit(): void {
 
     //set the active item to Profile
-    this.share.getActiveItem('Profile');
+    this.BroadcastService.getActiveItem('Profile');
   }
 
 }

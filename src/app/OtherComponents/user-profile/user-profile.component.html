@@ -1,12 +1,21 @@
 <div class="p-grid">
     <div class="p-col-12">
-    <p-card [header]="userProfile.nickname" [subheader]="userProfile.username" styleClass="p-card-shadow">
-            <ng-template pTemplate="header">
-                <img alt="Profile-Pic" [src]="userProfile.pictureLocation">
-            </ng-template>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-                quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
-        </p-card>
+        <p-card [header]="userProfile.nickname" [subheader]="userProfile.username" styleClass="p-card-shadow">
+                <ng-template pTemplate="header">
+                    <img alt="Profile-Pic" [src]="userProfile.pictureLocation">
+                </ng-template>
+                <div *ngIf="userProfile.roleId == 1">
+                    <div class="p-grid">
+                        <div class="p-col-2"><img src="assets/UserInfoImage/wallet.png" pTooltip="Wallet amount" alt="wallet" width="25px;" height="30px"/></div>
+                        <div class="p-col-3">{{userProfile.wallet}}</div>
+                        <div class="p-col-7"><img src="assets/UserInfoImage/rupee.png" alt="wallet" width="25px;" height="30px"/></div>
+                    </div>
+                    <div class="p-grid">
+                        <div class="p-col-2"><img src="assets/UserInfoImage/loyalty.png" pTooltip="Loyalty points" alt="wallet" width="25px;" height="30px"/></div>
+                        <div class="p-col-10">{{userProfile.points}}</div>
+                    </div>
+                </div>
+            </p-card>
     </div>
 </div>
 
