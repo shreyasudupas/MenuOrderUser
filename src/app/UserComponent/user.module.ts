@@ -8,12 +8,11 @@ import { MenuListDisplayComponent } from './menu-list-display/menu-list-display.
 import { UserFirstComponent } from './user-first/user-first.component';
 import { PrimeNGModule } from '../primeng.module';
 import { FormsModule } from '@angular/forms';
-import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { CartInformationComponent } from './cart-information/cart-information.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from '../OtherComponents/user-profile/user-profile.component';
-
+import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component';
 
 
 @NgModule({
@@ -22,11 +21,11 @@ import { UserProfileComponent } from '../OtherComponents/user-profile/user-profi
     VendorListComponent,
     MenuListDisplayComponent,
     UserFirstComponent,
-    MenuBarComponent,
     CartIconComponent,
     CartInformationComponent,
     ProfileComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    MenuBarComponent
   ],
   imports: [
     CommonModule,

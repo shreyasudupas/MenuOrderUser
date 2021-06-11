@@ -3,7 +3,7 @@
       <!-- <span class="custom-header-height">4</span> -->
     </div>
     <div class="p-col-8">
-      <app-menu-bar></app-menu-bar>
+      <app-menu-bar [GetMenuItems]="MenuItems" [RoleName]="CurrentUserRole"></app-menu-bar>
     </div>
     <div class="p-col-2">
       <!-- leave here blank-->
