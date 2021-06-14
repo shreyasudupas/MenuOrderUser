@@ -26,6 +26,7 @@ export class UserFirstComponent implements OnInit {
       {label: 'Home', icon: 'pi pi-fw pi-home',routerLink: ['./home']},
       {label: 'Vendor', icon: 'pi pi-fw pi-calendar',routerLink:['./vendorlist']},
       {label: 'Menu', icon: 'pi pi-fw pi-calendar',visible:false},
+      {label: 'Cart', icon: 'pi pi-fw pi-calendar',visible:false},
       {label: 'Profile', icon: 'pi pi-fw pi-pencil',routerLink:['./user-profile']},
       {label: 'Payment', icon: 'pi pi-fw pi-file'},
       {label: 'Settings', icon: 'pi pi-fw pi-cog'}

@@ -8,7 +8,7 @@ import { DataSharingService } from 'src/app/Services/data-sharing.service';
   styleUrls: ['./cart-icon.component.css']
 })
 export class CartIconComponent implements OnInit {
-  cartItems:string;
+  cartItemNumber:string;
 
   constructor(private share:DataSharingService,private router:Router,private route:ActivatedRoute) { }
 
@@ -17,7 +17,7 @@ export class CartIconComponent implements OnInit {
 
     this.share.getCurrentCartCount().subscribe((cartnumber)=>{
       var i = cartnumber;
-      this.cartItems = i.toString();
+      this.cartItemNumber = i.toString();
     });
   }
 

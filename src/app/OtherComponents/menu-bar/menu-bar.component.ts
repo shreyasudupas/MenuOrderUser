@@ -45,6 +45,13 @@ export class MenuBarComponent implements OnInit {
     }else{
       menuItems[2].visible = false;
     }
+    //cart vssibility
+    if(menuItems[index].label == 'Cart'){
+      //setting with value because we want only the menu to be invisible/visible based on condition
+      menuItems[3].visible = true;
+    }else{
+      menuItems[3].visible = false;
+    }
   }
 
   ngOnDestroy(){

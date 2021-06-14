@@ -1,4 +1,5 @@
-<button pButton type="button" label="Back to Menu" class="p-button-outlined" (click)="BackToMenu(displayInfo.vendorId,displayInfo.vendorName)" icon="pi pi-angle-left" iconPos="left"></button><br/>
+<div *ngIf="displayInfo;else showNoData">
+    <button pButton type="button" label="Back to Menu" class="p-button-outlined" (click)="BackToMenu(displayInfo.vendorId,displayInfo.vendorName)" icon="pi pi-angle-left" iconPos="left"></button><br/>
 <div id="cardcart">
     <p-card [header]="displayInfo.vendorName" [style]="{'width': '100%', 'margin-bottom': '2em'}">
         <ng-template pTemplate="header">
@@ -40,4 +41,12 @@
         </div>
     </p-card>
 </div>
+</div>
+<ng-template #showNoData>
+    <div style="margin: 15%;">
+        <h3 style="text-align: center;">No Items in cart</h3>
+        <img src="assets/MenuDisplayImages/emptyCart.png" alt="NoCartItem"/>
+    </div>
+</ng-template>
+
 
