@@ -5,5 +5,5 @@ export class UserInfo{
     nickname:string;
     pictureLocation:string;
     points:bigint;
-    wallet:number;
+    cartAmount:number;
 }
