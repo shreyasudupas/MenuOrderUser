@@ -62,6 +62,6 @@ private apiUrl:string;
 
     private handleError(error: HttpErrorResponse) {
         // Handle the HTTP error here
-        return throwError('Something wrong happened');
+        return throwError(error);
       }
 }

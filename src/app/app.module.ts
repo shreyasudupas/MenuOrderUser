@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { PrimeNGModule } from "../app/primeng.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +12,7 @@ import { LoginlogoutComponent } from './OtherComponents/loginlogout/loginlogout.
 //import { AuthModule } from '@auth0/auth0-angular';
 //import { environment as env } from '../environments/environment';
 import { AuthInterceptor } from './helper/auth-interceptor';
+import { GlobalErrorHandler } from './shared/errors/GlobalErrorHandler';
 
 
 
@@ -33,6 +34,7 @@ import { AuthInterceptor } from './helper/auth-interceptor';
     // })
   ],
   providers: [/*DataServiceService*/
+    { provide: ErrorHandler,useClass:GlobalErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

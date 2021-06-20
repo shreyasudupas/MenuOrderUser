@@ -13,6 +13,7 @@ import { CartInformationComponent } from './cart-information/cart-information.co
 import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from '../OtherComponents/user-profile/user-profile.component';
 import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component';
+import { ModalComponent } from '../OtherComponents/modal/modal.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component
     CartInformationComponent,
     ProfileComponent,
     UserProfileComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

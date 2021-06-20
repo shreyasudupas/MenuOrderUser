@@ -32,8 +32,8 @@ activeItem: MenuItem;
     
     this.listItems().subscribe((result)=>{
       this.vendorList = result
-    },
-    err=>console.log(err));
+    }
+    );
       //change the active Item in menu
       this.sharing.getActiveItem("Vendor");
 

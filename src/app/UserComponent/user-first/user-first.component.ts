@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/helper/Autho.service';
 import { UserInfo } from 'src/app/Models/UserProfile';
+import { ModalService } from 'src/app/Services/ModalService.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from '../../../environments/environment';
 
@@ -21,8 +22,9 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
   UserProfile:UserInfo;
   MenuItems: MenuItem[];
   CurrentUserRole:string;
+  
 
-  constructor(private AuthService:AuthService,httpclient:HttpClient) {
+  constructor(private AuthService:AuthService,httpclient:HttpClient,private modalService: ModalService) {
     super(httpclient,'User')
    }
 
@@ -44,15 +46,19 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
 
     //get user Info
   
-    this.createItem(this.UserProfile).subscribe((result)=>{
-      if(result!=null){
-          this.UserProfile.points = result.points;
-          this.UserProfile.cartAmount = result.cartAmount;
-          this.UserProfile.roleId = result.roleId;
-      }
-    },
-    err=>alert(err));
+      this.createItem(this.UserProfile).subscribe((result)=>{
+        if(result!=null){
+            this.UserProfile.points = result.points;
+            this.UserProfile.cartAmount = result.cartAmount;
+            this.UserProfile.roleId = result.roleId;
+        }
+      });
+
     }
 
-
+    open() {
+      let title="This USer First";
+      let body="Body body";
+      this.modalService.openModal(title,body);
+    }
 }
