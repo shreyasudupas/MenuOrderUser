@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/helper/Autho.service';
 import { UserInfo } from 'src/app/Models/UserProfile';
-import { DataServiceService } from 'src/app/Services/data-service.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from '../../../environments/environment';
 
@@ -23,7 +22,7 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
   MenuItems: MenuItem[];
   CurrentUserRole:string;
 
-  constructor(private AuthService:AuthService,private DataService:DataServiceService,httpclient:HttpClient) {
+  constructor(private AuthService:AuthService,httpclient:HttpClient) {
     super(httpclient,'User')
    }
 
