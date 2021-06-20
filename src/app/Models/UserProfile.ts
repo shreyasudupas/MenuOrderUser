@@ -1,6 +1,9 @@
 export class UserInfo{
-    email:string;
-    name:string;
+    userId:bigint;
+    username:string;
+    roleId:number;
     nickname:string;
-    picture:string
+    pictureLocation:string;
+    points:bigint;
+    cartAmount:number;
 }

@@ -3,7 +3,7 @@ import {environment as env } from '../../environments/environment';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
 import { UserInfo } from '../Models/UserProfile';
-import { Observable } from 'rxjs';
+import { DataSharingService } from '../Services/data-sharing.service';
 
 @Injectable({
     providedIn:'root'
@@ -23,7 +23,7 @@ export class AuthService {
     scope:'openid profile email profile:user profile:admin'
   });
 
-  constructor(public router: Router) {}
+  constructor(public router: Router,private share:DataSharingService) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -109,8 +109,8 @@ export class AuthService {
       var user = authresult.idTokenPayload;
       let userProfile = new UserInfo();
       if(user!=null){
-        userProfile.email = user.email;
-        userProfile.picture = user.picture;
+        userProfile.username = user.email;
+        userProfile.pictureLocation = user.picture;
         userProfile.nickname = user.nickname;
         var userSession = JSON.stringify(userProfile);
         sessionStorage.setItem('userInfo',userSession);

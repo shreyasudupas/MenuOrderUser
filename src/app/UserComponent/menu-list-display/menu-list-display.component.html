@@ -31,8 +31,8 @@
                     {{menu.price}}
                 </td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded p-button-text" (click)="addItemsoCart(menu)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-text" (click)="removeItemsFromCart(menu)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-plus" pTooltip="Add items" class="p-button-rounded p-button-text" (click)="addItemsoCart(menu)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" pTooltip="Remove items" class="p-button-rounded p-button-danger p-button-text" (click)="removeItemsFromCart(menu)"></button>
                 </td>
                 <td>{{menu.quantity}}</td>
             </tr>

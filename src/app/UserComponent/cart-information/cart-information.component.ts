@@ -37,10 +37,13 @@ totalPrice:number=0;
       //update the cart count used only when refreshed
       this.share.updateCartCountWithvalue(this.itemsList.length);
     }
+
+    //change the active Item in menu
+    this.share.getActiveItem("Cart");
   }
 
   getOrderCartItems():menuCart[]{
-    let items  = sessionStorage.getItem('cartDetails')|| '[{}]';
+    let items  = sessionStorage.getItem('cartDetails')|| '[]';
     let currentItemInCart:menuCart[] = JSON.parse(items);
     return currentItemInCart;
   }

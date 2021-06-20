@@ -161,7 +161,7 @@ export class MenuListDisplayComponent implements OnInit {
       sessionStorage.setItem('cartDetails',JSON.stringify(obj));
     }else{
       //If items are present then
-      var i = sessionStorage.getItem('cartDetails')|| '[{}]';
+      var i = sessionStorage.getItem('cartDetails')|| '[]';
       this.itemsInCart = JSON.parse(i);
       
       //check if the element is already present
@@ -198,7 +198,7 @@ export class MenuListDisplayComponent implements OnInit {
     //if items are present
     if(sessionStorage.getItem('cartDetails')!=null){
       //check if the item is of same vendor
-      let items  = sessionStorage.getItem('cartDetails')|| '[{}]';
+      let items  = sessionStorage.getItem('cartDetails')|| '[]';
       let currentItemInCart:menuCart[] = JSON.parse(items);
 
       if(currentItemInCart[0].vendorId == itemeSelected.vendorId){
@@ -215,7 +215,7 @@ export class MenuListDisplayComponent implements OnInit {
   updateTheMenuList(){
     if(sessionStorage.getItem('cartDetails')!=null){
       //get the items
-      let items  = sessionStorage.getItem('cartDetails')|| '[{}]';
+      let items  = sessionStorage.getItem('cartDetails')|| '[]';
       let currentItemInCart:menuCart[] = JSON.parse(items);
       var count = 0; //for cart count
 
