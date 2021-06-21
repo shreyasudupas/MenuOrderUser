@@ -24,7 +24,7 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
   CurrentUserRole:string;
   
 
-  constructor(private AuthService:AuthService,httpclient:HttpClient,private modalService: ModalService) {
+  constructor(private AuthService:AuthService,httpclient:HttpClient) {
     super(httpclient,'User')
    }
 
@@ -56,9 +56,9 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
 
     }
 
-    open() {
-      let title="This USer First";
-      let body="Body body";
-      this.modalService.openModal(title,body);
-    }
+    // open() {
+    //   let title="This USer First";
+    //   let body="Body body";
+    //   this.modalService.openModal(title,body);
+    // }
 }

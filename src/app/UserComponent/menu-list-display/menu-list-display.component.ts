@@ -1,13 +1,15 @@
-import { Component, NgZone, OnInit } from '@angular/core';
-import { ActivatedRoute, Router,NavigationStart } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { menuCart } from 'src/app/Models/menuCart';
 import { MenuItemList } from 'src/app/Models/MenuItemList';
 import { MenuItems } from 'src/app/Models/MenuItems';
 import { MenuList } from 'src/app/Models/MenuList';
-import { DataServiceService } from 'src/app/Services/data-service.service';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import {MessageService} from 'primeng/api';
+import { ResourceService } from 'src/app/Services/Resouce.service';
+import { environment as env } from 'src/environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-menu-list-display',
@@ -15,7 +17,14 @@ import {MessageService} from 'primeng/api';
   styleUrls: ['./menu-list-display.component.css'],
   providers: [MessageService]
 })
-export class MenuListDisplayComponent implements OnInit {
+export class MenuListDisplayComponent extends ResourceService<MenuList> implements OnInit {
+
+  getVersionUrl(): string {
+    return env.baseV1Url;
+  }
+  actionName(): string {
+    return "GetMenuList";
+  }
 
   subscription:Subscription;
   itemList:MenuList;
@@ -26,24 +35,14 @@ export class MenuListDisplayComponent implements OnInit {
   itemsInCart:menuCart[]=[];
   nav:any|null;
 
-  constructor(private router:Router,private route:ActivatedRoute,private dataService:DataServiceService,private share:DataSharingService,
+  constructor(private router:Router,private route:ActivatedRoute,protected httpclient:HttpClient,private share:DataSharingService,
     private messageService:MessageService) {
+      super(httpclient,'Menu');
      }
 
   ngOnInit(): void {
 
-    //this.nav = history.state.VendorDetails;
-    
-    // this.subscription = this.route.paramMap.subscribe((param)=>{
-    //   //console.log(param);
-    //   var id = param.get('menuId') || '';
-    //   if(id != '')
-    //   {
-        
-    //   }
-    // });
-
-        var vendorId = history.state.vendorId;
+        var vendorId:number = history.state.vendorId;
         var vendorName = history.state.vendorName;
 
         if(vendorId == undefined || vendorId == null){
@@ -52,10 +51,14 @@ export class MenuListDisplayComponent implements OnInit {
 
         }else{
 
-          this.dataService.getMenuListFromVendorId(vendorId).subscribe((response)=>{
-            this.itemList = response;
+        //set the params
+        let menuParams = new HttpParams();
+        menuParams = menuParams.append('VendorId',vendorId.toString());
 
-            this.menuItems = this.itemList.menuItemList;
+        this.getItem(menuParams).subscribe((result)=>{
+          this.itemList = result;
+
+          this.menuItems = this.itemList.menuItemList;
             this.menuTypeList = this.itemList.menuItemDetails;
 
             let menuObj:Array<menuCart> = [];
@@ -73,7 +76,6 @@ export class MenuListDisplayComponent implements OnInit {
 
             //console.log(this.menuDisplay);
             this.updateRowGroupMetaData();
-
         });
 
           //setting the active item in menu bar

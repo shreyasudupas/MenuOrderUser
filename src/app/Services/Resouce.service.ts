@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Params } from '@angular/router';
@@ -32,8 +32,8 @@ private apiUrl:string;
         );
     }
 
-    getItem(body:any):Observable<T>{
-        return this.httpclient.get<T>(this.apiUrl,body)
+    getItem(params:HttpParams):Observable<T>{
+        return this.httpclient.get<T>(this.apiUrl,{params:params})
         .pipe(
             map((data:any)=>{
                 if(data.response == 200){

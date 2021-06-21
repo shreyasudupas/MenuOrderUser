@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataServiceService } from 'src/app/Services/data-service.service';
 import { UserRoutingModule } from './user.routing.module';
 import { HomeComponent } from './home/home.component';
 import { VendorListComponent } from './vendor-list/vendor-list.component';
@@ -35,6 +34,6 @@ import { ModalComponent } from '../OtherComponents/modal/modal.component';
     PrimeNGModule,
     FormsModule
   ],
-  providers:[DataServiceService]
+  providers:[]
 })
 export class UserModule { }
