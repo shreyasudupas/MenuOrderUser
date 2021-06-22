@@ -56,4 +56,8 @@ totalPrice:number=0;
     this.router.navigateByUrl("/user/menulist",{state:VenderDetails});
   }
 
+  ProccedToPayment(){
+    this.router.navigateByUrl("/user/user-payment");
+  }
+
 }

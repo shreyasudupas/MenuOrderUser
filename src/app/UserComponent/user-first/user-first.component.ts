@@ -40,7 +40,7 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
       {label: 'Menu', icon: 'pi pi-fw pi-calendar',visible:false},
       {label: 'Cart', icon: 'pi pi-fw pi-calendar',visible:false},
       {label: 'Profile', icon: 'pi pi-fw pi-pencil',routerLink:['./user-profile']},
-      {label: 'Payment', icon: 'pi pi-fw pi-file'},
+      {label: 'Payment', icon: 'pi pi-fw pi-file',routerLink:['./user-payment']},
       {label: 'Settings', icon: 'pi pi-fw pi-cog'}
     ];
 

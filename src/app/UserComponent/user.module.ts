@@ -13,6 +13,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from '../OtherComponents/user-profile/user-profile.component';
 import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component';
 import { ModalComponent } from '../OtherComponents/modal/modal.component';
+import { PaymentScreenComponent } from './payment-screen/payment-screen.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { ModalComponent } from '../OtherComponents/modal/modal.component';
     ProfileComponent,
     UserProfileComponent,
     MenuBarComponent,
-    ModalComponent
+    ModalComponent,
+    PaymentScreenComponent
   ],
   imports: [
     CommonModule,
