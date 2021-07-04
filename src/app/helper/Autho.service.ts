@@ -30,7 +30,7 @@ export class AuthService {
   }
 
  
-  public handleAuthentication():Promise<string> {
+  public handleAuthentication():Promise<UserInfo> {
 
     return new Promise((resolve,reject)=>{
 
@@ -39,8 +39,8 @@ export class AuthService {
           window.location.hash = '';
           this.setSession(authResult);
           //this.router.navigateByUrl('/user');
-          this.getUserProfile(authResult);
-          resolve('success');
+          let user = this.getUserProfile(authResult);
+          resolve(user);
         } else if (err) {
           
           console.log(err);
@@ -115,6 +115,7 @@ export class AuthService {
         var userSession = JSON.stringify(userProfile);
         sessionStorage.setItem('userInfo',userSession);
       }
+      return userProfile;
   }
 
   getUserInformation():UserInfo{

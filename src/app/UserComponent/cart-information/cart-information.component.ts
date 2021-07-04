@@ -48,7 +48,7 @@ totalPrice:number=0;
     return currentItemInCart;
   }
 
-  BackToMenu(vendorId:number,vendorName:string){
+  BackToMenu(vendorId:bigint,vendorName:string){
     let VenderDetails = new VendorDetails();
     VenderDetails.vendorId = vendorId;
     VenderDetails.vendorName = vendorName;

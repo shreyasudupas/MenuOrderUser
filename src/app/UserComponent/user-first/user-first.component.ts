@@ -14,7 +14,8 @@ import { environment as env } from '../../../environments/environment';
 })
 export class UserFirstComponent extends ResourceService<UserInfo> implements OnInit {
   getVersionUrl(): string {
-    return env.baseV1Url;
+    //return env.baseV1Url;
+    return env.userAPI;
   }
   actionName(): string {
     return "GetOrUpdateUserDetails";
@@ -25,7 +26,7 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
   
 
   constructor(private AuthService:AuthService,httpclient:HttpClient) {
-    super(httpclient,'User')
+    super(httpclient,'')
    }
 
   ngOnInit(): void {

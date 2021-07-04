@@ -15,7 +15,10 @@ abstract actionName():string;
 private apiUrl:string;
 
     constructor(protected httpclient:HttpClient,@Inject('string') private controller:string){
+        if(controller != '')
         this.apiUrl = this.getVersionUrl()+this.controller+'/'+ this.actionName();
+        else
+        this.apiUrl = this.getVersionUrl()+this.actionName();
     }
 
     listItems():Observable<T[]>{

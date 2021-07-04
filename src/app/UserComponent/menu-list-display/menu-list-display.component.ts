@@ -20,7 +20,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class MenuListDisplayComponent extends ResourceService<MenuList> implements OnInit {
 
   getVersionUrl(): string {
-    return env.baseV1Url;
+    //return env.baseV1Url;
+    return env.menuAPI;
   }
   actionName(): string {
     return "GetMenuList";
@@ -37,7 +38,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
 
   constructor(private router:Router,private route:ActivatedRoute,protected httpclient:HttpClient,private share:DataSharingService,
     private messageService:MessageService) {
-      super(httpclient,'Menu');
+      super(httpclient,'');
      }
 
   ngOnInit(): void {
@@ -65,7 +66,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
             //assign the menuItems to menuList
             this.menuItems.forEach((item)=>{
               menuObj.push({
-                menuId:item.menuId,menuItem:item.menuItem,price:item.price,vendorId:item.vendorId,menuType:item.menuType,imagePath:item.imagePath,
+                id:item.id,menuItem:item.menuItem,price:item.price,vendorId:item.vendorId,menuType:item.menuType,imagePath:item.imagePath,
                 offerPrice:item.offerPrice,createdDate:item.createdDate,quantity:0,vendorName:vendorName
               });
             });
@@ -122,7 +123,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
     var isSuccess = this.validateCartItemsBeforeAdding(itemSelected);
     if(isSuccess){
       //find the corresponding element in the array and increment the quantity
-      let index = this.menuDisplay.findIndex(x=>x.menuId == itemSelected.menuId);
+      let index = this.menuDisplay.findIndex(x=>x.id == itemSelected.id);
       if(this.menuDisplay[index].quantity<20){
         this.menuDisplay[index].quantity += 1;
       //increase the cart Count
@@ -141,7 +142,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
 
   removeItemsFromCart(itemeSelected:menuCart){
     //find the corresponding element in the array and decrement the quantity
-    let index = this.menuDisplay.findIndex(x=>x.menuId == itemeSelected.menuId);
+    let index = this.menuDisplay.findIndex(x=>x.id == itemeSelected.id);
     if(this.menuDisplay[index].quantity>0){
       this.menuDisplay[index].quantity -= 1; 
     //decrease the cart Count
@@ -167,7 +168,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
       this.itemsInCart = JSON.parse(i);
       
       //check if the element is already present
-      var presentIndex = this.itemsInCart.findIndex(x=>x.menuId==item.menuId);
+      var presentIndex = this.itemsInCart.findIndex(x=>x.id==item.id);
       if(presentIndex!=-1){
         if(flag==1){
           //if present the increment the quanity of that item
@@ -222,7 +223,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
       var count = 0; //for cart count
 
       currentItemInCart.forEach((elements)=>{
-        var index = this.menuDisplay.findIndex(x=>x.menuId == elements.menuId && x.vendorId == elements.vendorId);
+        var index = this.menuDisplay.findIndex(x=>x.id == elements.id && x.id == elements.id);
         
         count += elements.quantity;
         //update the count of cart item

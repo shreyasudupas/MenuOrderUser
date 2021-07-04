@@ -1,22 +1,32 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/helper/Autho.service';
+import { APIResponse } from 'src/app/Models/APIResponse';
 import { UserInfo } from 'src/app/Models/UserProfile';
+import { ResourceService } from 'src/app/Services/Resouce.service';
+import { environment as env } from 'src/environments/environment';
 
 @Component({
   selector: 'app-loginlogout',
   templateUrl: './loginlogout.component.html',
   styleUrls: ['./loginlogout.component.css']
 })
-export class LoginlogoutComponent implements OnInit {
+export class LoginlogoutComponent extends ResourceService<APIResponse> implements OnInit {
+  getVersionUrl(): string {
+    return env.basketAPI;
+  }
+  actionName(): string {
+    return "StoreUserKeyValue";
+  }
   progressspinner=true;
   @ViewChild('logOutButton') logoutRef:ElementRef;
   @ViewChild('loggedOut') loginRef:ElementRef;
   userInfo:UserInfo;
   static i=0;
 
-  constructor(private router: Router,private auth:AuthService,private zone:NgZone) { 
-   
+  constructor(private router: Router,private auth:AuthService,private zone:NgZone,private client:HttpClient) { 
+   super(client,'')
   }
 
   ngOnInit(): void {
@@ -26,8 +36,10 @@ export class LoginlogoutComponent implements OnInit {
       this.progressspinner = false;
       this.auth.handleAuthentication().then((result)=>{
         console.log(result);
-        if(result == 'success'){
+        if(result != undefined){
           //this.userInfo = this.auth.getUserInformation();
+          //call the basket service to store the user cache
+          this.createItem(result).toPromise().then(response=>console.log(response));
         }
         LoginlogoutComponent.i+=1; //counter to keep track of home may times page have loaded
         this.refreshPage();
@@ -35,7 +47,7 @@ export class LoginlogoutComponent implements OnInit {
       });
     }else{
       //This is called again because we need the userInfo once the page reload haappens 
-      this.userInfo = this.auth.getUserInformation(); 
+      //this.userInfo = this.auth.getUserInformation(); 
     }
 
   }
