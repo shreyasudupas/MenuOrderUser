@@ -1,8 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Params } from '@angular/router';
 
 @Injectable({
     'providedIn':'root'
@@ -11,14 +10,20 @@ import { Params } from '@angular/router';
 export abstract class ResourceService<T>{
 abstract getVersionUrl():string;
 abstract actionName():string;
+requestUrls:any[]=[];
+response:any[]=[];
 
 private apiUrl:string;
 
-    constructor(protected httpclient:HttpClient,@Inject('string') private controller:string){
+    constructor(protected httpclient:HttpClient,@Inject('string') private controller:string,@Inject('string') actionName?:string){
         if(controller != '')
         this.apiUrl = this.getVersionUrl()+this.controller+'/'+ this.actionName();
         else
         this.apiUrl = this.getVersionUrl()+this.actionName();
+
+        if(this.actionName()== undefined){
+            this.apiUrl = this.getVersionUrl()+actionName;
+        }
     }
 
     listItems():Observable<T[]>{
@@ -61,6 +66,24 @@ private apiUrl:string;
             }),
             catchError(this.handleError)
         );
+    }
+
+    getItemsByFork(requestUrl:string[]):Observable<any[]>{
+        for(let i=0;i<requestUrl.length;i++){
+            this.requestUrls[i] = this.httpclient.get(requestUrl[i]);
+        }
+        return forkJoin(this.requestUrls)
+        .pipe(
+            map((results:any[]) =>{
+                for(var r=0;r<results.length;r++){
+                    if(results[r].response == 200){
+                        this.response[r] = results[r].content;
+                    }
+                }
+                return this.response;
+            }),
+            catchError(this.handleError)
+        )
     }
 
     private handleError(error: HttpErrorResponse) {
