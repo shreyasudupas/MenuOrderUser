@@ -32,7 +32,10 @@ private apiUrl:string;
             map((data:any)=>{
                 if(data.response == 200){
                     return data.content as T
-                }else{
+                }else if(data.response == 500){
+                    this.CallErrorHandler(data.exception);
+                }
+                else{
                     return data.content;
                 } 
             }),
@@ -90,4 +93,7 @@ private apiUrl:string;
         // Handle the HTTP error here
         return throwError(error);
       }
+    private CallErrorHandler(error:any){
+        return throwError(error)
+    }
 }

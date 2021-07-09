@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { menuCart } from 'src/app/Models/menuCart';
@@ -10,6 +10,8 @@ import {MessageService} from 'primeng/api';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { UpdateBasketService } from 'src/app/Services/UpdateBasketService';
+import { GetBasketService } from 'src/app/Services/GetBasketService';
 
 @Component({
   selector: 'app-menu-list-display',
@@ -37,7 +39,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
   nav:any|null;
 
   constructor(private router:Router,private route:ActivatedRoute,protected httpclient:HttpClient,private share:DataSharingService,
-    private messageService:MessageService) {
+    private messageService:MessageService,private ngZone: NgZone) {
       super(httpclient,'');
      }
 
@@ -55,11 +57,16 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
         //set the params
         let menuParams = new HttpParams();
         menuParams = menuParams.append('VendorId',vendorId.toString());
-
-        this.getItem(menuParams).subscribe((result)=>{
-          this.itemList = result;
-
-          this.menuItems = this.itemList.menuItemList;
+        
+        //Fork join two calls
+        let requestUrl:string[]=[];
+        requestUrl.push(env.menuAPI+'GetMenuList?VendorId='+vendorId);
+        requestUrl.push(env.basketAPI+'GetUserBasket');
+        this.getItemsByFork(requestUrl).subscribe(results=>{
+          if(results.length>0){
+            //get menu list items
+            this.itemList = results[0];
+            this.menuItems = this.itemList.menuItemList;
             this.menuTypeList = this.itemList.menuItemDetails;
 
             let menuObj:Array<menuCart> = [];
@@ -71,12 +78,11 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
               });
             });
 
-            this.menuDisplay = menuObj;
-            //update the menuList if its present in the storage
-            this.updateTheMenuList();
-
-            //console.log(this.menuDisplay);
+            //check if the item is already in cache if yes then update
+            this.menuDisplay = this.updateTheMenuListFromCache(menuObj,results[1].items);
+            
             this.updateRowGroupMetaData();
+          }
         });
 
           //setting the active item in menu bar
@@ -115,7 +121,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
             this.rowGroupMetadata[menuTypeName] = {index:i,size:1,imgPath:menuPicPath};
         }
       }
-      console.log(this.rowGroupMetadata);
+      //console.log(this.rowGroupMetadata);
     }
   }
 
@@ -129,7 +135,12 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
       //increase the cart Count
       this.share.updateCartCount(true); 
       //add in session strorage
-      this.addItemsInSessionStorage(index,1);
+      //this.addItemsInSessionStorage(index,1);
+        //call session storage API
+        let menu = this.menuDisplay[index];
+        if(menu != undefined){
+          let quantity = new UpdateBasketService(this.httpclient,"StoreUserBasketValue",menu);
+        }
       }else{
         this.showWarn("Cannot add more than 20 items..");
       }
@@ -148,53 +159,58 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
     //decrease the cart Count
       this.share.updateCartCount(false);
       //update in session strorage
-      this.addItemsInSessionStorage(index,2);
+      //this.addItemsInSessionStorage(index,2);
+        //call session storage API
+        let menu = this.menuDisplay[index];
+        if(menu != undefined){
+          let quantity = new UpdateBasketService(this.httpclient,"UpdateUserBasket",menu);
+        }
     }else{
       this.showWarn("Reached minimum quantity");
     }
   }
 
   //used for both operation flag 1 for adding and flag 2 for removing
-  addItemsInSessionStorage(index:number,flag:number){
-    let item = this.menuDisplay[index];
-    //If adding the item for the first time
-    if(sessionStorage.getItem('cartDetails')==null){
-      let obj = [];
-      obj.push(item);
-      sessionStorage.setItem('cartDetails',JSON.stringify(obj));
-    }else{
-      //If items are present then
-      var i = sessionStorage.getItem('cartDetails')|| '[]';
-      this.itemsInCart = JSON.parse(i);
+  // addItemsInSessionStorage(index:number,flag:number){
+  //   let item = this.menuDisplay[index];
+  //   //If adding the item for the first time
+  //   if(sessionStorage.getItem('cartDetails')==null){
+  //     let obj = [];
+  //     obj.push(item);
+  //     sessionStorage.setItem('cartDetails',JSON.stringify(obj));
+  //   }else{
+  //     //If items are present then
+  //     var i = sessionStorage.getItem('cartDetails')|| '[]';
+  //     this.itemsInCart = JSON.parse(i);
       
-      //check if the element is already present
-      var presentIndex = this.itemsInCart.findIndex(x=>x.id==item.id);
-      if(presentIndex!=-1){
-        if(flag==1){
-          //if present the increment the quanity of that item
-          this.itemsInCart[presentIndex].quantity+=1;
-        }else{
-          this.itemsInCart[presentIndex].quantity-=1;
-        }
-        //if the items becomes zero then remove the item from the list --this scenario is for removing items
-        if(this.itemsInCart[presentIndex].quantity == 0){
-            this.itemsInCart.splice(presentIndex,1);
-        }
-        //update in storage
-        sessionStorage.clear();
-        //if there is items in ItemsInCart only then add the cartItem in storage
-        if(this.itemsInCart.length>0){
-          sessionStorage.setItem('cartDetails',JSON.stringify(this.itemsInCart));
-        }
-      }else{
-        //add the item in the storage
-        this.itemsInCart.push(item);
-        sessionStorage.clear();
-        sessionStorage.setItem('cartDetails',JSON.stringify(this.itemsInCart));
-      }
-    }
+  //     //check if the element is already present
+  //     var presentIndex = this.itemsInCart.findIndex(x=>x.id==item.id);
+  //     if(presentIndex!=-1){
+  //       if(flag==1){
+  //         //if present the increment the quanity of that item
+  //         this.itemsInCart[presentIndex].quantity+=1;
+  //       }else{
+  //         this.itemsInCart[presentIndex].quantity-=1;
+  //       }
+  //       //if the items becomes zero then remove the item from the list --this scenario is for removing items
+  //       if(this.itemsInCart[presentIndex].quantity == 0){
+  //           this.itemsInCart.splice(presentIndex,1);
+  //       }
+  //       //update in storage
+  //       sessionStorage.clear();
+  //       //if there is items in ItemsInCart only then add the cartItem in storage
+  //       if(this.itemsInCart.length>0){
+  //         sessionStorage.setItem('cartDetails',JSON.stringify(this.itemsInCart));
+  //       }
+  //     }else{
+  //       //add the item in the storage
+  //       this.itemsInCart.push(item);
+  //       sessionStorage.clear();
+  //       sessionStorage.setItem('cartDetails',JSON.stringify(this.itemsInCart));
+  //     }
+  //   }
     
-  }
+  // }
   
   //items from diffrent vedors cannot be mixed
   validateCartItemsBeforeAdding(itemeSelected:menuCart):boolean{
@@ -237,6 +253,25 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
         }
       });
     }
+  }
+
+  updateTheMenuListFromCache(items:menuCart[],itemFromCache:menuCart[]){
+    
+      let currentItemInCart:menuCart[] = itemFromCache;
+      let count = 0;
+    
+      currentItemInCart.forEach((elements)=>{
+      var index = items.findIndex(x=>x.id == elements.id && x.id == elements.id);
+            
+      count += elements.quantity;
+        //update the count of cart item
+        this.share.updateCartCountWithvalue(count);
+        //if item is of the vendor then replace it with current item
+        if(index!=-1){
+            items.splice(index,1,elements);
+        }
+      });
+      return items;
   }
 
   backToVendor():void{
