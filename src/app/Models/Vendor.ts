@@ -1,5 +1,5 @@
 export class Vendor{
-    vendorId:number;
+    id:bigint;
     vendorName:string;
     vendorDescription:string;
     vendorRating:number;

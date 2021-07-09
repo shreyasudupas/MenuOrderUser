@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataServiceService } from 'src/app/Services/data-service.service';
 import { UserRoutingModule } from './user.routing.module';
 import { HomeComponent } from './home/home.component';
 import { VendorListComponent } from './vendor-list/vendor-list.component';
@@ -13,6 +12,8 @@ import { CartInformationComponent } from './cart-information/cart-information.co
 import { ProfileComponent } from './profile/profile.component';
 import { UserProfileComponent } from '../OtherComponents/user-profile/user-profile.component';
 import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component';
+import { ModalComponent } from '../OtherComponents/modal/modal.component';
+import { PaymentScreenComponent } from './payment-screen/payment-screen.component';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component
     CartInformationComponent,
     ProfileComponent,
     UserProfileComponent,
-    MenuBarComponent
+    MenuBarComponent,
+    ModalComponent,
+    PaymentScreenComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +36,6 @@ import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component
     PrimeNGModule,
     FormsModule
   ],
-  providers:[DataServiceService]
+  providers:[]
 })
 export class UserModule { }

@@ -1,4 +1,4 @@
 export class VendorDetails{
-    vendorId:number;
+    vendorId:bigint;
     vendorName:string;
 }

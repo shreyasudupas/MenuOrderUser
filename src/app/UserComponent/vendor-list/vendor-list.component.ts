@@ -15,7 +15,8 @@ import { environment as env } from '../../../environments/environment';
 })
 export class VendorListComponent extends ResourceService<Vendor> implements OnInit {
   getVersionUrl(): string {
-    return env.baseV1Url;
+    //return env.baseV1Url;
+    return env.vendorAPI;
   }
   actionName(): string {
     return "GetVendorList";
@@ -25,22 +26,22 @@ vendorList:Vendor[];
 activeItem: MenuItem;
 
   constructor(private router: Router,private sharing:DataSharingService,http:HttpClient) {
-    super(http,'Vendor');
+    super(http,'');
    }
 
   ngOnInit(): void {
     
     this.listItems().subscribe((result)=>{
       this.vendorList = result
-    },
-    err=>console.log(err));
+    }
+    );
       //change the active Item in menu
       this.sharing.getActiveItem("Vendor");
 
   }
 
   //call menu-list-Display component
-  callMenuList(menuId:number,vendorName:string):void{
+  callMenuList(menuId:bigint,vendorName:string):void{
     //this.router.navigate(['../menulist',menuId],{relativeTo:this.route})
     let VedorDetails = new VendorDetails();
     VedorDetails.vendorId=menuId;

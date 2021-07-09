@@ -1,8 +1,8 @@
 export class menuCart{
-    menuId:bigint;
+    id:bigint;
     menuItem:string;
     price:number;
-    vendorId:number;
+    vendorId:bigint;
     vendorName:string;
     menuType:string;
     imagePath:string;
