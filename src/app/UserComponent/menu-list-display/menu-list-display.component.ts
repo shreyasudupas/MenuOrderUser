@@ -259,18 +259,22 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
     
       let currentItemInCart:menuCart[] = itemFromCache;
       let count = 0;
-    
-      currentItemInCart.forEach((elements)=>{
-      var index = items.findIndex(x=>x.id == elements.id && x.id == elements.id);
-            
-      count += elements.quantity;
-        //update the count of cart item
-        this.share.updateCartCountWithvalue(count);
-        //if item is of the vendor then replace it with current item
-        if(index!=-1){
-            items.splice(index,1,elements);
-        }
-      });
+
+      if(currentItemInCart != null){
+        
+            currentItemInCart.forEach((elements)=>{
+            var index = items.findIndex(x=>x.id == elements.id && x.id == elements.id);
+                
+            count += elements.quantity;
+            //update the count of cart item
+            this.share.updateCartCountWithvalue(count);
+            //if item is of the vendor then replace it with current item
+            if(index!=-1){
+                items.splice(index,1,elements);
+            }
+          });
+      }
+      
       return items;
   }
 
