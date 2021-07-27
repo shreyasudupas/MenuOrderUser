@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-card header="Payment Info" subheader="Card Subheader" [style]="{'width': '100%'}" styleClass="p-card-shadow">
     <ng-template pTemplate="header">
         <img alt="Card" src="assets/MenuIcons/onlinePayment.jpg">
@@ -10,8 +11,14 @@
         <div class="col-4">
             Your Total Bill is <b>{{TotalPrice}}</b> <img src="assets/UserInfoImage/rupee.png" alt="wallet" width="25px;" height="30px" style="padding: 10"/>
         </div>
+        <div class="col-4">
+            <h5>Select Type of Payment</h5>
+            <p-dropdown [options]="cities" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown>
+        </div>
     </div>
     <ng-template pTemplate="footer">
-        
+        <div>
+            <button [disabled]="orderButtonDisable" pButton pRipple type="button" label="Order Now" class="p-button-outlined p-button-success" (click)="OrderUserBasket()"></button>
+        </div>
     </ng-template>
 </p-card>

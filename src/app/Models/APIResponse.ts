@@ -1,5 +1,5 @@
 export class APIResponse{
     response:number;
-    content:Object;
+    content:any;
     exception:Object;
 }

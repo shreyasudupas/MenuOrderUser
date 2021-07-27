@@ -12,6 +12,7 @@ import { environment as env } from 'src/environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UpdateBasketService } from 'src/app/Services/UpdateBasketService';
 import { GetBasketService } from 'src/app/Services/GetBasketService';
+import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/ResouceService/ResourceServiceForkRequest';
 
 @Component({
   selector: 'app-menu-list-display',
@@ -59,10 +60,19 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
         menuParams = menuParams.append('VendorId',vendorId.toString());
         
         //Fork join two calls
-        let requestUrl:string[]=[];
-        requestUrl.push(env.menuAPI+'GetMenuList?VendorId='+vendorId);
-        requestUrl.push(env.basketAPI+'GetUserBasket');
-        this.getItemsByFork(requestUrl).subscribe(results=>{
+        let forkRequest = new ResourceServiceForkRequest();
+        let RequestResource1 = new RequestResource();
+        RequestResource1.requestUrl = env.menuAPI+'GetMenuList?VendorId='+vendorId;
+        RequestResource1.httpMethod ='get';
+        let RequestResource2 = new RequestResource();
+        RequestResource2.requestUrl = env.basketAPI+'GetUserBasket';
+        RequestResource2.httpMethod ='get';
+        forkRequest.requestParamter = new Array<RequestResource>();
+        forkRequest.requestParamter.push(RequestResource1);
+        forkRequest.requestParamter.push(RequestResource2);
+
+        
+        this.getItemsByFork(forkRequest).subscribe(results=>{
           if(results.length>0){
             //get menu list items
             this.itemList = results[0];

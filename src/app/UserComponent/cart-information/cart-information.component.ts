@@ -30,7 +30,8 @@ totalPrice:number=0;
 
         this.displayInfo = new CartInformationDisplay();
         this.displayInfo.itemList=[];
-  
+        
+        if(this.itemsList)
         this.itemsList.forEach(items=>{
           this.displayInfo.vendorId = items.vendorId;
           this.displayInfo.vendorName = items.vendorName;

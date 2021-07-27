@@ -11,6 +11,7 @@ import {BadgeModule} from 'primeng/badge';
 import {ToastModule} from 'primeng/toast';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TooltipModule} from 'primeng/tooltip';
+import { DropdownModule } from "primeng/dropdown";
 
 @NgModule({
     imports:[ButtonModule,
@@ -25,6 +26,7 @@ import {TooltipModule} from 'primeng/tooltip';
         BadgeModule,
         ToastModule,
         ProgressSpinnerModule,
+        DropdownModule,
         TooltipModule],
     exports:[ButtonModule,
         TabMenuModule,
@@ -38,6 +40,7 @@ import {TooltipModule} from 'primeng/tooltip';
         BadgeModule,
         ToastModule,
         ProgressSpinnerModule,
+        DropdownModule,
         TooltipModule
     ]
 })

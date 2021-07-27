@@ -14,7 +14,8 @@ export const environment = {
   userAPI:"https://localhost:44326/api/gateway/user/",
   menuAPI:"https://localhost:44326/api/gateway/inventory/menu/",
   vendorAPI:"https://localhost:44326/api/gateway/inventory/vendor/",
-  basketAPI:"https://localhost:44326/api/gateway/basketservice/"
+  basketAPI:"https://localhost:44326/api/gateway/basketservice/",
+  orderAPI:"https://localhost:44326/api/gateway/orders/"
 };
 
 

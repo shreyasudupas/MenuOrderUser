@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { ResourceServiceForkRequest } from '../Models/ResouceService/ResourceServiceForkRequest';
 
 @Injectable({
     'providedIn':'root'
@@ -71,9 +72,15 @@ private apiUrl:string;
         );
     }
 
-    getItemsByFork(requestUrl:string[]):Observable<any[]>{
-        for(let i=0;i<requestUrl.length;i++){
-            this.requestUrls[i] = this.httpclient.get(requestUrl[i]);
+    getItemsByFork(forkRequest:ResourceServiceForkRequest):Observable<any[]>{
+        for(let i=0;i<forkRequest.requestParamter.length;i++){
+            var requestParam = forkRequest.requestParamter[i];
+            if(requestParam.httpMethod == 'get'){
+                this.requestUrls[i] = this.httpclient.get(requestParam.requestUrl);
+            }else if(requestParam.httpMethod == 'post'){
+                this.requestUrls[i] = this.httpclient.post(requestParam.requestUrl,requestParam.body);
+            }
+            
         }
         return forkJoin(this.requestUrls)
         .pipe(
