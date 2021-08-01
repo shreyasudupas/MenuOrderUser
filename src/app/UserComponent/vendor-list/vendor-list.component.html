@@ -1,3 +1,6 @@
+<div *ngIf="vendorList == null">
+    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+</div>
 <div *ngFor="let venList of vendorList;let i=index">          
     <div class="p-grid">
         <div class="p-col-12">

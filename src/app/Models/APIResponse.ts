@@ -1,5 +1,6 @@
 export class APIResponse{
-    response:number;
+    // response:number;
     content:any;
     exception:Object;
+    statusCode:number;
 }

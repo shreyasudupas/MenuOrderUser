@@ -51,7 +51,8 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
         let user = JSON.parse(userStrorage);
         this.UserProfile = user;
       }
-    })
+    });
+    
     this.cities = [
       {name: 'New York', code: 'NY'},
       {name: 'Rome', code: 'RM'},

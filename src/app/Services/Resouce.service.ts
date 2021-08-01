@@ -31,9 +31,9 @@ private apiUrl:string;
        return this.httpclient.get<T[]>(this.apiUrl)
         .pipe(
             map((data:any)=>{
-                if(data.response == 200){
+                if(data.statusCode == 200 || data.statusCode == 202){
                     return data.content as T
-                }else if(data.response == 500){
+                }else if(data.statusCode == 500 || data.statusCode == 404){
                     this.CallErrorHandler(data.exception);
                 }
                 else{
@@ -48,9 +48,10 @@ private apiUrl:string;
         return this.httpclient.get<T>(this.apiUrl,{params:params})
         .pipe(
             map((data:any)=>{
-                if(data.response == 200){
+                if(data.statusCode == 200 || data.statusCode == 202){
                     return data.content as T
-                }else{
+                }else if(data.statusCode == 500 || data.statusCode == 404){
+                    this.CallErrorHandler(data.exception);
                     return data.content;
                 } 
             }),
@@ -62,9 +63,10 @@ private apiUrl:string;
         return this.httpclient.post<T>(this.apiUrl,body)
         .pipe(
             map((data:any)=>{
-                if(data.response == 200){
+                if(data.statusCode == 200 || data.statusCode == 202){
                     return data.content as T
-                }else{
+                }else if(data.statusCode == 500 || data.statusCode == 404){
+                    this.CallErrorHandler(data.exception);
                     return data.content;
                 } 
             }),
@@ -86,7 +88,7 @@ private apiUrl:string;
         .pipe(
             map((results:any[]) =>{
                 for(var r=0;r<results.length;r++){
-                    if(results[r].response == 200){
+                    if(results[r].statusCode == 200 || results[r].statusCode == 202){
                         this.response[r] = results[r].content;
                     }
                 }
