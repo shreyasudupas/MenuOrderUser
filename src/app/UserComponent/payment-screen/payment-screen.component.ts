@@ -31,10 +31,13 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   orderButtonDisable:boolean;
   paymentScreenResponse:PaymentScreenResponse;
   cities:any[]=[];
-  selectedCity1:any;
+  selectedCity:any;
+  paymentSelect:any;
+  apiDropDown:string;
 
   constructor(private BroadcastService:DataSharingService,private http:HttpClient,private messageService: MessageService) { 
     super(http,'')
+    this.apiDropDown =  env.userAPI+'GetPaymentDropDown';
   }
 
   ngOnInit(): void {
@@ -54,13 +57,13 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
     });
     
     this.cities = [
-      {name: 'New York', code: 'NY'},
-      {name: 'Rome', code: 'RM'},
-      {name: 'London', code: 'LDN'},
-      {name: 'Istanbul', code: 'IST'},
-      {name: 'Paris', code: 'PRS'}
+      {label: 'New York', value: 'New York'},
+      {label: 'Rome', value: 'Rome'},
+      {label: 'London', value: 'London'},
+      {label: 'Istanbul', value: 'Istanbul'},
+      {label: 'Paris', value: 'Paris'}
   ];
-
+  this.paymentSelect = "Credit Card";
     
   }
 

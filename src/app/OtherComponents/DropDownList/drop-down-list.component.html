@@ -1,0 +1,15 @@
+<div *ngIf="ReadOnly != null && ReadOnly == false">
+    <p-dropdown [options]="options"  [placeholder]="placeholderName" [optionLabel]="displayLabel" [(ngModel)]="dropDownSelectedValue"
+    (ngModelChange)="SelectDropDownEvent($event)"></p-dropdown>
+</div>
+<div *ngIf="ReadOnly">
+    {{readOnlyDisplayValue}}
+</div>
+<!-- <select name="option" [(ngModel)]="dropDownSelectedValue" (ngModelChange)="SelectDropDownEvent($event)">
+    <option value="" disabled>Choose a Value</option>
+    <option *ngFor="let option of options" [ngValue]="option">
+      {{ option.label }}
+    </option>
+  </select> -->
+
+from DropDown: {{dropDownSelectedValue}}

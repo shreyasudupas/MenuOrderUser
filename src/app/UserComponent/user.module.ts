@@ -14,6 +14,7 @@ import { UserProfileComponent } from '../OtherComponents/user-profile/user-profi
 import { MenuBarComponent } from '../OtherComponents/menu-bar/menu-bar.component';
 import { ModalComponent } from '../OtherComponents/modal/modal.component';
 import { PaymentScreenComponent } from './payment-screen/payment-screen.component';
+import { DropDownListComponent } from '../OtherComponents/DropDownList/drop-down-list.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { PaymentScreenComponent } from './payment-screen/payment-screen.componen
     UserProfileComponent,
     MenuBarComponent,
     ModalComponent,
-    PaymentScreenComponent
+    PaymentScreenComponent,
+    DropDownListComponent
   ],
   imports: [
     CommonModule,
