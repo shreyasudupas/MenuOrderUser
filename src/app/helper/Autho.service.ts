@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
 import { UserInfo } from '../Models/UserProfile';
 import { DataSharingService } from '../Services/data-sharing.service';
+import { HttpClient } from '@angular/common/http';
+import jwt_decode from "jwt-decode";
 
 @Injectable({
     providedIn:'root'
@@ -23,7 +25,7 @@ export class AuthService {
     scope:'openid profile email profile:user profile:admin'
   });
 
-  constructor(public router: Router,private share:DataSharingService) {}
+  constructor(public router: Router,private share:DataSharingService,private httpClient:HttpClient) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -127,6 +129,35 @@ export class AuthService {
 
   getToken(){
     return sessionStorage.getItem('access_token');
+  }
+
+  authenticateUserDevelopment(body:any){
+
+    this.httpClient.post(env.userAPI+"Authenticate",body).toPromise().then((result:any)=>{
+      if(result.statusCode == 200){
+        var data = result.content;
+        var decoded:any = jwt_decode(data.token);
+        var authResult = {
+          expiresIn:decoded.exp,
+          scope:decoded.scope,
+          idToken:null,
+          accessToken:data.token
+        };
+
+        this.setSession(authResult);
+
+        //set user profile
+        var userProfile = {
+          username: data.username,
+          pictureLocation: data.pictureLocation,
+          nickname:data.nickname
+        };
+        sessionStorage.setItem('userInfo',JSON.stringify(userProfile));
+
+      }else{
+        throw new Error("Authentication Error");
+      }
+    });
   }
 
 }

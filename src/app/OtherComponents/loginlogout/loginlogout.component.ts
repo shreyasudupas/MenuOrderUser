@@ -80,12 +80,16 @@ export class LoginlogoutComponent extends ResourceService<APIResponse> implement
       //console.log(window.location);
       //then logout from this
       this.auth.logout();
+      this.router.navigate(['/']);
       
     }
   }
 
   navigateToDashboad(path:string):void{
-    this.auth.login();
+    //this.auth.login();
+    //for developement purposes only
+    let user = { username:"admin@test.com",password:"admin@123"};
+    this.auth.authenticateUserDevelopment(user);
   }
 
   logout():void{

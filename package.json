@@ -26,6 +26,7 @@
     "@types/auth0-js": "^9.14.4",
     "auth0-js": "^9.16.2",
     "bootstrap": "^4.5.0",
+    "jwt-decode": "^3.1.2",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
     "primeng": "^11.4.0",
