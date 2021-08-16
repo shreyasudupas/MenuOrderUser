@@ -2,7 +2,7 @@ export class MenuItems{
     id:bigint;
     menuItem:string;
     price:number;
-    vendorId:bigint;
+    vendorId:string;
     menuType:string;
     imagePath:string;
     offerPrice:number;

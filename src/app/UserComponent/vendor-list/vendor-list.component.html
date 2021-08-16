@@ -21,10 +21,10 @@
                                     {{venList.vendorName}}
                                 </div>
                                 <div class="p-col-12">
-                                    {{venList.vendorDescription}}
+                                    {{venList.description}}
                                 </div>
                                 <div class="p-col-10">
-                                    <p-rating [(ngModel)]="venList.vendorRating" [cancel]="false" [readonly]="true"></p-rating>
+                                    <p-rating [(ngModel)]="venList.rating" [cancel]="false" [readonly]="true"></p-rating>
                                 </div>
                                 <div class="p-col-2"> 
                                     <button pButton pRipple type="button" label="View Menu" class="p-button-outlined" (click)="callMenuList(venList.id,venList.vendorName)"></button>

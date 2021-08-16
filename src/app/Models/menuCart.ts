@@ -2,7 +2,7 @@ export class menuCart{
     id:bigint;
     menuItem:string;
     price:number;
-    vendorId:bigint;
+    vendorId:string;
     vendorName:string;
     menuType:string;
     imagePath:string;

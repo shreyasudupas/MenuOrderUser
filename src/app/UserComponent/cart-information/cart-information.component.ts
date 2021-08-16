@@ -56,7 +56,7 @@ totalPrice:number=0;
     
   }
 
-  BackToMenu(vendorId:bigint,vendorName:string){
+  BackToMenu(vendorId:string,vendorName:string){
     let VenderDetails = new VendorDetails();
     VenderDetails.vendorId = vendorId;
     VenderDetails.vendorName = vendorName;

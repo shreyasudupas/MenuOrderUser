@@ -54,29 +54,33 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
       RequestResource1.httpMethod ='post';
       RequestResource1.body = this.UserProfile;
       let RequestResource2 = new RequestResource();
-      RequestResource2.requestUrl = env.basketAPI+'GetUserBasket';
+      RequestResource2.requestUrl = env.cartInfoAPI+'GetUserBasketInfoFromCache';
       RequestResource2.httpMethod ='get';
       forkRequest.requestParamter = new Array<RequestResource>();
       forkRequest.requestParamter.push(RequestResource1);
       forkRequest.requestParamter.push(RequestResource2);
 
-      this.getItemsByFork(forkRequest).subscribe(responseList=>{
-        if(responseList.length>0){
-          let UserProfile = responseList[0];
-          let UserCartInfo = responseList[1];
-          if(UserProfile!=null){
-            this.UserProfile.points = UserProfile.points;
-            this.UserProfile.cartAmount = UserProfile.cartAmount;
-            this.UserProfile.roleId = UserProfile.roleId;
-          }
+      this.getItemsByFork(forkRequest).subscribe(([userProfileResponse,UserCartInformation])=>{
+        let UserProfile = userProfileResponse;
+        let UserCartInfo = JSON.parse(UserCartInformation);
+        // if(responseList.length>0){
+        // }
+        if(UserProfile!=null){
+          this.UserProfile.points = UserProfile.points;
+          this.UserProfile.cartAmount = UserProfile.cartAmount;
+          this.UserProfile.roleId = UserProfile.roleId;
+        }
 
           //cart information
-          if(UserCartInfo.items != null){
-            let count = UserCartInfo.items.length;
+          if(UserCartInfo.Items != null){
+            let count =0;
+            if(UserCartInfo.Items.length >0){
+                UserCartInfo.Items.forEach((item:any) =>{
+                  count +=item.quantity;
+               });
+            }
             this.BroadcastService.updateCartCountWithvalue(count);
           }
-          
-        }
       })
 
     }

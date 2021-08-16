@@ -1,5 +1,5 @@
 export class CartInformationDisplay{
-    vendorId:bigint;
+    vendorId:string;
     vendorName:string;
     itemList:CartItems[];
     

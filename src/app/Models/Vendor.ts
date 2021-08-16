@@ -1,7 +1,7 @@
 export class Vendor{
-    id:bigint;
+    id:string;
     vendorName:string;
-    vendorDescription:string;
-    vendorRating:number;
+    description:string;
+    rating:number;
     vendorImgLink:string;
 }

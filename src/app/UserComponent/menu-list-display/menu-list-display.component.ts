@@ -149,7 +149,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
         //call session storage API
         let menu = this.menuDisplay[index];
         if(menu != undefined){
-          let quantity = new UpdateBasketService(this.httpclient,"StoreUserBasketValue",menu);
+          //let quantity = new UpdateBasketService(this.httpclient,"StoreUserBasketValue",menu);
         }
       }else{
         this.showWarn("Cannot add more than 20 items..");
@@ -173,7 +173,7 @@ export class MenuListDisplayComponent extends ResourceService<MenuList> implemen
         //call session storage API
         let menu = this.menuDisplay[index];
         if(menu != undefined){
-          let quantity = new UpdateBasketService(this.httpclient,"UpdateUserBasket",menu);
+          //let quantity = new UpdateBasketService(this.httpclient,"UpdateUserBasket",menu);
         }
     }else{
       this.showWarn("Reached minimum quantity");

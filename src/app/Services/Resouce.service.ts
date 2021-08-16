@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ResourceServiceForkRequest } from '../Models/ResouceService/ResourceServiceForkRequest';
+import { of } from 'rxjs';
 
 @Injectable({
     'providedIn':'root'
@@ -13,6 +14,7 @@ abstract getVersionUrl():string;
 abstract actionName():string;
 requestUrls:any[]=[];
 response:any[]=[];
+ERROR_EVENT:string = "Error occurred"; 
 
 private apiUrl:string;
 
@@ -78,9 +80,19 @@ private apiUrl:string;
         for(let i=0;i<forkRequest.requestParamter.length;i++){
             var requestParam = forkRequest.requestParamter[i];
             if(requestParam.httpMethod == 'get'){
-                this.requestUrls[i] = this.httpclient.get(requestParam.requestUrl);
+                this.requestUrls[i] = this.httpclient.get(requestParam.requestUrl).pipe(
+                    catchError((err:any)=>{ 
+                    console.log(err);
+                     return of('Error occurred')
+                    })
+                );
             }else if(requestParam.httpMethod == 'post'){
-                this.requestUrls[i] = this.httpclient.post(requestParam.requestUrl,requestParam.body);
+                this.requestUrls[i] = this.httpclient.post(requestParam.requestUrl,requestParam.body).pipe(
+                    catchError((err:any)=>{ 
+                        console.log(err);
+                        return of("Error occurred")
+                    })
+                );
             }
             
         }
@@ -88,8 +100,13 @@ private apiUrl:string;
         .pipe(
             map((results:any[]) =>{
                 for(var r=0;r<results.length;r++){
-                    if(results[r].statusCode == 200 || results[r].statusCode == 202){
-                        this.response[r] = results[r].content;
+                    if(results[r] != this.ERROR_EVENT){
+                        if(results[r].statusCode == 200 || results[r].statusCode == 202){
+                            this.response[r] = results[r].content;
+                        }
+                    }
+                    else{
+                        this.response[r] = null;
                     }
                 }
                 return this.response;

@@ -41,12 +41,12 @@ activeItem: MenuItem;
   }
 
   //call menu-list-Display component
-  callMenuList(menuId:bigint,vendorName:string):void{
+  callMenuList(menuId:string,vendorName:string):void{
     //this.router.navigate(['../menulist',menuId],{relativeTo:this.route})
     let VedorDetails = new VendorDetails();
     VedorDetails.vendorId=menuId;
     VedorDetails.vendorName = vendorName;
-    this.router.navigateByUrl("/user/menulist",{state:VedorDetails});
+    this.router.navigateByUrl("/user/menu-display",{state:VedorDetails});
   }
 
 
