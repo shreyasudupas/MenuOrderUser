@@ -210,6 +210,40 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
         }
     }
 
+    removeItemsFromCart(itemeSelected:any){
+      //find the corresponding element in the array and increment the quantity
+      let index = this.menuCartItems.findIndex(x=>x.id == itemeSelected.id);
+      if(this.menuCartItems[index].quantity>0){
+        this.menuCartItems[index].quantity -= 1; 
+      //decrease the cart Count
+        this.BroadcastService.updateCartCount(false);
+        
+          //call session storage API
+          let menu = this.menuCartItems[index];
+          if(menu != undefined){
+            let menuData:Record<string,any> = menu;
+            menuData["vendor details"] = {
+              "id":this.vendorId,
+              "name":this.vendorName
+            }
+            let body = { 
+              "ColumnData":this.menuColumns,
+              "Data":menuData
+            }
+
+            let service = new UpdateBasketService(this.httpclient);
+            service.UpdateCartInformation('RemoveItemsFromCache',body).then((response:any) =>{
+              if(response == true)
+                this.showSuccess("Item removed from cart");
+              else
+                this.showError('Error in Removing Item');
+            });
+          }
+      }else{
+        this.showWarn("Reached minimum quantity");
+      }
+    }
+
     showWarn(messageContent:string) {
         this.messageService.add({key: 'tl',severity:'warn', summary: 'Warn', detail: messageContent});
     }

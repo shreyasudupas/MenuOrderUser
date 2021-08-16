@@ -23,7 +23,7 @@
                 </td>
                 <td>
                     <button pButton pRipple type="button" icon="pi pi-plus" pTooltip="Add items" class="p-button-rounded p-button-text" (click)="addItemsoCart(rowData)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" pTooltip="Remove items" class="p-button-rounded p-button-danger p-button-text" ></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" pTooltip="Remove items" class="p-button-rounded p-button-danger p-button-text" (click)="removeItemsFromCart(rowData)"></button>
                 </td>
             </tr>
         </ng-template>
