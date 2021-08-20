@@ -22,8 +22,11 @@
                     {{rowData[col.field]}}
                 </td>
                 <td>
-                    <button pButton pRipple type="button" icon="pi pi-plus" pTooltip="Add items" class="p-button-rounded p-button-text" (click)="addItemsoCart(rowData)"></button>
-                    <button pButton pRipple type="button" icon="pi pi-times" pTooltip="Remove items" class="p-button-rounded p-button-danger p-button-text" (click)="removeItemsFromCart(rowData)"></button>
+                    <!-- <button pButton pRipple type="button" icon="pi pi-plus" pTooltip="Add items" class="p-button-rounded p-button-text" (click)="addItemsoCart(rowData)"></button> -->
+                    <p-button icon="pi pi-shopping-cart" label="Add" (click)="addItemsoCart(rowData)"></p-button>
+                    <br/>
+                    <!-- <button pButton pRipple type="button" icon="pi pi-times" pTooltip="Remove items" class="p-button-rounded p-button-danger p-button-text" (click)="removeItemsFromCart(rowData)"></button> -->
+                    <p-button icon="pi pi-shopping-cart" label="Remove " (click)="removeItemsFromCart(rowData)" styleClass="p-button-warning"></p-button>
                 </td>
             </tr>
         </ng-template>

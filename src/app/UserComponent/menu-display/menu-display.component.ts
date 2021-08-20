@@ -187,14 +187,14 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
           let menu = this.menuCartItems[index];
           if(menu != undefined){
 
-            let menuData:Record<string,any> = menu;
-            menuData["vendor details"] = {
+            let vendorDetails = {
               "id":this.vendorId,
               "name":this.vendorName
             }
             let body = { 
               "ColumnData":this.menuColumns,
-              "Data":menuData
+              "Data":menu,
+              "vendor details":vendorDetails
             }
             let service = new UpdateBasketService(this.httpclient);
             service.UpdateCartInformation('AddItemInCache',body).then((response:any) =>{
@@ -221,14 +221,15 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
           //call session storage API
           let menu = this.menuCartItems[index];
           if(menu != undefined){
-            let menuData:Record<string,any> = menu;
-            menuData["vendor details"] = {
+            
+            let vendorDetails = {
               "id":this.vendorId,
               "name":this.vendorName
             }
             let body = { 
               "ColumnData":this.menuColumns,
-              "Data":menuData
+              "Data":menu,
+              "vendor details":vendorDetails
             }
 
             let service = new UpdateBasketService(this.httpclient);
