@@ -1,8 +1,8 @@
 <p-toast position="top-right" key="tl"></p-toast>
-<button pButton type="button" label="Back to Menu" class="p-button-outlined" (click)="backToVendor()" icon="pi pi-angle-left" iconPos="left"></button>
+<button pButton type="button" label="Back to Vendor" class="p-button-outlined" (click)="backToVendor()" icon="pi pi-angle-left" iconPos="left"></button>
 <br/><br/>
 <div *ngIf="menus;else noMenuDisplay">
-    <p-table [columns]="menuColumns" [value]="menuCartItems">
+    <p-table [columns]="menuColumns" [value]="menuCartItems" [scrollable]="true" scrollHeight="550px">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns" [style]="{ 'display': col.display }">

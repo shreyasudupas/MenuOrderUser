@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 import { throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { UserCartInformation } from 'src/app/Models/cart-information/UserCartInformation';
@@ -17,50 +18,17 @@ import { environment as env} from 'src/environments/environment';
   templateUrl: './cart-information.component.html',
   styleUrls: ['./cart-information.component.css']
 })
-export class CartInformationComponent  extends ResourceService<any> implements OnInit {
-  getVersionUrl(): string {
-    return env.cartInfoAPI;
-  }
-  actionName(): string {
-    return "GetUserBasketInfoFromCache";
-  }
-itemsList:menuCart[]=[];
-displayInfo:CartInformationDisplay;
+export class CartInformationComponent implements OnInit {
+
 totalPrice:number=0;
 menuCacheItems:UserCartInformation;
 cartConfig:CartConfiguration;
 columns:any[]=[];
 
   constructor(private share:DataSharingService,private router:Router,public httpclient:HttpClient) {
-    super(httpclient,"")
    }
 
   ngOnInit(): void {
-
-    //get the items from cart
-    //this.itemsList = 
-    // let basketService = new GetBasketService(this.httpclient,'GetUserBasket');
-    // basketService.GetAllItems().then(response=>{ 
-    //   if(response != undefined){
-    //     this.itemsList = response;
-
-    //     this.displayInfo = new CartInformationDisplay();
-    //     this.displayInfo.itemList=[];
-        
-    //     if(this.itemsList)
-    //     this.itemsList.forEach(items=>{
-    //       this.displayInfo.vendorId = items.vendorId;
-    //       this.displayInfo.vendorName = items.vendorName;
-    //       this.displayInfo.itemList.push({
-    //         menuItem : items.menuItem,offerPrice : items.offerPrice,price:items.price,quantity : items.quantity
-    //       });
-    //       this.totalPrice += items.price; 
-    //     });
-    //   }
-    //    //update the cart count used only when refreshed
-    //    this.share.updateCartCountWithvalue(this.itemsList.length);
-    // });
-    
 
     let url = env.cartInfoAPI+"GetUserBasketInfoFromCache";
     this.httpclient.get(url).pipe(map((response:any)=>{
@@ -74,6 +42,9 @@ columns:any[]=[];
         this.menuCacheItems = JSON.parse(response);
 
         if(this.menuCacheItems.VendorDetails != null || this.menuCacheItems.VendorDetails != undefined){
+          //calcalute total
+          this.calcaluteTotalPrice(this.menuCacheItems.Items);
+
           let url = env.vendorConfigAPI+'GetVendorCartConfigruation?vendorId='+this.menuCacheItems.VendorDetails.id;
           return this.httpclient.get(url).pipe(map((response:any)=>{
             if(response.statusCode ==200){
@@ -88,32 +59,41 @@ columns:any[]=[];
         }
       }
       )).subscribe((data:any)=>{
-        console.log(data);
+        //console.log(data);
 
         this.cartConfig = data;
+
+        if(this.cartConfig != null){
+          this.cartConfig.columnDetails.forEach((element:any)=>{
+            this.columns.push({ field: element.columnName,header: element.displayName,display:element.displayScreen});
+          });
+
+          //last add quantity
+          this.columns.push({ field: 'quantity',header: 'Quantity',display:''});
+        }
     })
 
     //change the active Item in menu
     this.share.getActiveItem("Cart");
   }
 
-  getOrderCartItems(){
-    // let items  = sessionStorage.getItem('cartDetails')|| '[]';
-    // let currentItemInCart:menuCart[] = JSON.parse(items);
-    // return currentItemInCart;
-    
-  }
 
   BackToMenu(vendorId:string,vendorName:string){
     let VenderDetails = new VendorDetails();
     VenderDetails.vendorId = vendorId;
     VenderDetails.vendorName = vendorName;
     //this.router.navigate(['../menulist',vendorId],{relativeTo:this.route});
-    this.router.navigateByUrl("/user/menulist",{state:VenderDetails});
+    this.router.navigateByUrl("/user/menu-display",{state:VenderDetails});
   }
 
   ProccedToPayment(){
     this.router.navigateByUrl("/user/user-payment");
+  }
+
+  calcaluteTotalPrice(cacheItem:any[]){
+    cacheItem.forEach((item:any) =>{
+      this.totalPrice+= item["Price"];
+    });
   }
 
 }
