@@ -1,43 +1,49 @@
 <div *ngIf="menuCacheItems;else showNoData">
-    <button pButton type="button" label="Back to Menu" class="p-button-outlined" (click)="BackToMenu(menuCacheItems.VendorDetails.id,menuCacheItems.VendorDetails.name)" 
-    icon="pi pi-angle-left" iconPos="left"></button>
+    <div *ngIf="menuCacheItems.VendorDetails != null">
+        <button pButton type="button" label="Back to Menu" class="p-button-outlined" (click)="BackToMenu(menuCacheItems.VendorDetails.id,menuCacheItems.VendorDetails.name)" 
+        icon="pi pi-angle-left" iconPos="left"></button>
+    </div>
+    <div *ngIf="menuCacheItems.VendorDetails == null">
+        <button pButton type="button" label="Back to Vendor" class="p-button-outlined" (click)="BackToVendor()"
+        icon="pi pi-angle-left" iconPos="left"></button>
+    </div>
     <br/>
     <div id="cardcart">
-        <p-card [header]="menuCacheItems.VendorDetails.name" [style]="{'width': '100%', 'margin-bottom': '2em'}">
-            <ng-template pTemplate="header">
-                <h2>Cart Items</h2>
-            </ng-template>
-
-            <p-table [columns]="columns" [value]="menuCacheItems.Items">
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th *ngFor="let col of columns" [style]="{ 'display': col.display }">
-                            {{col.header}}
-                        </th>
-                    </tr>
+        <div *ngIf="menuCacheItems.VendorDetails;else showNoData">
+            <p-card [header]="menuCacheItems.VendorDetails.name" [style]="{'width': '100%', 'margin-bottom': '2em'}">
+                <ng-template pTemplate="header">
+                    <h2>Cart Items</h2>
                 </ng-template>
-                <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr>
-                        <td *ngFor="let col of columns" [style]="{ 'display': col.display }">
-                            {{rowData[col.field]}}
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="summary">
-                    <div class="grid">
-                        <div class="p-col-4">
-                            <span> Total Price to Pay is: {{totalPrice}}</span>
+    
+                <p-table [columns]="columns" [value]="menuCacheItems.Items">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [style]="{ 'display': col.display }">
+                                {{col.header}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns" [style]="{ 'display': col.display }">
+                                {{rowData[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary">
+                        <div class="grid">
+                            <div class="p-col-4">
+                                <span> Total Price to Pay is: {{totalPrice}}</span>
+                            </div>
+                            <div class="p-col-8">
+                                <button pButton type="button" label="Proceed to Payment" class="p-button-outlined" (click)="ProccedToPayment()"></button>
+                            </div>
                         </div>
-                        <div class="p-col-8">
-                            <button pButton type="button" label="Proceed to Payment" class="p-button-outlined" (click)="ProccedToPayment()"></button>
-                        </div>
-                    </div>
-
-                </ng-template>
-            </p-table>
-
-            
-        </p-card>
+    
+                    </ng-template>
+                </p-table>
+            </p-card>
+        </div>
     </div>
 </div>
 

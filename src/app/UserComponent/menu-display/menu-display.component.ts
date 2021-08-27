@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { MenuCartData, MenuColumnData, MenuDisplayReponse } from 'src/app/Models/menu-display/menu-display-response';
-import { menuCart } from 'src/app/Models/menuCart';
 import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/ResouceService/ResourceServiceForkRequest';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
@@ -154,7 +153,7 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
 
     updateTheMenuListFromCache(items:MenuCartData[],itemFromCache:any[]){
     
-        let currentItemInCart:menuCart[] = itemFromCache;
+        let currentItemInCart:MenuCartData[] = itemFromCache;
         let count = 0;
   
         if(currentItemInCart != null){

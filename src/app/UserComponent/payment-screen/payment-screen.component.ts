@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { ThisReceiver } from '@angular/compiler';
 import { Component, NgZone, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
-import { menuCart } from 'src/app/Models/menuCart';
+import { UserCartInformation } from 'src/app/Models/cart-information/UserCartInformation';
 import { PaymentScreenResponse } from 'src/app/Models/payment-screen/PaymentScreenResponse';
 import { UserInfo } from 'src/app/Models/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
@@ -24,16 +22,16 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   actionName(): string {
     return "UserOrder";
   }
-  cartItems:menuCart[]=[];
+  //cartItems:menuCart[]=[];
   TotalPrice:number = 0;
   UserProfile:UserInfo;
-  subscription:Subscription;
   orderButtonDisable:boolean;
   paymentScreenResponse:PaymentScreenResponse;
   cities:any[]=[];
   selectedCity:any;
   paymentSelect:any;
   apiDropDown:string;
+  CacheItem:UserCartInformation;
 
   constructor(private BroadcastService:DataSharingService,private http:HttpClient,private messageService: MessageService) { 
     super(http,'')
@@ -43,18 +41,9 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   ngOnInit(): void {
     //set active menu item
     this.BroadcastService.getActiveItem('Payment');
-    //get cart items from session strorage
+    //get cart items cache server
     this.getOrderCartItems();
 
-    //get UserInfo
-    this.subscription = this.BroadcastService.getCurrentUserInfo().subscribe((result)=>{
-      this.UserProfile = result;
-      if(this.UserProfile.nickname == undefined ){
-        let userStrorage = sessionStorage.getItem('userInfo')|| '{}';
-        let user = JSON.parse(userStrorage);
-        this.UserProfile = user;
-      }
-    });
     
     this.cities = [
       {label: 'New York', value: 'New York'},
@@ -68,31 +57,26 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   }
 
   getOrderCartItems(){
-    // let items  = sessionStorage.getItem('cartDetails')|| '[]';
-    // let currentItemInCart:menuCart[] = JSON.parse(items);
-    // return currentItemInCart;
-    let basket = new GetBasketService(this.http,'GetUserBasket');
-    //let cartItems:menuCart[] = [];
-    basket.GetAllItems().then((result:any)=>{
-      this.cartItems = result;
+    
+    let basket = new GetBasketService(this.http,'GetUserBasketInfoFromCache');
+    basket.GetAllItems().then((result:string)=>{
+      if(result != null){
+        this.CacheItem = JSON.parse(result);
+        this.UserProfile = this.CacheItem.UserInfo;
 
-      if(this.cartItems != null){
-        if(this.cartItems.length > 0)
-          this.TotalPrice = this.getTotalPrice(this.cartItems);
-          this.orderButtonDisable = false;
-      }else{
-        this.orderButtonDisable = true;
+        this.getTotalPrice(this.CacheItem.Items);
       }
+      //console.log(result);
         
     });
   }
 
-  getTotalPrice(items:menuCart[]){
-    let TotalAmount:number = 0;
+  getTotalPrice(items:any[]){
+
     items.forEach(item =>{
-      TotalAmount+= item.price;
+      this.TotalPrice += item["Price"];
     });
-    return TotalAmount;
+    return this.TotalPrice;
   }
 
   OrderUserBasket(){
@@ -108,7 +92,7 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
+    //this.subscription.unsubscribe();
   }
 
 }

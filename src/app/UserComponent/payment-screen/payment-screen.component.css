@@ -1,0 +1,13 @@
+.UserInformation{
+    background-color: rgb(24, 185, 185);
+    color: azure;
+}
+
+.Logo{
+    height:60px;
+}
+
+.PaymentForm{
+    border-style: solid;
+  border-color: rgb(22, 170, 158);
+}

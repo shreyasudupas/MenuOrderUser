@@ -1,16 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { element } from 'protractor';
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+import { GlobalConstant } from 'src/app/global/global-constants';
 import { UserCartInformation } from 'src/app/Models/cart-information/UserCartInformation';
 import { CartConfiguration } from 'src/app/Models/CartConfiguration/cart-configuration';
-import { CartInformationDisplay } from 'src/app/Models/CartInformationDisplay';
-import { menuCart } from 'src/app/Models/menuCart';
 import { VendorDetails } from 'src/app/Models/VendorDetails';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
-import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env} from 'src/environments/environment';
 
 @Component({
@@ -18,6 +15,7 @@ import { environment as env} from 'src/environments/environment';
   templateUrl: './cart-information.component.html',
   styleUrls: ['./cart-information.component.css']
 })
+
 export class CartInformationComponent implements OnInit {
 
 totalPrice:number=0;
@@ -55,22 +53,27 @@ columns:any[]=[];
           }));
         }
         else{
-          return throwError(new Error("Vendor details not present in cache"));
+          return of(GlobalConstant.VENDOR_DETAILS_NOTFOUND);
         }
       }
       )).subscribe((data:any)=>{
         //console.log(data);
+        if( data != GlobalConstant.VENDOR_DETAILS_NOTFOUND){
+          this.cartConfig = data;
 
-        this.cartConfig = data;
+          if(this.cartConfig != null){
+            this.cartConfig.columnDetails.forEach((element:any)=>{
+              this.columns.push({ field: element.columnName,header: element.displayName,display:element.displayScreen});
+            });
 
-        if(this.cartConfig != null){
-          this.cartConfig.columnDetails.forEach((element:any)=>{
-            this.columns.push({ field: element.columnName,header: element.displayName,display:element.displayScreen});
-          });
-
-          //last add quantity
-          this.columns.push({ field: 'quantity',header: 'Quantity',display:''});
-        }
+            //last add quantity
+            this.columns.push({ field: 'quantity',header: 'Quantity',display:''});
+          }
+        }else{
+          // this.menuCacheItems.Items = [];
+        }        
+    },(err)=>{
+      console.log(err);
     })
 
     //change the active Item in menu
@@ -96,4 +99,7 @@ columns:any[]=[];
     });
   }
 
+  BackToVendor(){
+    this.router.navigateByUrl("/user/vendorlist");
+  }
 }

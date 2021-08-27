@@ -1,27 +1,54 @@
 <p-toast></p-toast>
-<p-card header="Payment Info" subheader="Card Subheader" [style]="{'width': '100%'}" styleClass="p-card-shadow">
-    <ng-template pTemplate="header">
-        <img alt="Card" src="assets/MenuIcons/onlinePayment.jpg">
-    </ng-template>
-    <!-- body -->
-    <div class="p-grid">
-        <div class="col-8">
-            Welcome <b>{{UserProfile.nickname}}</b> how would you like to make the payment.
-        </div>
-        <div class="col-4">
-            Your Total Bill is <b>{{TotalPrice}}</b> <img src="assets/UserInfoImage/rupee.png" alt="wallet" width="25px;" height="30px" style="padding: 10"/>
-        </div>
-        <div class="col-4">
-            <h5>Select Type of Payment</h5>
-            <!-- <drop-down-list  placeholderName="Select a City" displayLabel="label" [(ngModel)]="paymentSelect" [responseFromAPI]="apiDropDown"></drop-down-list>  -->
-            <drop-down-list [options]="cities" placeholderName="Select a City" displayLabel="label" [(ngModel)]="paymentSelect"></drop-down-list> 
-            <br/>From parent :{{paymentSelect}}
 
+<div *ngIf="UserProfile;else ShowNoData">
+    <p-card header="Payment Information"  [style]="{'width': '100%','height':'40%'}" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+            <!-- <img alt="Card" src="assets/MenuIcons/onlinePayment.jpg"> -->
+        </ng-template>
+        <!-- body -->
+        <div class="p-grid">
+            <div class="p-col-6 UserInformation">
+                <div class="p-col">
+                    <span class="box shadow-8 m-3">
+                        <img  src="assets/Logo/MenuLogo1.png" alt="NoCartItem" class="Logo"/>
+                    </span>
+                </div>
+                <div class="p-col">
+                    Hi {{UserProfile.nickname}} how would you like to make the payment.
+                </div>
+                <div class="p-col">
+                    3
+                </div>
+            </div>
+            <div class="p-col-6 PaymentForm">
+                B
+            </div>
+            
+            <!-- <div class="col-8">
+                Welcome <b>{{UserProfile.nickname}}</b> how would you like to make the payment.
+            </div>
+            <div class="col-4">
+                Your Total Bill is <b>{{TotalPrice}}</b> <img src="assets/UserInfoImage/rupee.png" alt="wallet" width="25px;" height="30px" style="padding: 10"/>
+            </div>
+            <div class="col-4">
+                <h5>Select Type of Payment</h5> -->
+                <!-- <drop-down-list  placeholderName="Select a City" displayLabel="label" [(ngModel)]="paymentSelect" [responseFromAPI]="apiDropDown"></drop-down-list>  -->
+                <!-- <drop-down-list [options]="cities" placeholderName="Select a City" displayLabel="label" [(ngModel)]="paymentSelect"></drop-down-list> 
+                <br/>From parent :{{paymentSelect}}
+    
+            </div> -->
         </div>
+        
+        <ng-template pTemplate="footer">
+            <div>
+                <button [disabled]="orderButtonDisable" pButton pRipple type="button" label="Order Now" class="p-button-outlined p-button-success" (click)="OrderUserBasket()"></button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>
+
+<ng-template #ShowNoData>
+    <div style="margin: 10%;">
+        <img src="assets/Exception/BrokenImage.jpg" alt="NoCartItem" class="align-items-center"/>
     </div>
-    <ng-template pTemplate="footer">
-        <div>
-            <button [disabled]="orderButtonDisable" pButton pRipple type="button" label="Order Now" class="p-button-outlined p-button-success" (click)="OrderUserBasket()"></button>
-        </div>
-    </ng-template>
-</p-card>
+</ng-template>
