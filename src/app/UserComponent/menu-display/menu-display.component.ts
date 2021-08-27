@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { MenuCartData, MenuColumnData, MenuDisplayReponse } from 'src/app/Models/menu-display/menu-display-response';
-import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/ResouceService/ResourceServiceForkRequest';
+import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/resouce-service/ResourceServiceForkRequest';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { UpdateBasketService } from 'src/app/Services/UpdateBasketService';

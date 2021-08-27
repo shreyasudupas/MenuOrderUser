@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { ResourceServiceForkRequest } from '../Models/ResouceService/ResourceServiceForkRequest';
+import { ResourceServiceForkRequest } from '../Models/resouce-service/ResourceServiceForkRequest';
 import { of } from 'rxjs';
 
 @Injectable({

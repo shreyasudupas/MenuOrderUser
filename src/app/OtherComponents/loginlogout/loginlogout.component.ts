@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/helper/Autho.service';
-import { APIResponse } from 'src/app/Models/APIResponse';
-import { UserInfo } from 'src/app/Models/UserProfile';
+import { APIResponse } from 'src/app/Models/api-response/APIResponse';
+import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from 'src/environments/environment';
 

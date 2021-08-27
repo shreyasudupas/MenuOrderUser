@@ -1,7 +1,7 @@
 import { ResourceService } from "./Resouce.service";
 import { environment as env } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { APIResponse } from "../Models/APIResponse";
+import { APIResponse } from "../Models/api-response/APIResponse";
 import { Observable } from "rxjs";
 
 export class UpdateBasketService{

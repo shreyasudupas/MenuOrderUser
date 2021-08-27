@@ -1,4 +1,4 @@
-import { UserInfo } from "../UserProfile";
+import { UserInfo } from "../user/UserProfile";
 import { CartUserVendorDetails } from "./CartUserVendorDetails";
 
 export class UserCartInformation{

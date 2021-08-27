@@ -5,8 +5,8 @@ import { of, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { GlobalConstant } from 'src/app/global/global-constants';
 import { UserCartInformation } from 'src/app/Models/cart-information/UserCartInformation';
-import { CartConfiguration } from 'src/app/Models/CartConfiguration/cart-configuration';
-import { VendorDetails } from 'src/app/Models/VendorDetails';
+import { CartConfiguration } from 'src/app/Models/cart-configuration/cart-configuration';
+import { VendorDetails } from 'src/app/Models/Vendor/VendorDetails';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { environment as env} from 'src/environments/environment';
 

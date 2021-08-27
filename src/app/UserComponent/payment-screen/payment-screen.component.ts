@@ -3,7 +3,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { UserCartInformation } from 'src/app/Models/cart-information/UserCartInformation';
 import { PaymentScreenResponse } from 'src/app/Models/payment-screen/PaymentScreenResponse';
-import { UserInfo } from 'src/app/Models/UserProfile';
+import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { GetBasketService } from 'src/app/Services/GetBasketService';
 import { ResourceService } from 'src/app/Services/Resouce.service';
