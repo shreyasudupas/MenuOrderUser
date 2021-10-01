@@ -1,5 +1,5 @@
 export class UserInfo{
-    userId:bigint;
+    Id:bigint;
     username:string;
     roleId:number;
     nickname:string;

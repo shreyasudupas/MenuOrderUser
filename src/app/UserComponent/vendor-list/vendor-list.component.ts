@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { VendorDetails } from 'src/app/Models/VendorDetails';
+import { VendorDetails } from 'src/app/Models/Vendor/VendorDetails';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
-import {Vendor} from '../../Models/Vendor';
+import {Vendor} from '../../Models/Vendor/Vendor';
 import { environment as env } from '../../../environments/environment';
 
 @Component({
@@ -41,12 +41,12 @@ activeItem: MenuItem;
   }
 
   //call menu-list-Display component
-  callMenuList(menuId:bigint,vendorName:string):void{
+  callMenuList(menuId:string,vendorName:string):void{
     //this.router.navigate(['../menulist',menuId],{relativeTo:this.route})
     let VedorDetails = new VendorDetails();
     VedorDetails.vendorId=menuId;
     VedorDetails.vendorName = vendorName;
-    this.router.navigateByUrl("/user/menulist",{state:VedorDetails});
+    this.router.navigateByUrl("/user/menu-display",{state:VedorDetails});
   }
 
 

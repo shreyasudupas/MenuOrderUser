@@ -11,10 +11,13 @@ export const environment = {
   },
   baseV1Url:"http://localhost:5000/api/v1/",
   baseV2Url:"http://localhost:5000/api/v2/",
-  userAPI:"https://localhost:44326/api/gateway/user/",
-  menuAPI:"https://localhost:44326/api/gateway/inventory/menu/",
-  vendorAPI:"https://localhost:44326/api/gateway/inventory/vendor/",
-  basketAPI:"https://localhost:44326/api/gateway/basketservice/"
+  userAPI:"https://localhost:5000/api/gateway/user/",
+  menuAPI:"https://localhost:5000/api/gateway/inventory/menu/",
+  vendorAPI:"https://localhost:5000/api/gateway/inventory/vendor/",
+  basketAPI:"https://localhost:5000/api/gateway/basketservice/",
+  orderAPI:"https://localhost:5000/api/gateway/orders/",
+  cartInfoAPI:"https://localhost:5000/api/gateway/cart-information/",
+  vendorConfigAPI:"https://localhost:5000/api/gateway/cart-configuration/"
 };
 
 

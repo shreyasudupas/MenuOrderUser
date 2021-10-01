@@ -2,7 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/helper/Autho.service';
-import { UserInfo } from 'src/app/Models/UserProfile';
+import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/resouce-service/ResourceServiceForkRequest';
+import { UserInfo } from 'src/app/Models/user/UserProfile';
+import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { ModalService } from 'src/app/Services/ModalService.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from '../../../environments/environment';
@@ -25,7 +27,7 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
   CurrentUserRole:string;
   
 
-  constructor(private AuthService:AuthService,httpclient:HttpClient) {
+  constructor(private AuthService:AuthService,httpclient:HttpClient,private BroadcastService:DataSharingService) {
     super(httpclient,'')
    }
 
@@ -45,15 +47,41 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
       {label: 'Settings', icon: 'pi pi-fw pi-cog'}
     ];
 
-    //get user Info
-  
-      this.createItem(this.UserProfile).subscribe((result)=>{
-        if(result!=null){
-            this.UserProfile.points = result.points;
-            this.UserProfile.cartAmount = result.cartAmount;
-            this.UserProfile.roleId = result.roleId;
+      //fork join two  calls
+      let forkRequest = new ResourceServiceForkRequest();
+      let RequestResource1 = new RequestResource();
+      RequestResource1.requestUrl = env.userAPI+'GetOrUpdateUserDetails';
+      RequestResource1.httpMethod ='post';
+      RequestResource1.body = this.UserProfile;
+      let RequestResource2 = new RequestResource();
+      RequestResource2.requestUrl = env.cartInfoAPI+'GetUserBasketInfoFromCache';
+      RequestResource2.httpMethod ='get';
+      forkRequest.requestParamter = new Array<RequestResource>();
+      forkRequest.requestParamter.push(RequestResource1);
+      forkRequest.requestParamter.push(RequestResource2);
+
+      this.getItemsByFork(forkRequest).subscribe(([userProfileResponse,UserCartInformation])=>{
+        let UserProfile = userProfileResponse;
+        let UserCartInfo = JSON.parse(UserCartInformation);
+        // if(responseList.length>0){
+        // }
+        if(UserProfile!=null){
+          this.UserProfile.points = UserProfile.points;
+          this.UserProfile.cartAmount = UserProfile.cartAmount;
+          this.UserProfile.roleId = UserProfile.roleId;
         }
-      });
+
+          //cart information
+          if(UserCartInfo.Items != null){
+            let count =0;
+            if(UserCartInfo.Items.length >0){
+                UserCartInfo.Items.forEach((item:any) =>{
+                  count +=item.quantity;
+               });
+            }
+            this.BroadcastService.updateCartCountWithvalue(count);
+          }
+      })
 
     }
 

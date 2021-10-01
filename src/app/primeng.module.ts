@@ -11,6 +11,9 @@ import {BadgeModule} from 'primeng/badge';
 import {ToastModule} from 'primeng/toast';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {TooltipModule} from 'primeng/tooltip';
+import { DropdownModule } from "primeng/dropdown";
+import {DataViewModule} from 'primeng/dataview';
+import {InputTextModule} from 'primeng/inputtext';
 
 @NgModule({
     imports:[ButtonModule,
@@ -25,7 +28,10 @@ import {TooltipModule} from 'primeng/tooltip';
         BadgeModule,
         ToastModule,
         ProgressSpinnerModule,
-        TooltipModule],
+        DropdownModule,
+        TooltipModule,
+        DataViewModule,
+        InputTextModule],
     exports:[ButtonModule,
         TabMenuModule,
         MessageModule,
@@ -38,7 +44,10 @@ import {TooltipModule} from 'primeng/tooltip';
         BadgeModule,
         ToastModule,
         ProgressSpinnerModule,
-        TooltipModule
+        DropdownModule,
+        TooltipModule,
+        DataViewModule,
+        InputTextModule
     ]
 })
 
