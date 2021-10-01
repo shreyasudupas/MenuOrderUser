@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UserCartInformation } from 'src/app/Models/cart-information/UserCartInformation';
 import { PaymentScreenResponse } from 'src/app/Models/payment-screen/PaymentScreenResponse';
-import { UserInfo } from 'src/app/Models/user/UserProfile';
+import { CartUserProfile } from 'src/app/Models/user/CartUserProfile';
+//import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { GetBasketService } from 'src/app/Services/GetBasketService';
 import { ResourceService } from 'src/app/Services/Resouce.service';
@@ -24,7 +26,7 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   }
   //cartItems:menuCart[]=[];
   TotalPrice:number = 0;
-  UserProfile:UserInfo;
+  UserProfile:CartUserProfile;
   orderButtonDisable:boolean;
   paymentScreenResponse:PaymentScreenResponse;
   cities:any[]=[];
@@ -32,8 +34,10 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   paymentSelect:any;
   apiDropDown:string;
   CacheItem:UserCartInformation;
+  paymentForm:FormGroup;
 
-  constructor(private BroadcastService:DataSharingService,private http:HttpClient,private messageService: MessageService) { 
+  constructor(private BroadcastService:DataSharingService,private http:HttpClient,private messageService: MessageService
+    ,private formBuilder: FormBuilder) { 
     super(http,'')
     this.apiDropDown =  env.userAPI+'GetPaymentDropDown';
   }
@@ -53,6 +57,11 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
       {label: 'Paris', value: 'Paris'}
   ];
   this.paymentSelect = "Credit Card";
+
+  this.paymentForm = this.formBuilder.group({
+    CustomerName:['',Validators.required],
+    City:[null,Validators.required]
+  })
     
   }
 
