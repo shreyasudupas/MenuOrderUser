@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user.routing.module';
 import { HomeComponent } from './home/home.component';
 import { VendorListComponent } from './vendor-list/vendor-list.component';
-import { UserFirstComponent } from './user-first/user-first.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { PrimeNGModule } from '../primeng.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
@@ -21,7 +21,7 @@ import { MenuDisplayComponent } from './menu-display/menu-display.component';
   declarations: [
     HomeComponent,
     VendorListComponent,
-    UserFirstComponent,
+    UserDashboardComponent,
     CartIconComponent,
     CartInformationComponent,
     ProfileComponent,

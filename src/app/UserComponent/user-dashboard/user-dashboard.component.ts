@@ -2,21 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from 'src/app/helper/Autho.service';
+import { BaseComponent } from 'src/app/helper/base-component';
 import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/resouce-service/ResourceServiceForkRequest';
 import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
-import { ModalService } from 'src/app/Services/ModalService.service';
+import { MenuService } from 'src/app/Services/menu.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-user-first',
-  templateUrl: './user-first.component.html',
-  styleUrls: ['./user-first.component.css']
+  selector: 'user-dashboard',
+  templateUrl: './user-dashboard.component.html',
+  styleUrls: ['./user-dashboard.component.css']
 })
-export class UserFirstComponent extends ResourceService<UserInfo> implements OnInit {
+export class UserDashboardComponent extends ResourceService<UserInfo> implements OnInit {
   getVersionUrl(): string {
-    //return env.baseV1Url;
     return env.userAPI;
   }
   actionName(): string {
@@ -27,8 +27,11 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
   CurrentUserRole:string;
   
 
-  constructor(private AuthService:AuthService,httpclient:HttpClient,private BroadcastService:DataSharingService) {
+  constructor(private AuthService:AuthService,httpclient:HttpClient,
+    public _broadcastService:DataSharingService,
+    public _menuService:MenuService) {
     super(httpclient,'')
+    //super(_menuService,httpclient,_broadcastService);
    }
 
   ngOnInit(): void {
@@ -37,15 +40,6 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
 
     this.CurrentUserRole = "user";
 
-    this.MenuItems =  [
-      {label: 'Home', icon: 'pi pi-fw pi-home',routerLink: ['./home']},
-      {label: 'Vendor', icon: 'pi pi-fw pi-calendar',routerLink:['./vendorlist']},
-      {label: 'Menu', icon: 'pi pi-fw pi-calendar',visible:false},
-      {label: 'Cart', icon: 'pi pi-fw pi-calendar',visible:false},
-      {label: 'Profile', icon: 'pi pi-fw pi-pencil',routerLink:['./user-profile']},
-      {label: 'Payment', icon: 'pi pi-fw pi-file',routerLink:['./user-payment']},
-      {label: 'Settings', icon: 'pi pi-fw pi-cog'}
-    ];
 
       //fork join two  calls
       let forkRequest = new ResourceServiceForkRequest();
@@ -72,22 +66,20 @@ export class UserFirstComponent extends ResourceService<UserInfo> implements OnI
         }
 
           //cart information
-          if(UserCartInfo.Items != null){
-            let count =0;
-            if(UserCartInfo.Items.length >0){
+        if(UserCartInfo.Items != null){
+        let count =0;
+        if(UserCartInfo.Items.length >0){
                 UserCartInfo.Items.forEach((item:any) =>{
                   count +=item.quantity;
                });
             }
-            this.BroadcastService.updateCartCountWithvalue(count);
+            this._broadcastService.updateCartCountWithvalue(count);
           }
-      })
+      });
+
+      
 
     }
 
-    // open() {
-    //   let title="This USer First";
-    //   let body="Body body";
-    //   this.modalService.openModal(title,body);
-    // }
+    
 }

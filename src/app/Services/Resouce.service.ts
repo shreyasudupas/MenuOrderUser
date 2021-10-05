@@ -15,6 +15,7 @@ abstract actionName():string;
 requestUrls:any[]=[];
 response:any[]=[];
 ERROR_EVENT:string = "Error occurred"; 
+public requestUri:string;
 
 private apiUrl:string;
 
@@ -30,7 +31,7 @@ private apiUrl:string;
     }
 
     listItems():Observable<T[]>{
-       return this.httpclient.get<T[]>(this.apiUrl)
+       return this.httpclient.get<T[]>(this.requestUri)
         .pipe(
             map((data:any)=>{
                 if(data.statusCode == 200 || data.statusCode == 202){

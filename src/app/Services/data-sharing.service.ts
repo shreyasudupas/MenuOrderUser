@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { MenuActiveItem } from '../Models/menu-service/menu-model';
 import { UserInfo } from '../Models/user/UserProfile';
 //import { menuCart } from '../Models/menuCart';
 
@@ -16,6 +18,9 @@ export class DataSharingService {
   //userProfile
   private userProfile = new BehaviorSubject<UserInfo>(new UserInfo());
 
+  //assign default menuList options
+  private menuList = new BehaviorSubject<MenuActiveItem>(new MenuActiveItem());
+
   constructor() { }
 
   getCurrentItem():Observable<string>{
@@ -24,6 +29,14 @@ export class DataSharingService {
 
   getActiveItem(activeMenuItem:string){
     this.activeitemSource.next(activeMenuItem);
+  }
+
+  getActiveMenuList():Observable<MenuActiveItem>{
+    return this.menuList.asObservable();
+  }
+
+  sendUpdatedMenuList(updatedList:MenuActiveItem){
+    this.menuList.next(updatedList);
   }
 
   getCurrentCartCount():Observable<number>{
