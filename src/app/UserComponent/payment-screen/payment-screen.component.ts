@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { BaseComponent } from 'src/app/helper/base-component';
 import { UserCartInformation } from 'src/app/Models/cart-information/UserCartInformation';
 import { PaymentScreenResponse } from 'src/app/Models/payment-screen/PaymentScreenResponse';
 import { CartUserProfile } from 'src/app/Models/user/CartUserProfile';
 //import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { GetBasketService } from 'src/app/Services/GetBasketService';
-import { ResourceService } from 'src/app/Services/Resouce.service';
+import { MenuService } from 'src/app/Services/menu.service';
 import { environment as env } from 'src/environments/environment';
 
 @Component({
@@ -17,14 +19,8 @@ import { environment as env } from 'src/environments/environment';
   styleUrls: ['./payment-screen.component.css'],
   providers:[MessageService]
 })
-export class PaymentScreenComponent extends ResourceService<string> implements OnInit  {
-  getVersionUrl(): string {
-    return env.orderAPI;
-  }
-  actionName(): string {
-    return "UserOrder";
-  }
-  //cartItems:menuCart[]=[];
+export class PaymentScreenComponent extends BaseComponent<string> implements OnInit  {
+ 
   TotalPrice:number = 0;
   UserProfile:CartUserProfile;
   orderButtonDisable:boolean;
@@ -36,15 +32,23 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
   CacheItem:UserCartInformation;
   paymentForm:FormGroup;
 
-  constructor(private BroadcastService:DataSharingService,private http:HttpClient,private messageService: MessageService
+  constructor(public _broadcastService:DataSharingService,public http:HttpClient,
+    private route:ActivatedRoute,public _menuService:MenuService,public activatedRoute:ActivatedRoute,private messageService: MessageService
     ,private formBuilder: FormBuilder) { 
-    super(http,'')
+    super(_menuService,http,_broadcastService);
+
     this.apiDropDown =  env.userAPI+'GetPaymentDropDown';
   }
 
   ngOnInit(): void {
-    //set active menu item
-    this.BroadcastService.getActiveItem('Payment');
+    
+
+    this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
+    this.versionUrl = "";
+    this.action = ""; 
+
+    this.Initilize();
+
     //get cart items cache server
     this.getOrderCartItems();
 
@@ -94,7 +98,7 @@ export class PaymentScreenComponent extends ResourceService<string> implements O
     this.createItem(null).subscribe(result =>{
       this.paymentScreenResponse.ReponseMessage = result;
       this.messageService.add({severity: 'success',summary:'Success', detail:this.paymentScreenResponse.ReponseMessage});
-      this.BroadcastService.updateCartCountWithvalue(0);
+      this._broadcastService.updateCartCountWithvalue(0);
       this.TotalPrice = 0;
       this.orderButtonDisable=true;
     });

@@ -1,6 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { BaseComponent } from 'src/app/helper/base-component';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
+import { MenuService } from 'src/app/Services/menu.service';
 
 
 @Component({
@@ -8,15 +12,21 @@ import { DataSharingService } from 'src/app/Services/data-sharing.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent extends BaseComponent<any> implements OnInit {
   
   subscription: Subscription;
 
-  constructor(private sharing:DataSharingService) { }
+  constructor(public _menuService:MenuService,public httpclient:HttpClient,public _broadcastService:DataSharingService,public activatedRoute:ActivatedRoute) {
+    super(_menuService,httpclient,_broadcastService);
+  }
 
   ngOnInit(): void {
 
-    this.sharing.getActiveItem("Home");    
+    this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
+    this.versionUrl = "";
+    this.action = ""; 
+
+    this.Initilize();
   }
 
   ngOnDestroy(){
