@@ -2,8 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/helper/Autho.service';
+import { BaseComponent } from 'src/app/helper/base-component';
 import { APIResponse } from 'src/app/Models/api-response/APIResponse';
 import { UserInfo } from 'src/app/Models/user/UserProfile';
+import { DataSharingService } from 'src/app/Services/data-sharing.service';
+import { MenuService } from 'src/app/Services/menu.service';
 import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from 'src/environments/environment';
 
@@ -12,24 +15,22 @@ import { environment as env } from 'src/environments/environment';
   templateUrl: './loginlogout.component.html',
   styleUrls: ['./loginlogout.component.css']
 })
-export class LoginlogoutComponent extends ResourceService<APIResponse> implements OnInit {
-  getVersionUrl(): string {
-    return env.basketAPI;
-  }
-  actionName(): string {
-    return "StoreUserKeyValue";
-  }
+export class LoginlogoutComponent extends BaseComponent<APIResponse> implements OnInit {
+ 
   progressspinner=true;
   @ViewChild('logOutButton') logoutRef:ElementRef;
   @ViewChild('loggedOut') loginRef:ElementRef;
   userInfo:UserInfo;
   static i=0;
 
-  constructor(private router: Router,private auth:AuthService,private zone:NgZone,private client:HttpClient) { 
-   super(client,'')
+  constructor(private router: Router,private auth:AuthService,private zone:NgZone,public client:HttpClient,
+    public _menuService:MenuService,public _broadcastService:DataSharingService) { 
+    super(_menuService,client,_broadcastService);
   }
 
   ngOnInit(): void {
+    this.versionUrl = env.basketAPI;
+    this.action = "StoreUserKeyValue";
 
     if(!this.auth.isAuthenticated()){
       //add the loading param
@@ -39,7 +40,8 @@ export class LoginlogoutComponent extends ResourceService<APIResponse> implement
         if(result != undefined){
           //this.userInfo = this.auth.getUserInformation();
           //call the basket service to store the user cache
-          this.createItem(result).toPromise().then(response=>console.log(response));
+          //this.createItem(result).toPromise().then(response=>console.log(response));
+          this.Create(result).toPromise().then(response=>console.log(response));
         }
         LoginlogoutComponent.i+=1; //counter to keep track of home may times page have loaded
         this.refreshPage();

@@ -10,25 +10,13 @@ import { of } from 'rxjs';
 })
 
 export abstract class ResourceService<T>{
-abstract getVersionUrl():string;
-abstract actionName():string;
 requestUrls:any[]=[];
 response:any[]=[];
 ERROR_EVENT:string = "Error occurred"; 
 public requestUri:string;
 
-private apiUrl:string;
 
-    constructor(protected httpclient:HttpClient,@Inject('string') private controller:string,@Inject('string') actionName?:string){
-        if(controller != '')
-        this.apiUrl = this.getVersionUrl()+this.controller+'/'+ this.actionName();
-        else
-        this.apiUrl = this.getVersionUrl()+this.actionName();
-
-        if(this.actionName()== undefined){
-            this.apiUrl = this.getVersionUrl()+actionName;
-        }
-    }
+    constructor(public httpclient:HttpClient){}
 
     listItems():Observable<T[]>{
        return this.httpclient.get<T[]>(this.requestUri)
@@ -48,7 +36,7 @@ private apiUrl:string;
     }
 
     getItem(params:HttpParams):Observable<T>{
-        return this.httpclient.get<T>(this.apiUrl,{params:params})
+        return this.httpclient.get<T>(this.requestUri,{params:params})
         .pipe(
             map((data:any)=>{
                 if(data.statusCode == 200 || data.statusCode == 202){
@@ -63,7 +51,7 @@ private apiUrl:string;
     }
 
     createItem(body:any):Observable<T>{
-        return this.httpclient.post<T>(this.apiUrl,body)
+        return this.httpclient.post<T>(this.requestUri,body)
         .pipe(
             map((data:any)=>{
                 if(data.statusCode == 200 || data.statusCode == 202){

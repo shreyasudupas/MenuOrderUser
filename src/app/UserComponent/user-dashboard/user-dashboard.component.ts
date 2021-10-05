@@ -7,7 +7,6 @@ import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/reso
 import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { MenuService } from 'src/app/Services/menu.service';
-import { ResourceService } from 'src/app/Services/Resouce.service';
 import { environment as env } from '../../../environments/environment';
 
 @Component({
@@ -15,13 +14,8 @@ import { environment as env } from '../../../environments/environment';
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.css']
 })
-export class UserDashboardComponent extends ResourceService<UserInfo> implements OnInit {
-  getVersionUrl(): string {
-    return env.userAPI;
-  }
-  actionName(): string {
-    return "GetOrUpdateUserDetails";
-  }
+export class UserDashboardComponent extends BaseComponent<UserInfo> implements OnInit {
+ 
   UserProfile:UserInfo;
   MenuItems: MenuItem[];
   CurrentUserRole:string;
@@ -30,8 +24,7 @@ export class UserDashboardComponent extends ResourceService<UserInfo> implements
   constructor(private AuthService:AuthService,httpclient:HttpClient,
     public _broadcastService:DataSharingService,
     public _menuService:MenuService) {
-    super(httpclient,'')
-    //super(_menuService,httpclient,_broadcastService);
+    super(_menuService,httpclient,_broadcastService);
    }
 
   ngOnInit(): void {
@@ -54,7 +47,8 @@ export class UserDashboardComponent extends ResourceService<UserInfo> implements
       forkRequest.requestParamter.push(RequestResource1);
       forkRequest.requestParamter.push(RequestResource2);
 
-      this.getItemsByFork(forkRequest).subscribe(([userProfileResponse,UserCartInformation])=>{
+
+      this.getForkItems(forkRequest).subscribe(([userProfileResponse,UserCartInformation])=>{
         let UserProfile = userProfileResponse;
         let UserCartInfo = JSON.parse(UserCartInformation);
         // if(responseList.length>0){

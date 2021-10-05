@@ -27,13 +27,6 @@ export class MenuDisplayComponent extends BaseComponent<MenuDisplayReponse>{
     vendorId:string='';
     vendorName:string='';
 
-    // getVersionUrl(): string {
-    //     return "";
-    // }
-    // actionName(): string {
-    //     return "";
-    // }
-
     constructor(private router:Router,public _broadcastService:DataSharingService,public http:HttpClient,
       private route:ActivatedRoute,public _menuService:MenuService,public activatedRoute:ActivatedRoute,
         private messageService:MessageService){

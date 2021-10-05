@@ -7,12 +7,6 @@ import { MenuService } from "../Services/menu.service";
 import { ResourceService } from "../Services/Resouce.service";
 
 export class BaseComponent<T> extends ResourceService<T>{
-    getVersionUrl(): string {
-        return this.versionUrl;
-    }
-    actionName(): string {
-        return this.action;
-    }
 
     public componentName:any;
     private activeMenuList:MenuActiveItem;
@@ -21,7 +15,7 @@ export class BaseComponent<T> extends ResourceService<T>{
     public versionUrl:string;
 
     constructor(public _menuService:MenuService,public httpclient:HttpClient,public _broadcastService:DataSharingService){
-        super(httpclient,'');
+        super(httpclient);
         
     }
 
@@ -42,6 +36,11 @@ export class BaseComponent<T> extends ResourceService<T>{
         //console.log(this.action , this.versionUrl) ;
         this.requestUri = this.versionUrl+this.action;
         return this.listItems();
+    }
+
+    public Create(body:any):Observable<T>{
+        this.requestUri = this.versionUrl+this.action;
+        return this.createItem(body);
     }
 
 
