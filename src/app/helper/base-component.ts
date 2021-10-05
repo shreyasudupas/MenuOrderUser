@@ -35,7 +35,7 @@ export class BaseComponent<T> extends ResourceService<T>{
     }
 
     public getForkItems(request:ResourceServiceForkRequest):Observable<any[]>{
-        return this.getForkItems(request);
+        return this.getItemsByFork(request);
     }
 
     public ListItems():Observable<T[]> {   

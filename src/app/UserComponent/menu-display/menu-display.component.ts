@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { BaseComponent } from 'src/app/helper/base-component';
 import { MenuCartData, MenuColumnData, MenuDisplayReponse } from 'src/app/Models/menu-display/menu-display-response';
 import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/resouce-service/ResourceServiceForkRequest';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
-import { ResourceService } from 'src/app/Services/Resouce.service';
+import { MenuService } from 'src/app/Services/menu.service';
 import { UpdateBasketService } from 'src/app/Services/UpdateBasketService';
 import { environment as env} from 'src/environments/environment';
 
@@ -16,7 +16,7 @@ import { environment as env} from 'src/environments/environment';
     providers: [MessageService]
 })
 
-export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
+export class MenuDisplayComponent extends BaseComponent<MenuDisplayReponse>{
     menuResponse:MenuDisplayReponse;
     menuCartItems:MenuCartData[]=[];
     menuColumns:Array<MenuColumnData>;
@@ -27,16 +27,17 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
     vendorId:string='';
     vendorName:string='';
 
-    getVersionUrl(): string {
-        return "";
-    }
-    actionName(): string {
-        return "";
-    }
+    // getVersionUrl(): string {
+    //     return "";
+    // }
+    // actionName(): string {
+    //     return "";
+    // }
 
-    constructor(private router:Router,public httpclient:HttpClient,private BroadcastService:DataSharingService,
+    constructor(private router:Router,public _broadcastService:DataSharingService,public http:HttpClient,
+      private route:ActivatedRoute,public _menuService:MenuService,public activatedRoute:ActivatedRoute,
         private messageService:MessageService){
-            super(httpclient,'')
+            super(_menuService,http,_broadcastService);
     }
 
     ngOnInit(){
@@ -49,6 +50,12 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
           this.router.navigateByUrl('/user/vendorlist');
 
         }else{
+
+            this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
+            this.versionUrl = "";
+            this.action = ""; 
+
+            this.Initilize();
 
             //set the params
             let menuParams = new HttpParams();
@@ -66,7 +73,7 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
             forkRequest.requestParamter.push(RequestResource1);
             forkRequest.requestParamter.push(RequestResource2);
 
-            this.getItemsByFork(forkRequest).subscribe(([menuResult,basketCacheResult])=>{
+            this.getForkItems(forkRequest).subscribe(([menuResult,basketCacheResult])=>{
               this.menuResponse = menuResult;
               let cacheMenuBasket = JSON.parse(basketCacheResult);
                 // if(results.length>0){
@@ -110,9 +117,6 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
                 }
                 
             });
-      
-            //setting the active item in menu bar
-            this.BroadcastService.getActiveItem("Menu");
         }
     }
 
@@ -163,7 +167,7 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
                   
               count += elements.quantity;
               //update the count of cart item
-              this.BroadcastService.updateCartCountWithvalue(count);
+              this._broadcastService.updateCartCountWithvalue(count);
               //if item is of the vendor then replace it with current item
               if(index!=-1){
                   items.splice(index,1,elements);
@@ -180,7 +184,7 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
         if(this.menuCartItems[index].quantity<20){
           this.menuCartItems[index].quantity += 1;
         //increase the cart Count
-        this.BroadcastService.updateCartCount(true); 
+        this._broadcastService.updateCartCount(true); 
         
           //call session storage API
           let menu = this.menuCartItems[index];
@@ -215,7 +219,7 @@ export class MenuDisplayComponent extends ResourceService<MenuDisplayReponse>{
       if(this.menuCartItems[index].quantity>0){
         this.menuCartItems[index].quantity -= 1; 
       //decrease the cart Count
-        this.BroadcastService.updateCartCount(false);
+        this._broadcastService.updateCartCount(false);
         
           //call session storage API
           let menu = this.menuCartItems[index];

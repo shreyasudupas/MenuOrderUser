@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { GlobalConstant } from 'src/app/global/global-constants';
@@ -9,6 +9,8 @@ import { CartConfiguration } from 'src/app/Models/cart-configuration/cart-config
 import { VendorDetails } from 'src/app/Models/Vendor/VendorDetails';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { environment as env} from 'src/environments/environment';
+import { BaseComponent } from 'src/app/helper/base-component';
+import { MenuService } from 'src/app/Services/menu.service';
 
 @Component({
   selector: 'cart-information',
@@ -16,17 +18,25 @@ import { environment as env} from 'src/environments/environment';
   styleUrls: ['./cart-information.component.css']
 })
 
-export class CartInformationComponent implements OnInit {
+export class CartInformationComponent extends BaseComponent<any> implements OnInit {
 
 totalPrice:number=0;
 menuCacheItems:UserCartInformation;
 cartConfig:CartConfiguration;
 columns:any[]=[];
 
-  constructor(private share:DataSharingService,private router:Router,public httpclient:HttpClient) {
+  constructor(public _broadcastService:DataSharingService,private router:Router,public httpclient:HttpClient,public _menuService:MenuService
+    ,private activatedRoute:ActivatedRoute) {
+    super(_menuService,httpclient,_broadcastService);
    }
 
   ngOnInit(): void {
+
+    this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
+    this.versionUrl = "";
+    this.action = ""; 
+
+    this.Initilize();
 
     let url = env.cartInfoAPI+"GetUserBasketInfoFromCache";
     this.httpclient.get(url).pipe(map((response:any)=>{
@@ -76,8 +86,7 @@ columns:any[]=[];
       console.log(err);
     })
 
-    //change the active Item in menu
-    this.share.getActiveItem("Cart");
+    
   }
 
 

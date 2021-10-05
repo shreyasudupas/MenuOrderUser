@@ -1,7 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MenuItem } from 'primeng/api';
 import { MenuActiveItem, MenuNavigationModel } from '../Models/menu-service/menu-model';
 
 @Injectable({
@@ -10,7 +7,7 @@ import { MenuActiveItem, MenuNavigationModel } from '../Models/menu-service/menu
 
 export class MenuService{
 
-    constructor(private route:ActivatedRoute){
+    constructor(){
 
     }
 
@@ -65,19 +62,20 @@ export class MenuService{
             let name:string = componentName;
             var getFirstName = name.split(/(?=[A-Z])/);
 
+            var newMenuList = new MenuService().menuList;
             //compare the name with the first name
-            var findParentMenuListId = this.menuList.findIndex(item => item.parent == 'user');
+            var findParentMenuListId = newMenuList.findIndex(item => item.parent == 'user');
 
             if(findParentMenuListId > -1){
                 //compare first name of the component and label
-                var CurrentMenuId = this.menuList[findParentMenuListId].items.findIndex(item => item.label == getFirstName[0]);
+                var CurrentMenuId = newMenuList[findParentMenuListId].items.findIndex(item => item.label == getFirstName[0]);
 
                 if(CurrentMenuId > -1){
-                    this.menuList[findParentMenuListId].items[CurrentMenuId].visible = true;
+                    newMenuList[findParentMenuListId].items[CurrentMenuId].visible = true;
 
                     this.menu = {
-                        activeMenu : this.menuList[findParentMenuListId].items[CurrentMenuId],
-                        itemList : this.menuList[findParentMenuListId].items
+                        activeMenu : newMenuList[findParentMenuListId].items[CurrentMenuId],
+                        itemList : newMenuList[findParentMenuListId].items
                     };
 
                     return this.menu;
@@ -85,8 +83,8 @@ export class MenuService{
                 else{
                     //default to user home
                     this.menu = {
-                        activeMenu : this.menuList[findParentMenuListId].items[0],
-                        itemList : this.menuList[findParentMenuListId].items
+                        activeMenu : newMenuList[findParentMenuListId].items[0],
+                        itemList : newMenuList[findParentMenuListId].items
                     };
 
                     return this.menu;
@@ -94,8 +92,8 @@ export class MenuService{
             }else{
                 //if profile doesnt match user or admin then default to home user
                 this.menu = {
-                    activeMenu : this.menuList[0].items[0],
-                    itemList : this.menuList[0].items
+                    activeMenu : newMenuList[0].items[0],
+                    itemList : newMenuList[0].items
                 };
                 return this.menu;
             }

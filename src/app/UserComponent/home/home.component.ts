@@ -22,7 +22,6 @@ export class HomeComponent extends BaseComponent<any> implements OnInit {
 
   ngOnInit(): void {
 
-    //this.sharing.getActiveItem("Home");   
     this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
     this.versionUrl = "";
     this.action = ""; 

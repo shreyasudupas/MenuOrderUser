@@ -9,9 +9,6 @@ import { UserInfo } from '../Models/user/UserProfile';
 
 export class DataSharingService {
   
-  //assigning a default value
-  private activeitemSource = new BehaviorSubject<string>("Home");
-  //currentItem = this.activeitemSource.asObservable();
 
   //cart count
   private itemsAddedToCartCount = new BehaviorSubject<number>(0);
@@ -22,14 +19,6 @@ export class DataSharingService {
   private menuList = new BehaviorSubject<MenuActiveItem>(new MenuActiveItem());
 
   constructor() { }
-
-  getCurrentItem():Observable<string>{
-    return this.activeitemSource.asObservable();
-  }
-
-  getActiveItem(activeMenuItem:string){
-    this.activeitemSource.next(activeMenuItem);
-  }
 
   getActiveMenuList():Observable<MenuActiveItem>{
     return this.menuList.asObservable();

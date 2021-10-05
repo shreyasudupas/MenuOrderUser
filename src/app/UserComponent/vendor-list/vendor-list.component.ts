@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {  ActivatedRoute, Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
 import { VendorDetails } from 'src/app/Models/Vendor/VendorDetails';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import {Vendor} from '../../Models/Vendor/Vendor';
