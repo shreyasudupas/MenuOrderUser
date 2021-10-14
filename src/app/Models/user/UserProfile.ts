@@ -1,7 +1,7 @@
 export class UserInfo{
     Id:bigint;
     username:string;
-    roleId:number;
+    roleName:string;
     nickname:string;
     pictureLocation:string;
     points:bigint;

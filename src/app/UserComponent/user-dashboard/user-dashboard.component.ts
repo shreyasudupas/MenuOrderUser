@@ -49,21 +49,21 @@ export class UserDashboardComponent extends BaseComponent<UserInfo> implements O
 
 
       this.getForkItems(forkRequest).subscribe(([userProfileResponse,UserCartInformation])=>{
-        let UserProfile = userProfileResponse;
-        let UserCartInfo = JSON.parse(UserCartInformation);
+        let UserProfileResponse = userProfileResponse;
+        let UserCartInfoResponse = JSON.parse(UserCartInformation);
         // if(responseList.length>0){
         // }
-        if(UserProfile!=null){
-          this.UserProfile.points = UserProfile.points;
-          this.UserProfile.cartAmount = UserProfile.cartAmount;
-          this.UserProfile.roleId = UserProfile.roleId;
+        if(UserProfileResponse != null){
+          this.UserProfile.points = UserProfileResponse.points;
+          this.UserProfile.cartAmount = UserProfileResponse.cartAmount;
+          this.UserProfile.roleName = UserProfileResponse.roleName;
         }
 
           //cart information
-        if(UserCartInfo.Items != null){
+        if(UserCartInfoResponse.Items != null){
         let count =0;
-        if(UserCartInfo.Items.length >0){
-                UserCartInfo.Items.forEach((item:any) =>{
+        if(UserCartInfoResponse.Items.length >0){
+            UserCartInfoResponse.Items.forEach((item:any) =>{
                   count +=item.quantity;
                });
             }
