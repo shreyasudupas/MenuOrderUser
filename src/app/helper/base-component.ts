@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { MenuActiveItem } from "../Models/menu-service/menu-model";
 import { ResourceServiceForkRequest } from "../Models/resouce-service/ResourceServiceForkRequest";
@@ -41,6 +41,11 @@ export class BaseComponent<T> extends ResourceService<T>{
     public Create(body:any):Observable<T>{
         this.requestUri = this.versionUrl+this.action;
         return this.createItem(body);
+    }
+
+    public GetItem(param:HttpParams):Observable<T>{
+        this.requestUri = this.versionUrl+this.action;
+        return this.getItem(param);
     }
 
 
