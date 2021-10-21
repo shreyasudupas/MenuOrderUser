@@ -1,3 +1,7 @@
+import { UserInfo } from "../user/UserProfile";
+
 export class PaymentScreenResponse{
-    ReponseMessage:string;
+    userInfo:UserInfo;
+    totalAmount:number;
+    lastSelectedPaymentMode:string;
 }

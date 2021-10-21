@@ -14,6 +14,8 @@ import {TooltipModule} from 'primeng/tooltip';
 import { DropdownModule } from "primeng/dropdown";
 import {DataViewModule} from 'primeng/dataview';
 import {InputTextModule} from 'primeng/inputtext';
+import {CheckboxModule} from 'primeng/checkbox';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 @NgModule({
     imports:[ButtonModule,
@@ -31,7 +33,9 @@ import {InputTextModule} from 'primeng/inputtext';
         DropdownModule,
         TooltipModule,
         DataViewModule,
-        InputTextModule],
+        InputTextModule,
+        CheckboxModule,
+        RadioButtonModule],
     exports:[ButtonModule,
         TabMenuModule,
         MessageModule,
@@ -47,7 +51,9 @@ import {InputTextModule} from 'primeng/inputtext';
         DropdownModule,
         TooltipModule,
         DataViewModule,
-        InputTextModule
+        InputTextModule,
+        CheckboxModule,
+        RadioButtonModule
     ]
 })
 

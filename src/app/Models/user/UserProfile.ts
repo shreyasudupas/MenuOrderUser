@@ -1,9 +1,18 @@
 export class UserInfo{
     Id:bigint;
-    username:string;
+    userName:string;
     roleName:string;
     nickname:string;
     pictureLocation:string;
     points:bigint;
     cartAmount:number;
+    address:UserAddress[];
+}
+
+export class UserAddress{
+    userAddressId:bigint;
+    fullAddress:string;
+    city:string;
+    state:string;
+    isActive:boolean;
 }
