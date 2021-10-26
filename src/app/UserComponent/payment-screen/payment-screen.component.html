@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 
-<div *ngIf="UserProfile;else ShowNoData">
+<div *ngIf="paymentScreenResponse.userInfo;else ShowNoData">
     <!-- <p-card header="Payment Information"  [style]="{'width': '100%','max-width': '100%', 'height': '40%'}" styleClass="p-card-shadow">
         <ng-template pTemplate="header">
         </ng-template>
@@ -32,10 +32,10 @@
                     </span>
                 </div>
                 <div class="p-col">
-                    <h3>Total Cost is </h3> {{TotalPrice}} <img src="assets/UserInfoImage/rupee.png" alt="rupees" width="25px;" height="30px" style="padding: 10"/>
+                    <h3>Total Cost is </h3> {{paymentScreenResponse.totalAmount}} <img src="assets/UserInfoImage/rupee.png" alt="rupees" width="25px;" height="30px" style="padding: 10"/>
                 </div>
                 <div class="p-col">
-                    Hi {{UserProfile.Nickname}} how would you like to make the payment.
+                    Hi {{paymentScreenResponse.userInfo.userName}} how would you like to make the payment.
                 </div>
                 <div class="p-col">
                     <img src="assets/MenuIcons/payment-icon.png" alt="paymentIcon" style="padding: 10"/>
@@ -44,14 +44,30 @@
             </div>
         </div>
         <div class="p-col-6 Payment">
-            <form [formGroup]="paymentForm">
-               
-                <label for="firstname">First Name </label>
-                <input type="text" id="firstname" name="firstname" formControlName="CustomerName">
+            <form [formGroup]="paymentForm" (ngSubmit)="OnPaymentSubmit()">
                 
                 <div class="p-col">
-                    <drop-down-list  placeholderName="Select a City" displayLabel="label" formControlName="City" [responseFromAPI]="apiDropDown"></drop-down-list>
+                    <drop-down-list  placeholderName="Select a Payment Mode" displayLabel="label" formControlName="PaymentMode" [responseFromAPI]="apiDropDown"></drop-down-list>
                 </div>
+                
+                <div class="p-col">
+                    <label for="Address">Select Address </label>
+                    <div *ngFor="let addr of addresses" class="p-field-checkbox address">
+                        <p-card>
+                            <ng-template pTemplate="content">
+                                <div class="p-field-checkbox">
+                                    <!-- <p-radioButton [value]="addr" formControlName="UserAddress"></p-radioButton> -->
+                                    <input id="addr.key" type="radio" [value]="addr.key" name="UserAddress" formControlName="UserAddress">
+                                    <label [for]="addr.key">{{addr.name}}</label>
+                                </div>
+                            </ng-template>
+                        </p-card>
+                    </div>
+                    <button type="button" class="block">Add Address</button>
+                </div>
+
+                <button type="submit" class="block">Proceed to Payment</button>
+
             </form>
         </div>
     </div>
@@ -59,6 +75,16 @@
 </div>
 
 <ng-template #ShowNoData>
+    <div *ngIf="paymentScreenResponse.totalAmount == 0 ;else errorData">
+        <div style="margin: 15%;">
+            <h3 style="text-align: center;">No Items in cart</h3>
+            <img src="assets/MenuDisplayImages/emptyCart.png" alt="NoCartItem"/>
+        </div>
+    </div>
+    
+</ng-template>
+
+<ng-template #errorData>
     <div style="margin: 10%;">
         <img src="assets/Exception/BrokenImage.jpg" alt="NoCartItem" class="align-items-center"/>
     </div>

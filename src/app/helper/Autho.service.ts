@@ -111,7 +111,7 @@ export class AuthService {
       var user = authresult.idTokenPayload;
       let userProfile = new UserInfo();
       if(user!=null){
-        userProfile.username = user.email;
+        userProfile.userName = user.email;
         userProfile.pictureLocation = user.picture;
         userProfile.nickname = user.nickname;
         var userSession = JSON.stringify(userProfile);

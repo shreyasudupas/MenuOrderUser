@@ -11,3 +11,18 @@
     border-style: solid;
   border-color: rgb(22, 170, 158);
 }
+
+.address{
+    display:table-row;
+    margin: 1px;
+}
+.block{
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: rgb(24, 185, 185);
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
