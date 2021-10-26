@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { PaymentScreenResponse } from 'src/app/Models/payment-screen/PaymentScreenResponse';
 import { UserAddress } from 'src/app/Models/user/UserProfile';
 //import { UserInfo } from 'src/app/Models/user/UserProfile';

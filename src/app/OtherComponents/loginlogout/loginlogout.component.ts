@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/helper/Autho.service';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { AuthService } from 'src/app/helper/service/Autho.service';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { APIResponse } from 'src/app/Models/api-response/APIResponse';
 import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';

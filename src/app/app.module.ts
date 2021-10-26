@@ -11,8 +11,8 @@ import { AppComponent } from './app.component';
 import { LoginlogoutComponent } from './OtherComponents/loginlogout/loginlogout.component';
 //import { AuthModule } from '@auth0/auth0-angular';
 //import { environment as env } from '../environments/environment';
-import { AuthInterceptor } from './helper/auth-interceptor';
-import { GlobalErrorHandler } from './shared/errors/GlobalErrorHandler';
+import { AuthInterceptor } from './helper/interceptor/auth-interceptor';
+import { GlobalErrorHandler } from './shared/error/GlobalErrorHandler';
 
 
 

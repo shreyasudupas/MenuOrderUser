@@ -9,7 +9,7 @@ import { CartConfiguration } from 'src/app/Models/cart-configuration/cart-config
 import { VendorDetails } from 'src/app/Models/Vendor/VendorDetails';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { environment as env} from 'src/environments/environment';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { MenuService } from 'src/app/Services/menu.service';
 
 @Component({

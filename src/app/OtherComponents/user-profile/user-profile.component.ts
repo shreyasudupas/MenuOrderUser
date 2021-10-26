@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/helper/Autho.service';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { AuthService } from 'src/app/helper/service/Autho.service';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { MenuService } from 'src/app/Services/menu.service';
