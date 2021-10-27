@@ -16,6 +16,7 @@ import {DataViewModule} from 'primeng/dataview';
 import {InputTextModule} from 'primeng/inputtext';
 import {CheckboxModule} from 'primeng/checkbox';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {PasswordModule} from 'primeng/password';
 
 @NgModule({
     imports:[ButtonModule,
@@ -35,7 +36,8 @@ import {RadioButtonModule} from 'primeng/radiobutton';
         DataViewModule,
         InputTextModule,
         CheckboxModule,
-        RadioButtonModule],
+        RadioButtonModule,
+        PasswordModule],
     exports:[ButtonModule,
         TabMenuModule,
         MessageModule,
@@ -53,7 +55,8 @@ import {RadioButtonModule} from 'primeng/radiobutton';
         DataViewModule,
         InputTextModule,
         CheckboxModule,
-        RadioButtonModule
+        RadioButtonModule,
+        PasswordModule
     ]
 })
 

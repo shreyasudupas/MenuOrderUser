@@ -1,4 +1,6 @@
 import { Component,OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from './helper/service/Autho.service';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +8,16 @@ import { Component,OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+isLogin:boolean = false;
 
-  constructor(){ }
+  constructor(public _authService: AuthService,public route:Router) { }
 
-  ngOnInit(){}
+  ngOnInit(){
+    this.isLogin = this._authService.isAuthenticated();
+
+    if(!this.isLogin){
+      this.route.navigate(['login']);
+    }
+  }
 
 }

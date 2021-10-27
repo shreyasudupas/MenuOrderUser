@@ -1,0 +1,17 @@
+{{title}}
+<div class="center">
+    <div class="p-grid p-fluid">
+        <div class="p-col-12 p-md-12">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input type="text" pInputText placeholder="Username" [(ngModel)]="userLogin.username">         
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-password [(ngModel)]="userLogin.password" [feedback]="false"></p-password> 
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-button label="Submit" (click)="Login()"></p-button>
+        </div>
+    </div>
+</div>
