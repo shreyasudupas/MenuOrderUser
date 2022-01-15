@@ -8,16 +8,32 @@ import { AuthService } from './helper/service/Autho.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-isLogin:boolean = false;
+isUserAuthenticated:boolean = false;
+title="app";
 
-  constructor(public _authService: AuthService,public route:Router) { }
+  constructor(public _authService: AuthService,public route:Router) {
+    
+    this._authService.loginChanged.subscribe(userAuthenticated => {
+      this.isUserAuthenticated = userAuthenticated;
+  });
+   }
 
   ngOnInit(){
-    this.isLogin = this._authService.isAuthenticated();
+     this._authService.isAuthenticated().then((value) =>{
+       this.isUserAuthenticated = value;
+     });
 
-    if(!this.isLogin){
-      this.route.navigate(['login']);
-    }
+    // if(!this.isLogedIn){
+    //   this.route.navigate(['login']);
+    // }
+  }
+
+  public login = () => {
+    this._authService.login();
+  }
+
+  public logout = () => {
+
   }
 
 }

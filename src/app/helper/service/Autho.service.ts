@@ -6,6 +6,9 @@ import { UserInfo } from '../../Models/user/UserProfile';
 import { DataSharingService } from '../../Services/data-sharing.service';
 import { HttpClient } from '@angular/common/http';
 import jwt_decode from "jwt-decode";
+import { User, UserManager, UserManagerSettings } from 'oidc-client';
+import { Constants } from 'src/app/shared/Constants ';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn:'root'
@@ -25,11 +28,20 @@ export class AuthService {
     scope:'openid profile email profile:user profile:admin'
   });
 
-  constructor(public router: Router,private share:DataSharingService,private httpClient:HttpClient) {}
+  private _userManager: UserManager;
+  private _user: User = null;
+  private userLoginSubject = new Subject<boolean>();
 
-  public login(): void {
-    this.auth0.authorize();
-  }
+  public loginChanged = this.userLoginSubject.asObservable();
+
+  constructor(public router: Router,private share:DataSharingService,private httpClient:HttpClient) {
+      this._userManager = new UserManager(this.idpSettings);
+
+    }
+
+  // public login(): void {
+  //   this.auth0.authorize();
+  // }
 
  
   public handleAuthentication():Promise<UserInfo> {
@@ -95,12 +107,12 @@ export class AuthService {
     
   }
 
-  public isAuthenticated(): boolean {
-    // Check whether the current time is past the
-    // Access Token's expiry time
-    const expiresAt = JSON.parse(sessionStorage.getItem('expires_at')||'0');
-    return new Date().getTime() < expiresAt;
-  }
+  // public isAuthenticated(): boolean {
+  //   // Check whether the current time is past the
+  //   // Access Token's expiry time
+  //   const expiresAt = JSON.parse(sessionStorage.getItem('expires_at')||'0');
+  //   return new Date().getTime() < expiresAt;
+  // }
 
   public userHasScopes(scopes: Array<string>): boolean {
     const grantedScopes = JSON.parse(sessionStorage.getItem('scopes')||'{}').split(' ');
@@ -131,32 +143,72 @@ export class AuthService {
     return sessionStorage.getItem('access_token');
   }
 
-  authenticateUserDevelopment(body:any){
+  // authenticateUserDevelopment(body:any){
 
-    this.httpClient.post(env.userAPI+"Authenticate",body).toPromise().then((result:any)=>{
-      if(result.statusCode == 200){
-        var data = result.content;
-        var decoded:any = jwt_decode(data.token);
-        var authResult = {
-          expiresIn:decoded.exp,
-          scope:decoded.scope,
-          idToken:null,
-          accessToken:data.token
-        };
+  //   this.httpClient.post(env.userAPI+"Authenticate",body).toPromise().then((result:any)=>{
+  //     if(result.statusCode == 200){
+  //       var data = result.content;
+  //       var decoded:any = jwt_decode(data.token);
+  //       var authResult = {
+  //         expiresIn:decoded.exp,
+  //         scope:decoded.scope,
+  //         idToken:null,
+  //         accessToken:data.token
+  //       };
 
-        this.setSession(authResult);
+  //       this.setSession(authResult);
 
-        //set user profile
-        var userProfile = {
-          username: data.username,
-          pictureLocation: data.pictureLocation,
-          nickname:data.nickname
-        };
-        sessionStorage.setItem('userInfo',JSON.stringify(userProfile));
+  //       //set user profile
+  //       var userProfile = {
+  //         username: data.username,
+  //         pictureLocation: data.pictureLocation,
+  //         nickname:data.nickname
+  //       };
+  //       sessionStorage.setItem('userInfo',JSON.stringify(userProfile));
 
-      }else{
-        throw new Error("Authentication Error");
+  //     }else{
+  //       throw new Error("Authentication Error");
+  //     }
+  //   });
+  // }
+
+  private get idpSettings() : UserManagerSettings {
+    return {
+      authority: Constants.idpAuthority,
+      client_id: Constants.clientId,
+      redirect_uri: `${Constants.clientRoot}/signin-callback`,
+      scope: "openid basketApi",
+      response_type: "code",
+      post_logout_redirect_uri: `${Constants.clientRoot}/signout-callback`
+    }
+  }
+
+  public isAuthenticated = (): Promise<boolean> => {
+    return this._userManager.getUser()
+    .then(user => {
+      if(this._user !== user){
+        this.userLoginSubject.next(this.checkUser(user));
       }
+      this._user = user;
+        
+      return this.checkUser(user);
+    })
+  }
+
+  private checkUser = (user : User): boolean => {
+    return !!user && !user.expired;
+  }
+
+  public login = () => {
+    return this._userManager.signinRedirect();
+  }
+
+  public finishLogin = (): Promise<User> => {
+    return this._userManager.signinRedirectCallback()
+    .then(user => {
+      this._user = user;
+      this.userLoginSubject.next(this.checkUser(user));
+      return user;
     });
   }
 

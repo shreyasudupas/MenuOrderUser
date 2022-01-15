@@ -91,7 +91,7 @@ export class LoginlogoutComponent extends BaseComponent<APIResponse> implements 
     //this.auth.login();
     //for developement purposes only
     let user = { username:"admin@test.com",password:"admin@123"};
-    this.auth.authenticateUserDevelopment(user);
+    //this.auth.authenticateUserDevelopment(user);
   }
 
   logout():void{
