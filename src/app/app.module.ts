@@ -13,7 +13,6 @@ import { LoginlogoutComponent } from './OtherComponents/loginlogout/loginlogout.
 //import { environment as env } from '../environments/environment';
 import { AuthInterceptor } from './helper/interceptor/auth-interceptor';
 import { GlobalErrorHandler } from './shared/error/GlobalErrorHandler';
-import { LoginComponent } from './OtherComponents/login/login.component';
 import { SigninRedirectCallbackComponent } from './shared/component/signIn-redirect-callBack/signin-redirect-callback.component';
 import { PageNotFoundComponent } from './shared/component/NotFound/page-not-found.component';
 
@@ -23,7 +22,6 @@ import { PageNotFoundComponent } from './shared/component/NotFound/page-not-foun
   declarations: [
     AppComponent,
     LoginlogoutComponent,
-    LoginComponent,
     SigninRedirectCallbackComponent,
     PageNotFoundComponent
   ],
