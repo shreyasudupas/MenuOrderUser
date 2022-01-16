@@ -15,6 +15,7 @@ import { AuthInterceptor } from './helper/interceptor/auth-interceptor';
 import { GlobalErrorHandler } from './shared/error/GlobalErrorHandler';
 import { SigninRedirectCallbackComponent } from './shared/component/signIn-redirect-callBack/signin-redirect-callback.component';
 import { PageNotFoundComponent } from './shared/component/NotFound/page-not-found.component';
+import { SignoutRedirectComponent } from './shared/component/signOutRedirectCallback/signout-redirect-callback.component';
 
 
 
@@ -23,7 +24,8 @@ import { PageNotFoundComponent } from './shared/component/NotFound/page-not-foun
     AppComponent,
     LoginlogoutComponent,
     SigninRedirectCallbackComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SignoutRedirectComponent
   ],
   imports: [
     BrowserModule,

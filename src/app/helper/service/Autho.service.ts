@@ -83,29 +83,29 @@ export class AuthService {
     sessionStorage.setItem('scopes', JSON.stringify(scopes));
   }
 
-  public logout(): void {
-    //chek if it contains the session value
-    let session_variables:boolean = false;
-    if(sessionStorage.getItem('access_token')!=null){
-      session_variables = true;
-    }
-    // Remove tokens and expiry time from localStorage
-    sessionStorage.removeItem('access_token');
-    sessionStorage.removeItem('id_token');
-    sessionStorage.removeItem('expires_at');
-    sessionStorage.removeItem('scopes');
-    sessionStorage.removeItem('userInfo');
+  // public logout(): void {
+  //   //chek if it contains the session value
+  //   let session_variables:boolean = false;
+  //   if(sessionStorage.getItem('access_token')!=null){
+  //     session_variables = true;
+  //   }
+  //   // Remove tokens and expiry time from localStorage
+  //   sessionStorage.removeItem('access_token');
+  //   sessionStorage.removeItem('id_token');
+  //   sessionStorage.removeItem('expires_at');
+  //   sessionStorage.removeItem('scopes');
+  //   sessionStorage.removeItem('userInfo');
 
-    //logout from app only if it contains the session variables
-    if(session_variables){
-        //logout from auth0 Application
-        this.auth0.logout({
-          clientID:env.auth.clientId,
-          returnTo:env.auth.redirectUri
-        });
-    }
+  //   //logout from app only if it contains the session variables
+  //   if(session_variables){
+  //       //logout from auth0 Application
+  //       this.auth0.logout({
+  //         clientID:env.auth.clientId,
+  //         returnTo:env.auth.redirectUri
+  //       });
+  //   }
     
-  }
+  // }
 
   // public isAuthenticated(): boolean {
   //   // Check whether the current time is past the
@@ -210,6 +210,15 @@ export class AuthService {
       this.userLoginSubject.next(this.checkUser(user));
       return user;
     });
+  }
+
+  public logout = () => {
+    this._userManager.signoutRedirect();
+  }
+
+  public finishLogout = () => {
+    this._user = null;
+    return this._userManager.signoutRedirectCallback();
   }
 
 }

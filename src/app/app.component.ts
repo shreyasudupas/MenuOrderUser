@@ -33,7 +33,7 @@ title="app";
   }
 
   public logout = () => {
-
+    this._authService.logout();
   }
 
 }
