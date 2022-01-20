@@ -16,16 +16,18 @@ import { GlobalErrorHandler } from './shared/error/GlobalErrorHandler';
 import { SigninRedirectCallbackComponent } from './shared/component/signIn-redirect-callBack/signin-redirect-callback.component';
 import { PageNotFoundComponent } from './shared/component/NotFound/page-not-found.component';
 import { SignoutRedirectComponent } from './shared/component/signOutRedirectCallback/signout-redirect-callback.component';
+import { ForbiddenComponent } from './shared/component/Forbidden/forbidden-component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginlogoutComponent,
+    // LoginlogoutComponent,
     SigninRedirectCallbackComponent,
     PageNotFoundComponent,
-    SignoutRedirectComponent
+    SignoutRedirectComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

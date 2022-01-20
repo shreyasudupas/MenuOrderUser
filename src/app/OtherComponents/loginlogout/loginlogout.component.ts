@@ -67,13 +67,13 @@ export class LoginlogoutComponent extends BaseComponent<APIResponse> implements 
       // //if url is base url then only navigate other wise it will navigate irrespective of explicity routing to that route
       if((window.location.href == (window.location.origin+'/#')) || (window.location.href == (window.location.origin+'/'))){
 
-        if(this.auth.userHasScopes(['profile:user'])){
-          this.zone.run(()=>{
-            this.router.navigate(['user']);
-          }); 
-          if(LoginlogoutComponent.i == 1)//temp fix since its not routing
-            location.reload();
-        }
+        // if(this.auth.userHasScopes(['profile:user'])){
+        //   this.zone.run(()=>{
+        //     this.router.navigate(['user']);
+        //   }); 
+        //   if(LoginlogoutComponent.i == 1)//temp fix since its not routing
+        //     location.reload();
+        // }
       }
     }else{
       this.logoutRef.nativeElement.hidden = true;

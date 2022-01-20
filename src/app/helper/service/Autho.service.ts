@@ -114,9 +114,21 @@ export class AuthService {
   //   return new Date().getTime() < expiresAt;
   // }
 
-  public userHasScopes(scopes: Array<string>): boolean {
-    const grantedScopes = JSON.parse(sessionStorage.getItem('scopes')||'{}').split(' ');
-    return scopes.every(scope => grantedScopes.includes(scope));
+  // public userHasScopes(scopes: Array<string>): boolean {
+  //   const grantedScopes = JSON.parse(sessionStorage.getItem('scopes')||'{}').split(' ');
+  //   return scopes.every(scope => grantedScopes.includes(scope));
+  // }
+  public UserIsAppUser():boolean {
+    var result = false;
+    this._userManager.getUser()
+    .then(user=>{
+      if(this._user == user){
+        result = this._user.profile["role"] == "appUser";
+      }else{
+        result = false;
+      }
+    });
+    return result;
   }
 
   public getUserProfile(authresult:auth0.Auth0DecodedHash){
@@ -134,8 +146,7 @@ export class AuthService {
 
   getUserInformation():UserInfo{
     let userProfile = new UserInfo();
-    let getuserDetails = JSON.parse(sessionStorage.getItem('userInfo')||'{}');
-    userProfile = getuserDetails;
+    
     return userProfile;
   }
 
@@ -177,7 +188,7 @@ export class AuthService {
       authority: Constants.idpAuthority,
       client_id: Constants.clientId,
       redirect_uri: `${Constants.clientRoot}/signin-callback`,
-      scope: "openid basketApi",
+      scope: "openid profile GetUserRole",
       response_type: "code",
       post_logout_redirect_uri: `${Constants.clientRoot}/signout-callback`
     }
