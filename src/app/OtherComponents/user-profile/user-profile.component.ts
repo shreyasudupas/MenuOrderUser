@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/helper/service/Autho.service';
 import { BaseComponent } from 'src/app/shared/component/base-component';
 import { UserInfo } from 'src/app/Models/user/UserProfile';
@@ -14,30 +14,30 @@ import { environment as env} from 'src/environments/environment';
 })
 export class UserProfileComponent extends BaseComponent<UserInfo> implements OnInit {
 userProfile:UserInfo;
-//@Input() InputUserProfile:UserInfo;
+userRole:string;
 
   constructor(private authService:AuthService,
     public _menuService:MenuService,
     public http:HttpClient,
     public _broadcastService:DataSharingService) { 
     super(_menuService,http,_broadcastService);
+    this.userProfile = new UserInfo();
   }
 
   ngOnInit(): void {
     
-    this.versionUrl = env.userAPI;
-    this.action = 'GetOrUpdateUserDetails';
-    this.userProfile = this.authService.getUserInformation();
-    //get the current token
-    //this.userProfile = this.InputUserProfile;
-    this.Create(this.userProfile).subscribe((response)=>{
-      if(response != null){
-        this.userProfile.points = response.points;
-        this.userProfile.cartAmount = response.cartAmount;
-        this.userProfile.roleName = response.roleName;
-      }
+    this.versionUrl = env.IDSUserAPI;
+    this.action = 'GetUserInformation';
+    
+    this.userRole = this.authService.GetUserRole();
+
+    this.GetItem(null).subscribe((user)=>{
+      //debugger;
+      this.userProfile = user;
       
-    })
+      if(this.userProfile.imagePath != null)
+        this.userProfile.imagePath = env.idsConfig.imageServerPath + this.userProfile.imagePath;
+    });
   }
 
 }

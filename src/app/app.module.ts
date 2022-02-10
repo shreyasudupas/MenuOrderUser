@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginlogoutComponent } from './OtherComponents/loginlogout/loginlogout.component';
 //import { AuthModule } from '@auth0/auth0-angular';
 //import { environment as env } from '../environments/environment';
 import { AuthInterceptor } from './helper/interceptor/auth-interceptor';

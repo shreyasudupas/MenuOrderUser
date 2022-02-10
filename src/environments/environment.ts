@@ -1,4 +1,4 @@
-import { domain,clientId,audience } from '../../auth-config.json';
+import { domain,clientId,audience,scope } from '../../auth-config.json';
 
 export const environment = {
   production: false,
@@ -6,9 +6,14 @@ export const environment = {
     domain,
     clientId,
     redirectUri: window.location.origin,
-    audience
+    audience,
+    scope
 
   },
+  idsConfig:{
+    imageServerPath:'https://localhost:5005/images/'
+  }
+  ,
   baseV1Url:"http://localhost:5000/api/v1/",
   baseV2Url:"http://localhost:5000/api/v2/",
   userAPI:"https://localhost:5000/api/gateway/user/",
@@ -17,7 +22,8 @@ export const environment = {
   basketAPI:"https://localhost:5000/api/gateway/basketservice/",
   orderAPI:"https://localhost:5000/api/gateway/orders/",
   cartInfoAPI:"https://localhost:5000/api/gateway/cart-information/",
-  vendorConfigAPI:"https://localhost:5000/api/gateway/cart-configuration/"
+  vendorConfigAPI:"https://localhost:5000/api/gateway/cart-configuration/",
+  IDSUserAPI:"https://localhost:5005/api/v1/User/"
 };
 
 

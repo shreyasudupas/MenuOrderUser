@@ -1,13 +1,19 @@
 <div class="p-grid">
     <div class="p-col-12">
-        <p-card [header]="userProfile.nickname" [subheader]="userProfile.userName" styleClass="p-card-shadow">
+        <p-card [header]="userProfile.username" [subheader]="userProfile.email" styleClass="p-card-shadow">
                 <ng-template pTemplate="header">
-                    <img alt="Profile-Pic" [src]="userProfile.pictureLocation">
+                    <div *ngIf="userProfile.imagePath == null">
+                        <img [src]="" alt="DefaultPic"/>
+                    </div>
+                    <div *ngIf="userProfile.imagePath != null">
+                        <img alt="Profile-Pic" [src]="userProfile.imagePath">
+                    </div>
                 </ng-template>
                 <div *ngIf="userProfile.cartAmount == null">
-                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+                    <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s">
+                    </p-progressSpinner>
                 </div>
-                <div *ngIf="userProfile.roleName == 'User'">
+                <div *ngIf="userRole == 'appUser'">
                     <div class="p-grid">
                         <div class="p-col-2"><img src="assets/UserInfoImage/wallet.png" pTooltip="Wallet amount" alt="wallet" width="25px;" height="30px"/></div>
                         <div class="p-col-3">{{userProfile.cartAmount}}</div>

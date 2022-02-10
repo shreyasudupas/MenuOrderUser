@@ -11,7 +11,7 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { VendorListComponent } from './vendor-list/vendor-list.component';
 
 const routes: Routes = [
-  {path:'',component:UserDashboardComponent,canActivate:[AppUserGaurd],children:[
+  {path:'',component:UserDashboardComponent,canActivate:[AppUserGaurd], data: { roles: ['appUser'] },children:[
     {path:'home',component:HomeComponent},
     {path:'vendorlist',component:VendorListComponent},
     {path:'menu-display',component:MenuDisplayComponent},

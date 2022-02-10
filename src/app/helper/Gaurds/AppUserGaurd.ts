@@ -10,25 +10,31 @@ export class AppUserGaurd implements CanActivate {
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Promise<boolean> | boolean {
-
-      var isAuthenticated = false;
-      this.auth.isAuthenticated().then(result => {
-        isAuthenticated = result;
-
-        if(isAuthenticated){
-          //check if the user has the role appUser
-          if(this.auth.UserIsAppUser()){
-            isAuthenticated = true;
-            return true;
-          }
-          else{
-            return this.router.navigate(['/forbidden']);
-          }
-        }else{
-          return isAuthenticated;
-        }
-      });
-      return isAuthenticated;
+    state: RouterStateSnapshot) {
+      const roles = next.data['roles'] as Array<string>;
+      if(!roles){
+        return this.checkIfUserIsAuthenticated();
+      }else{
+        return this.checkForAppUser();
+      }      
   }
+
+  private checkIfUserIsAuthenticated(){
+    return this.auth.isAuthenticated().then(res=>{
+      return res? true: this.redirectToUnAuthorized();
+    })
+  }
+
+  private checkForAppUser(){
+    return this.auth.CheckIfUserIsAppUser()
+    .then(res=>{
+      return res ? true: this.redirectToUnAuthorized();
+    })
+  }
+
+  private redirectToUnAuthorized(){
+    this.router.navigate(['/forbidden'])
+    return false;
+  }
+
 }

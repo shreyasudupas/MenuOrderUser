@@ -44,27 +44,27 @@ export class AuthService {
   // }
 
  
-  public handleAuthentication():Promise<UserInfo> {
+  // public handleAuthentication():Promise<UserInfo> {
 
-    return new Promise((resolve,reject)=>{
+  //   return new Promise((resolve,reject)=>{
 
-      this.auth0.parseHash((err, authResult) => {
-        if (authResult && authResult.accessToken && authResult.idToken) {
-          window.location.hash = '';
-          this.setSession(authResult);
-          //this.router.navigateByUrl('/user');
-          let user = this.getUserProfile(authResult);
-          resolve(user);
-        } else if (err) {
+  //     this.auth0.parseHash((err, authResult) => {
+  //       if (authResult && authResult.accessToken && authResult.idToken) {
+  //         window.location.hash = '';
+  //         this.setSession(authResult);
+  //         //this.router.navigateByUrl('/user');
+  //         let user = this.getUserProfile(authResult);
+  //         resolve(user);
+  //       } else if (err) {
           
-          console.log(err);
-          alert('Error: <%= "${err.error}" %>. Check the console for further details.');
-          reject(err);
-        }
-      });
-    });
+  //         console.log(err);
+  //         alert('Error: <%= "${err.error}" %>. Check the console for further details.');
+  //         reject(err);
+  //       }
+  //     });
+  //   });
     
-  }
+  // }
 
 
   private setSession(authResult:any): void {
@@ -118,40 +118,39 @@ export class AuthService {
   //   const grantedScopes = JSON.parse(sessionStorage.getItem('scopes')||'{}').split(' ');
   //   return scopes.every(scope => grantedScopes.includes(scope));
   // }
-  public UserIsAppUser():boolean {
-    var result = false;
-    this._userManager.getUser()
-    .then(user=>{
-      if(this._user == user){
-        result = this._user.profile["role"] == "appUser";
-      }else{
-        result = false;
-      }
+  public CheckIfUserIsAppUser = (): Promise<boolean> => {
+    return this._userManager.getUser()
+    .then(user => {
+      return user?.profile.role === "appUser";
     });
-    return result;
   }
 
-  public getUserProfile(authresult:auth0.Auth0DecodedHash){
-      var user = authresult.idTokenPayload;
-      let userProfile = new UserInfo();
-      if(user!=null){
-        userProfile.userName = user.email;
-        userProfile.pictureLocation = user.picture;
-        userProfile.nickname = user.nickname;
-        var userSession = JSON.stringify(userProfile);
-        sessionStorage.setItem('userInfo',userSession);
-      }
-      return userProfile;
+  public GetUserRole(){
+    return this._user?.profile.role;
   }
+
+  // public getUserProfile(authresult:auth0.Auth0DecodedHash){
+  //     var user = authresult.idTokenPayload;
+  //     let userProfile = new UserInfo();
+  //     if(user!=null){
+  //       userProfile.userName = user.email;
+  //       userProfile.pictureLocation = user.picture;
+  //       userProfile.nickname = user.nickname;
+  //       var userSession = JSON.stringify(userProfile);
+  //       sessionStorage.setItem('userInfo',userSession);
+  //     }
+  //     return userProfile;
+  // }
 
   getUserInformation():UserInfo{
     let userProfile = new UserInfo();
-    
+
     return userProfile;
   }
 
   getToken(){
-    return sessionStorage.getItem('access_token');
+    //return sessionStorage.getItem('access_token');
+    return this._user?.access_token;
   }
 
   // authenticateUserDevelopment(body:any){
@@ -188,7 +187,7 @@ export class AuthService {
       authority: Constants.idpAuthority,
       client_id: Constants.clientId,
       redirect_uri: `${Constants.clientRoot}/signin-callback`,
-      scope: "openid profile GetUserRole",
+      scope: env.auth.scope,
       response_type: "code",
       post_logout_redirect_uri: `${Constants.clientRoot}/signout-callback`
     }

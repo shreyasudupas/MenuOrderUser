@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     var userInfo = this.auth.getUserInformation();
-    if(userInfo){
+    if(userInfo!=null){
       request = request.clone({headers: request.headers.append('UserInfo',JSON.stringify(userInfo))});
     }
    
