@@ -5,7 +5,6 @@ import * as auth0 from 'auth0-js';
 import { UserInfo } from '../../Models/user/UserProfile';
 import { DataSharingService } from '../../Services/data-sharing.service';
 import { HttpClient } from '@angular/common/http';
-import jwt_decode from "jwt-decode";
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import { Constants } from 'src/app/shared/Constants ';
 import { Subject } from 'rxjs';
