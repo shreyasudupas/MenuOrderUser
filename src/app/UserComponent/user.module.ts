@@ -15,6 +15,7 @@ import { ModalComponent } from '../OtherComponents/modal/modal.component';
 import { PaymentScreenComponent } from './payment-screen/payment-screen.component';
 import { DropDownListComponent } from '../OtherComponents/DropDownList/drop-down-list.component';
 import { MenuDisplayComponent } from './menu-display/menu-display.component';
+import { AppUserGaurd } from '../helper/Gaurds/AppUserGaurd';
 
 
 @NgModule({
@@ -39,6 +40,6 @@ import { MenuDisplayComponent } from './menu-display/menu-display.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers:[]
+  providers:[AppUserGaurd]
 })
 export class UserModule { }

@@ -15,7 +15,7 @@ export class MenuService{
 
     public menuList:MenuNavigationModel[] = [
         {
-            parent :'user',
+            parent :'appUser',
             items : [
                 {
                     label: 'Home',

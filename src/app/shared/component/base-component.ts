@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { MenuActiveItem } from "../Models/menu-service/menu-model";
-import { ResourceServiceForkRequest } from "../Models/resouce-service/ResourceServiceForkRequest";
-import { DataSharingService } from "../Services/data-sharing.service";
-import { MenuService } from "../Services/menu.service";
-import { ResourceService } from "../Services/Resouce.service";
+import { MenuActiveItem } from "../../Models/menu-service/menu-model";
+import { ResourceServiceForkRequest } from "../../Models/resouce-service/ResourceServiceForkRequest";
+import { DataSharingService } from "../../Services/data-sharing.service";
+import { MenuService } from "../../Services/menu.service";
+import { ResourceService } from "../../Services/Resouce.service";
 
 export class BaseComponent<T> extends ResourceService<T>{
 

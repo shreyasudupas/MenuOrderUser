@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { MenuService } from 'src/app/Services/menu.service';
 

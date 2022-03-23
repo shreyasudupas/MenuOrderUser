@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { MenuCartData, MenuColumnData, MenuDisplayReponse } from 'src/app/Models/menu-display/menu-display-response';
 import { RequestResource, ResourceServiceForkRequest } from 'src/app/Models/resouce-service/ResourceServiceForkRequest';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppUserGaurd } from '../helper/Gaurds/AppUserGaurd';
 import { CartInformationComponent } from './cart-information/cart-information.component';
 import { HomeComponent } from './home/home.component';
 import { MenuDisplayComponent } from './menu-display/menu-display.component';
@@ -10,7 +11,7 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { VendorListComponent } from './vendor-list/vendor-list.component';
 
 const routes: Routes = [
-  {path:'',component:UserDashboardComponent,children:[
+  {path:'',component:UserDashboardComponent,canActivate:[AppUserGaurd], data: { roles: ['appUser'] },children:[
     {path:'home',component:HomeComponent},
     {path:'vendorlist',component:VendorListComponent},
     {path:'menu-display',component:MenuDisplayComponent},

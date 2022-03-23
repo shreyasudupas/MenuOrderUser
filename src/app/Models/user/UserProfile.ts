@@ -1,12 +1,14 @@
 export class UserInfo{
-    Id:bigint;
-    userName:string;
-    roleName:string;
-    nickname:string;
-    pictureLocation:string;
+    userId:string;
+    username:string;
+    email:string;
+    phoneNumber:string;
+    imagePath:string;
     points:bigint;
     cartAmount:number;
     address:UserAddress[];
+    errorDescription:string[];
+    status:number;
 }
 
 export class UserAddress{

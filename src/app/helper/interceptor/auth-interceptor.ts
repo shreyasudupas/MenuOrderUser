@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from './Autho.service';
+import { AuthService } from '../service/Autho.service';
 
 @Injectable()
 
@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     var userInfo = this.auth.getUserInformation();
-    if(userInfo){
+    if(userInfo!=null){
       request = request.clone({headers: request.headers.append('UserInfo',JSON.stringify(userInfo))});
     }
    

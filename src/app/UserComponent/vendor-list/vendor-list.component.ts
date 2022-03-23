@@ -5,7 +5,7 @@ import { VendorDetails } from 'src/app/Models/Vendor/VendorDetails';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import {Vendor} from '../../Models/Vendor/Vendor';
 import { environment as env } from '../../../environments/environment';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { MenuService } from 'src/app/Services/menu.service';
 
 @Component({

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/helper/Autho.service';
-import { BaseComponent } from 'src/app/helper/base-component';
+import { AuthService } from 'src/app/helper/service/Autho.service';
+import { BaseComponent } from 'src/app/shared/component/base-component';
 import { APIResponse } from 'src/app/Models/api-response/APIResponse';
 import { UserInfo } from 'src/app/Models/user/UserProfile';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
@@ -67,13 +67,13 @@ export class LoginlogoutComponent extends BaseComponent<APIResponse> implements 
       // //if url is base url then only navigate other wise it will navigate irrespective of explicity routing to that route
       if((window.location.href == (window.location.origin+'/#')) || (window.location.href == (window.location.origin+'/'))){
 
-        if(this.auth.userHasScopes(['profile:user'])){
-          this.zone.run(()=>{
-            this.router.navigate(['user']);
-          }); 
-          if(LoginlogoutComponent.i == 1)//temp fix since its not routing
-            location.reload();
-        }
+        // if(this.auth.userHasScopes(['profile:user'])){
+        //   this.zone.run(()=>{
+        //     this.router.navigate(['user']);
+        //   }); 
+        //   if(LoginlogoutComponent.i == 1)//temp fix since its not routing
+        //     location.reload();
+        // }
       }
     }else{
       this.logoutRef.nativeElement.hidden = true;
@@ -91,7 +91,7 @@ export class LoginlogoutComponent extends BaseComponent<APIResponse> implements 
     //this.auth.login();
     //for developement purposes only
     let user = { username:"admin@test.com",password:"admin@123"};
-    this.auth.authenticateUserDevelopment(user);
+    //this.auth.authenticateUserDevelopment(user);
   }
 
   logout():void{
