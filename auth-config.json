@@ -1,6 +1,8 @@
 {
-    "domain": "dev--5e4sc6g.us.auth0.com",
-    "clientId": "K6KQ9yPvbm0D06u7cvMJCPrhCLXScX0U",
+    "apiRoot": "https://localhost:5001/api",
+    "clientRoot": "http://localhost:4200",
+    "idpAuthority": "https://localhost:5005",
+    "clientId": "interactive",
     "audience":"http://menuorder/authorize",
     "scope":"openid profile userIDSApi IdentityServerApi GetUserRole"
 }

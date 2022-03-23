@@ -1,12 +1,12 @@
-import { domain,clientId,audience,scope } from '../../auth-config.json';
+import { clientRoot,clientId,idpAuthority,scope } from '../../auth-config.json';
 
 export const environment = {
   production: false,
   auth:{
-    domain,
+    clientRoot,
     clientId,
     redirectUri: window.location.origin,
-    audience,
+    idpAuthority,
     scope
 
   },
