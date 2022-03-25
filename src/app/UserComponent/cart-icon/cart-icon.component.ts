@@ -2,7 +2,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BaseComponent } from 'src/app/shared/component/base-component';
-import { CartIconReponse } from 'src/app/Models/cart-icon-response/cart-icon';
 import { DataSharingService } from 'src/app/Services/data-sharing.service';
 import { MenuService } from 'src/app/Services/menu.service';
 import { environment as env} from 'src/environments/environment';
