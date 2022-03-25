@@ -4,5 +4,5 @@
     "idpAuthority": "https://localhost:5005",
     "clientId": "interactive",
     "audience":"http://menuorder/authorize",
-    "scope":"openid profile userIDSApi IdentityServerApi GetUserRole"
+    "scope":"openid profile userIDSApi IdentityServerApi basketApi"
 }

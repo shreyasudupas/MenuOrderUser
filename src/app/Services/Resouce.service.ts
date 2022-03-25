@@ -39,12 +39,13 @@ public requestUri:string;
         return this.httpclient.get<T>(this.requestUri,{params:params})
         .pipe(
             map((data:any)=>{
-                if(data.statusCode == 200 || data.statusCode == 202){
-                    return data.content as T
-                }else if(data.statusCode == 500 || data.statusCode == 404){
-                    this.CallErrorHandler(data.exception);
-                    return data.content;
-                } 
+                // if(data.statusCode == 200 || data.statusCode == 202){
+                //     return data.content as T
+                // }else if(data.statusCode == 500 || data.statusCode == 404){
+                //     this.CallErrorHandler(data.exception);
+                //     return data.content;
+                // }
+                return data as T; 
             }),
             catchError(this.handleError)
         );

@@ -12,7 +12,7 @@ import { environment as env} from 'src/environments/environment';
   templateUrl: './cart-icon.component.html',
   styleUrls: ['./cart-icon.component.css']
 })
-export class CartIconComponent extends BaseComponent<CartIconReponse> implements OnInit {
+export class CartIconComponent extends BaseComponent<number> implements OnInit {
   cartItemNumber:string;
 
   constructor(private share:DataSharingService,
@@ -27,10 +27,11 @@ export class CartIconComponent extends BaseComponent<CartIconReponse> implements
   ngOnInit(): void {
     //this.cartItems = "3" ;
     let param = new HttpParams();
-    this.versionUrl = env.cartInfoAPI;
-    this.action = "GetCartItem";
+    this.versionUrl = env.BasketAPI;
+    this.action = "getbasketcount";
+
     this.GetItem(param).subscribe((result)=>{
-      this.cartItemNumber = result.totalItems.toString();
+      this.cartItemNumber = result.toString();
     });
 
     this.share.getCurrentCartCount().subscribe((cartnumber)=>{

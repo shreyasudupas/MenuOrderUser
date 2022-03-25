@@ -22,10 +22,10 @@ export class AuthInterceptor implements HttpInterceptor {
         request = request.clone({ headers: request.headers.append('Content-Type', 'application/json') });
     }
 
-    var userInfo = this.auth.getUserInformation();
-    if(userInfo!=null){
-      request = request.clone({headers: request.headers.append('UserInfo',JSON.stringify(userInfo))});
-    }
+    // var userInfo = this.auth.getUserInformation();
+    // if(userInfo!=null){
+    //   request = request.clone({headers: request.headers.append('UserInfo',JSON.stringify(userInfo))});
+    // }
    
     return next.handle(request);
   }

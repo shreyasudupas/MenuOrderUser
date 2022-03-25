@@ -23,7 +23,8 @@ export const environment = {
   orderAPI:"https://localhost:5000/api/gateway/orders/",
   cartInfoAPI:"https://localhost:5000/api/gateway/cart-information/",
   vendorConfigAPI:"https://localhost:5000/api/gateway/cart-configuration/",
-  IDSUserAPI:"https://localhost:5005/api/v1/User/"
+  IDSUserAPI:"https://localhost:5005/api/v1/User/",
+  BasketAPI:"https://localhost:5000/api/basket/"
 };
 
 

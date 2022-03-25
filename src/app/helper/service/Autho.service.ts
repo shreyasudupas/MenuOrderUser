@@ -46,10 +46,8 @@ export class AuthService {
   }
 
 
-  getUserInformation():UserInfo{
-    let userProfile = new UserInfo();
-
-    return userProfile;
+  getUserInformation():User{
+    return this._user;
   }
 
   getToken(){
