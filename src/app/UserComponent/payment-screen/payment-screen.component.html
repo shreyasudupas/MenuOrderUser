@@ -1,0 +1,91 @@
+<p-toast></p-toast>
+
+<div *ngIf="paymentScreenResponse.userInfo;else ShowNoData">
+    <!-- <p-card header="Payment Information"  [style]="{'width': '100%','max-width': '100%', 'height': '40%'}" styleClass="p-card-shadow">
+        <ng-template pTemplate="header">
+        </ng-template>
+        
+        <div class="p-grid">
+            <div class="p-col-6 UserInformation">
+                
+            </div>
+            <div class="p-col-6 Payment">
+                <h4>Payment Information</h4>
+            </div>
+        </div>
+
+        
+        <ng-template pTemplate="footer">
+            <div>
+                <button [disabled]="orderButtonDisable" pButton pRipple type="button" label="Order Now" class="p-button-outlined p-button-success" (click)="OrderUserBasket()"></button>
+            </div>
+        </ng-template>
+    </p-card> -->
+
+    <div class="p-grid">
+        <div class="p-col-6 UserInformation">
+            <div class="grid">
+                <div class="p-col">
+                    <button pButton pRipple type="button" icon="pi pi-angle-left" class="p-button-rounded p-button-text"></button>
+                    <span class="box shadow-8" style="float: right;">
+                        <img  src="assets/Logo/MenuLogo1.png" alt="MenuLogo" class="Logo"/>
+                    </span>
+                </div>
+                <div class="p-col">
+                    <h3>Total Cost is </h3> {{paymentScreenResponse.totalAmount}} <img src="assets/UserInfoImage/rupee.png" alt="rupees" width="25px;" height="30px" style="padding: 10"/>
+                </div>
+                <div class="p-col">
+                    <!-- Hi {{paymentScreenResponse.userInfo.userName}} how would you like to make the payment. -->
+                </div>
+                <div class="p-col">
+                    <img src="assets/MenuIcons/payment-icon.png" alt="paymentIcon" style="padding: 10"/>
+                </div>
+
+            </div>
+        </div>
+        <div class="p-col-6 Payment">
+            <form [formGroup]="paymentForm" (ngSubmit)="OnPaymentSubmit()">
+                
+                <div class="p-col">
+                    <drop-down-list  placeholderName="Select a Payment Mode" displayLabel="label" formControlName="PaymentMode" [responseFromAPI]="apiDropDown"></drop-down-list>
+                </div>
+                
+                <div class="p-col">
+                    <label for="Address">Select Address </label>
+                    <div *ngFor="let addr of addresses" class="p-field-checkbox address">
+                        <p-card>
+                            <ng-template pTemplate="content">
+                                <div class="p-field-checkbox">
+                                    <!-- <p-radioButton [value]="addr" formControlName="UserAddress"></p-radioButton> -->
+                                    <input id="addr.key" type="radio" [value]="addr.key" name="UserAddress" formControlName="UserAddress">
+                                    <label [for]="addr.key">{{addr.name}}</label>
+                                </div>
+                            </ng-template>
+                        </p-card>
+                    </div>
+                    <button type="button" class="block">Add Address</button>
+                </div>
+
+                <button type="submit" class="block">Proceed to Payment</button>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #ShowNoData>
+    <div *ngIf="paymentScreenResponse.totalAmount == 0 ;else errorData">
+        <div style="margin: 15%;">
+            <h3 style="text-align: center;">No Items in cart</h3>
+            <img src="assets/MenuDisplayImages/emptyCart.png" alt="NoCartItem"/>
+        </div>
+    </div>
+    
+</ng-template>
+
+<ng-template #errorData>
+    <div style="margin: 10%;">
+        <img src="assets/Exception/BrokenImage.jpg" alt="NoCartItem" class="align-items-center"/>
+    </div>
+</ng-template>

@@ -1,0 +1,6 @@
+{
+    "clientRoot": "http://localhost:4200",
+    "idpAuthority": "https://localhost:5006",
+    "clientId": "menuAngularUI",
+    "scope":"openid profile IdentityServerApi basketApi inventoryApi"
+}

@@ -1,0 +1,26 @@
+<div>
+    <p-card>
+        <ng-template pTemplate="header">
+            <h2>
+                <p style="text-align:center"><b>Choose Your Location !!</b></p>
+            </h2>
+        </ng-template>
+       
+        <form [formGroup]="registerUserLocation" (ngSubmit)="onSubmit()">
+            <div class="form-row text-center">
+                <div class="form-group col">
+                    <p-dropdown [options]="locations" formControlName="locality" placeholder="Select a City" [group]="true">
+                        <ng-template let-group pTemplate="group">
+                            <div class="flex align-items-center">
+                                <span>{{group.label}}</span>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="text-center">
+                <p-button type="submit" label="Submit"></p-button>
+            </div>
+        </form>
+    </p-card>
+</div>

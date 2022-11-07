@@ -1,0 +1,42 @@
+<toast-message [position]="toastMessagePosition"></toast-message>
+<button pButton type="button" label="Back to Vendor" class="p-button-outlined" (click)="backToVendor()" icon="pi pi-angle-left" iconPos="left"></button>
+<br/><br/>
+<div *ngIf="menus;else noMenuDisplay">
+    <p-table [columns]="menuColumns" [value]="menuCartItems" [scrollable]="true" scrollHeight="550px">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" [style]="{ 'display': col.display }">
+                    {{col.header}}
+                </th>
+                <th>Add/Remove</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+            <tr *ngIf="rowGroupMetadata[rowData['menu type']].index === rowIndex">
+                <td [attr.colspan]="dynamicColSpan">
+                    <span class="p-text-bold p-ml-2">{{rowData["menu type"]}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td *ngFor="let col of columns" [style]="{ 'display': col.display }">
+                    {{rowData[col.field]}}
+                </td>
+                <td>
+                    <!-- <button pButton pRipple type="button" icon="pi pi-plus" pTooltip="Add items" class="p-button-rounded p-button-text" (click)="addItemsoCart(rowData)"></button> -->
+                    <p-button icon="pi pi-shopping-cart" label="Add" (click)="addItemsoCart(rowData)"></p-button>
+                    <br/>
+                    <!-- <button pButton pRipple type="button" icon="pi pi-times" pTooltip="Remove items" class="p-button-rounded p-button-danger p-button-text" (click)="removeItemsFromCart(rowData)"></button> -->
+                    <p-button icon="pi pi-shopping-cart" label="Remove " (click)="removeItemsFromCart(rowData)" styleClass="p-button-warning"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<ng-template #noMenuDisplay>
+    <div class="card">
+        <h2>Oops No Menu Items</h2>
+        <img src="assets/MenuIcons/BlankMenu.jpg" alt="NoMenuItems"/>
+    </div>
+</ng-template>

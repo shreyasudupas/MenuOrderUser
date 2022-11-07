@@ -1,0 +1,64 @@
+<toast-message [position]="toastMessage"></toast-message>
+<div *ngIf="userCartInformation;else showNoData">
+    <div *ngIf="userCartInformation.VendorDetails != null">
+        <button pButton type="button" label="Back to Menu" class="p-button-outlined" (click)="backToMenu(userCartInformation.VendorDetails.id,userCartInformation.VendorDetails.name)" 
+        icon="pi pi-angle-left" iconPos="left"></button>
+    </div>
+    <div *ngIf="userCartInformation.VendorDetails == null">
+        <button pButton type="button" label="Back to Vendor" class="p-button-outlined" (click)="backToVendor()"
+        icon="pi pi-angle-left" iconPos="left"></button>
+    </div>
+    <br/>
+    <div id="cardcart">
+        <div *ngIf="userCartInformation.VendorDetails;else showNoData">
+            <p-card [header]="userCartInformation.VendorDetails.name" [style]="{'width': '100%', 'margin-bottom': '2em'}">
+                <ng-template pTemplate="header">
+                    <div class="cart-header-name">
+                        <h2>Cart Items</h2>
+                    </div>
+                    <div class="cart-delete-icon">
+                        <button pButton pRipple type="button" pTooltip="Delete Cart" icon="pi pi-trash"  tooltipPosition="bottom" placeholder="Bottom"
+                        class="p-button-rounded p-button-danger p-button-text" (click)="deleteCartItems()"></button>
+                    </div>
+                </ng-template>
+    
+                <p-table [columns]="columns" [value]="userCartInformation.Items">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [style]="{ 'display': col.display }">
+                                {{col.header}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr>
+                            <td *ngFor="let col of columns" [style]="{ 'display': col.display }">
+                                {{rowData[col.field]}}
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary">
+                        <div class="grid">
+                            <div class="p-col-4">
+                                <span> Total Price to Pay is: {{totalPrice}}</span>
+                            </div>
+                            <div class="p-col-8">
+                                <button pButton type="button" label="Proceed to Payment" class="p-button-outlined" (click)="proccedToPayment()"></button>
+                            </div>
+                        </div>
+    
+                    </ng-template>
+                </p-table>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+<ng-template #showNoData>
+    <div style="margin: 15%;">
+        <h3 style="text-align: center;">No Items in cart</h3>
+        <img src="assets/MenuDisplayImages/emptyCart.png" alt="NoCartItem"/>
+    </div>
+</ng-template>
+
+

@@ -1,0 +1,51 @@
+<div class="container">
+    <div *ngIf="vendorList == null" class="child">
+        <p-progressSpinner [style]="{width: '50px', height: '50px'}" styleClass="custom-spinner" strokeWidth="8" fill="#EEEEEE" animationDuration=".5s"></p-progressSpinner>
+    </div>
+    <div *ngIf="vendorList?.length > 0;else showEmptyMessage">
+        <div *ngFor="let venList of vendorList;let i=index">          
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <p-card header="{{i+1}})">
+                        <div class="p-grid p-ai-stretch vertical-container">
+                            <div class="p-col-2">
+                                <span class="displayed ">
+                                    <p-skeleton shape="circle" size="50px"></p-skeleton>
+                                </span>
+                            </div>
+                            <div class="p-col-1">
+                                <p-divider layout="vertical"></p-divider>
+                            </div>
+                            <div class="p-col-9">
+                                <div class="p-grid">
+                                    <div class="p-col-12">
+                                        {{venList.vendorName}}
+                                    </div>
+                                    <div class="p-col-12">
+                                        {{venList.description}}
+                                    </div>
+                                    <div class="p-col-12">
+                                        {{venList.vendorArea}}
+                                    </div>
+                                    <div class="p-col-10">
+                                        <p-rating [(ngModel)]="venList.rating" [cancel]="false" [readonly]="true"></p-rating>
+                                    </div>
+                                    <div class="p-col-2"> 
+                                        <button pButton pRipple type="button" label="View Menu" class="p-button-outlined" 
+                                        (click)="callMenuList(venList.vendorId,venList.vendorName)"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-card>
+                </div>
+            </div>    
+        </div>
+    </div>
+</div>
+
+<ng-template #showEmptyMessage>
+    <div>
+        <h3>No Vendor Present for {{userLocation}} locality</h3>
+    </div>
+</ng-template>
