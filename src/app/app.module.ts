@@ -16,6 +16,8 @@ import { SigninRedirectCallbackComponent } from './shared/component/signIn-redir
 import { PageNotFoundComponent } from './shared/component/not-found/page-not-found.component';
 import { SignoutRedirectComponent } from './shared/component/signOutRedirectCallback/signout-redirect-callback.component';
 import { ForbiddenComponent } from './shared/component/forbidden/forbidden-component';
+import { environment as env } from '../environments/environment';
+import { GraphQLModule } from './graphql.module';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { ForbiddenComponent } from './shared/component/forbidden/forbidden-compo
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    GraphQLModule
     //add and intilize AuthModule
     // AuthModule.forRoot({
     //   ...env.auth,
