@@ -11,6 +11,7 @@ export class AppUserGaurd implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
+      debugger;
       const roles = next.data['roles'] as Array<string>;
       if(!roles){
         return this.checkIfUserIsAuthenticated();

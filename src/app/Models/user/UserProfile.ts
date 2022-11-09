@@ -7,8 +7,8 @@ export class UserInfo{
     points:bigint;
     cartAmount:number;
     address:UserAddress[];
-    errorDescription:string[];
-    status:number;
+    // errorDescription:string[];
+    // status:number;
 }
 
 export class UserAddress{
