@@ -59,7 +59,7 @@ export class AuthService {
   public isAuthenticated = (): Promise<boolean> => {
     return this._userManager.getUser()
     .then(user => {
-      debugger
+      //debugger
       if(this._user !== user){
         this.userLoginSubject.next(this.checkUser(user));
       }
@@ -80,7 +80,7 @@ export class AuthService {
   public finishLogin = (): Promise<User> => {
     return this._userManager.signinRedirectCallback()
     .then(user => {
-      debugger
+      //debugger
       this._user = user;
       this.userLoginSubject.next(this.checkUser(user));
       return user;

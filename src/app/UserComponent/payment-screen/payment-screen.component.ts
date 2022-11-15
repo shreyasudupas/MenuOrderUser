@@ -64,11 +64,11 @@ export class PaymentScreenComponent extends BaseComponent<PaymentScreenResponse>
           if(this.paymentScreenResponse.userInfo.address.length > 0 ){
             this.paymentScreenResponse.userInfo.address.forEach(element=>{
               let addr = element.fullAddress + ' ' + element.city + ' ' + element.state
-              this.addresses.push({ name:addr , key:element.userAddressId});
+              //this.addresses.push({ name:addr , key:element.userAddressId});
 
               //if item is active set the form as default addresses
               if(element.isActive){
-                this.paymentForm.patchValue({UserAddress: element.userAddressId});
+                //this.paymentForm.patchValue({UserAddress: element.userAddressId});
               }
 
             });

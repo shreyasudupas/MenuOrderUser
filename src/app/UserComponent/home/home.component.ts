@@ -35,26 +35,38 @@ export class HomeComponent extends BaseComponent<any> implements OnInit {
   ngOnInit(): void {
 
     this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
-    this.versionUrl = env.IDSUtility;
-    this.action = "GetLocationDropDown"; 
+    this.versionUrl = env.auth.idpAuthority + '/api/utility';
+    this.action = "getAllCities"; 
 
     this.Initilize();
 
     //Get Location dropdown values from backend based on active address in IDS user form
     this.GetItem(null).subscribe((result:any)=>{
+      debugger
       this.locations = result;
 
-      //Once the API is called add the active location of user in form
-      this.registerUserLocation.patchValue({
-        locality:this.userLocality
-      });
+      // //Once the API is called add the active location of user in form
+      // this.registerUserLocation.patchValue({
+      //   locality:this.userLocality
+      // });
     })
 
-    this.broadcastService.getUserLocality().subscribe(result=> {
-        this.userLocality = result;
-    });
+    // this.broadcastService.getUserLocality().subscribe(result=> {
+    //     this.userLocality = result;
+    // });
 
-    console.log('location get:'+ this.userLocality);
+    // console.log('location get:'+ this.userLocality);
+
+    //get user location
+    // this.broadcastService.getCurrentUserInfo().subscribe(user=>{
+    //   //debugger
+    //   //console.log(user);
+    //   if(user.address !== undefined){
+    //     let userAddress = user.address.find(a=>a.isActive == true);
+
+    //     if(userAddress.)
+    //   }
+    // });
 
     this.registerUserLocation = this.formBuilder.group({
       locality: [this.userLocality,Validators.required]

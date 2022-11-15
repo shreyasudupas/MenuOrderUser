@@ -8,6 +8,7 @@ import { MenuService } from 'src/app/Services/menu.service';
 import { environment as env} from 'src/environments/environment';
 import { Apollo, gql } from 'apollo-angular';
 import { Subscription } from 'rxjs';
+import { User } from 'oidc-client';
 
 const GET_USER_INFO = gql`
 query GetUserInformation($userId:String!){
@@ -26,27 +27,23 @@ query GetUserInformation($userId:String!){
       area
       state
       stateId
-      myStates {
-        label
-        value
-      }
       isActive
       city
-      myCities {
-        label
-        value
-      }
       cityId
       area
-      myAreas {
-        label
-        value
-      }
       areaId
     }
   }
 }
 `
+
+interface UserInfoResponse{
+  userInformation:UserInfo;
+}
+
+interface UserInfoVariable{
+  userId: string;
+}
 
 @Component({
   selector: 'app-user-profile',
@@ -91,24 +88,50 @@ query GetUserInformation($userId:String!){
 // }
 export class UserProfileComponent implements OnInit, OnDestroy {
   private querySubscription: Subscription
-  user:any;
+  user:UserInfo;
+  loading:boolean = true;
+  userRole:string;
+  userProfile:User;
 
-  constructor(private apollo:Apollo,private authService:AuthService) { }
+  constructor(private apollo:Apollo
+    ,private authService:AuthService
+    ,private _broadcastService:DataSharingService) { }
   
   ngOnInit(): void {
 
-    let user = this.authService.getUserInformation();
+    this.userProfile = this.authService.getUserInformation();
 
     this.querySubscription = this.apollo
-    .watchQuery<any>({
+    .watchQuery<UserInfoResponse,UserInfoVariable>({
       query: GET_USER_INFO,
       variables:{
-        userId: user.profile["userId"]
+        userId: this.userProfile.profile["userId"]
       }
     })
     .valueChanges.subscribe(({data,loading}) => {
-      debugger
+      //debugger
         this.user = data.userInformation
+        this.loading = loading;
+
+        //set image location
+        let serverPath = env.auth.idpAuthority + "/images/";
+        let imageName = this.user.imagePath;
+        if(this.user.imagePath !== null){
+          //this.user.imagePath = serverPath + this.user.imagePath;
+          this.user = {...this.user, imagePath: serverPath + imageName}
+        }else{
+          this.user.imagePath = serverPath + "/profile-default.jpg";
+        }
+
+        //set user Role
+        this.userRole = this.userProfile.profile["role"];
+
+        if(this.userRole == "user"){
+          //update in data sharing
+          this._broadcastService.updateUserInfo(this.user);
+        }
+        
+
     })
   }
 

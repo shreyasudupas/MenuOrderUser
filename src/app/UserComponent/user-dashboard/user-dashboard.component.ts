@@ -26,7 +26,7 @@ export class UserDashboardComponent implements OnInit {
         let url = env.BasketAPI + '/' + 'personalInfo';
         let body = {
           'userId' : userInfo.userId,
-          'username':userInfo.username
+          'username':userInfo.userName
         };
         this.http.post(url,body)
           .pipe(
