@@ -23,7 +23,7 @@ export class ProfileComponent extends BaseComponent<any> implements OnInit {
     this.versionUrl = "";
     this.action = ""; 
 
-    this.Initilize();
+    this.InitilizeMenu();
   }
 
 }

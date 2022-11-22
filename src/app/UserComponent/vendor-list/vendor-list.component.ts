@@ -34,7 +34,7 @@ userLocation:string;
       this.versionUrl = env.vendorAPI;
       this.action = null; 
 
-      this.Initilize();
+      this.InitilizeMenu();
 
       this._broadcastService.getUserLocality().subscribe(result=>{
         this.userLocation = result;

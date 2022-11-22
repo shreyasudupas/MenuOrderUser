@@ -8,6 +8,7 @@ import { SignoutRedirectComponent } from './shared/component/signOutRedirectCall
 const routes: Routes = [
   //{path:'',component:FirstComponent},
   { path:'user',loadChildren:()=> import('./UserComponent/user.module').then(m=>m.UserModule) },
+  { path:'admin',loadChildren:()=> import('./admin/admin.module').then(m=>m.AdminModule) },
   // {path:'login',component:LoginlogoutComponent}
   { path:'signin-callback',component:SigninRedirectCallbackComponent },
   { path:'signout-callback',component:SignoutRedirectComponent},

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from '../helper/service/Autho.service';
 import { MenuActiveItem, MenuNavigationModel } from '../Models/menu-service/menu-model';
 
 @Injectable({
@@ -7,15 +8,14 @@ import { MenuActiveItem, MenuNavigationModel } from '../Models/menu-service/menu
 
 export class MenuService{
 
-    constructor(){
-
+    constructor(private authService:AuthService){
     }
 
     menu: MenuActiveItem;
 
     public menuList:MenuNavigationModel[] = [
         {
-            parent :'appUser',
+            parent :'user',
             items : [
                 {
                     label: 'Home',
@@ -52,6 +52,20 @@ export class MenuService{
                     icon: 'pi pi-fw pi-cog'
                 }
             ]
+        },
+        {
+            parent :'admin',
+            items : [
+                {
+                    label: 'Home',
+                    icon: 'pi pi-fw pi-home',
+                    routerLink: ['./home']
+                },
+                {
+                    label: 'Settings', 
+                    icon: 'pi pi-fw pi-cog'
+                }
+            ]
         }
     ]; 
     
@@ -62,51 +76,55 @@ export class MenuService{
             let name:string = componentName;
             var getFirstName = name.split(/(?=[A-Z])/);
 
-            var newMenuList = new MenuService().menuList;
             //compare the name with the first name
-            var findParentMenuListId = newMenuList.findIndex(item => item.parent == 'appUser');
+            var role = this.authService.GetUserRole();
 
-            if(findParentMenuListId > -1){
-                //compare first name of the component and label
-                var CurrentMenuId = newMenuList[findParentMenuListId].items.findIndex(item => item.label == getFirstName[0]);
+            var findParentMenuListId = this.menuList.findIndex(item => item.parent == role);
 
-                if(CurrentMenuId > -1){
-                    newMenuList[findParentMenuListId].items[CurrentMenuId].visible = true;
-
+                if(findParentMenuListId > -1){
+                    //compare first name of the component and label
+                    var CurrentMenuId = this.menuList[findParentMenuListId].items.findIndex(item => item.label == getFirstName[0]);
+    
+                    if(CurrentMenuId > -1){
+                        this.menuList[findParentMenuListId].items[CurrentMenuId].visible = true;
+    
+                        this.menu = {
+                            activeMenu : this.menuList[findParentMenuListId].items[CurrentMenuId],
+                            itemList : this.menuList[findParentMenuListId].items
+                        };
+    
+                        return this.menu;
+                    }
+                    else{
+                        //default to user home
+                        this.menu = {
+                            activeMenu : this.menuList[findParentMenuListId].items[0],
+                            itemList : this.menuList[findParentMenuListId].items
+                        };
+    
+                        return this.menu;
+                    }
+                } else {
+                    //if profile doesnt match user or admin then default to home user
                     this.menu = {
-                        activeMenu : newMenuList[findParentMenuListId].items[CurrentMenuId],
-                        itemList : newMenuList[findParentMenuListId].items
+                        activeMenu : this.menuList[0].items[0],
+                        itemList : this.menuList[0].items
                     };
-
                     return this.menu;
-                }
-                else{
-                    //default to user home
-                    this.menu = {
-                        activeMenu : newMenuList[findParentMenuListId].items[0],
-                        itemList : newMenuList[findParentMenuListId].items
-                    };
-
-                    return this.menu;
-                }
-            }else{
-                //if profile doesnt match user or admin then default to home user
-                this.menu = {
-                    activeMenu : newMenuList[0].items[0],
-                    itemList : newMenuList[0].items
-                };
-                return this.menu;
-            }
+                }   
         }else{
-            let defaultMenu = [{label: 'Home', icon: 'pi pi-fw pi-home',routerLink: ['./home'],visible:true}];
+            this.defaultMenu();
+        };
+        return this.menu;
+    }
 
-             //default to user home
-             this.menu = {
-                activeMenu : defaultMenu[0],
-                itemList : defaultMenu
-            };
+    private defaultMenu = () => {
+        let defaultMenu = [{label: 'Home', icon: 'pi pi-fw pi-home',routerLink: ['./home'],visible:true}];
 
-            return this.menu;
-        }
+        //default to user home
+        this.menu = {
+           activeMenu : defaultMenu[0],
+           itemList : defaultMenu
+       };
     }
 }

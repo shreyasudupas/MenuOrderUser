@@ -40,7 +40,7 @@ toastMessage:string = "top-right";
     this.versionUrl = env.BasketAPI;
     this.action = null; 
 
-    this.Initilize();
+    this.InitilizeMenu();
 
     this.GetItem(null).subscribe((result:any)=>{
         this.userCartInformation = result;

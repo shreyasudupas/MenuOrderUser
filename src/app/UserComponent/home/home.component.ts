@@ -38,7 +38,7 @@ export class HomeComponent extends BaseComponent<any> implements OnInit {
     this.versionUrl = env.auth.idpAuthority + '/api/utility';
     this.action = "getAllCities"; 
 
-    this.Initilize();
+    this.InitilizeMenu();
 
     //Get Location dropdown values from backend based on active address in IDS user form
     this.GetItem(null).subscribe((result:any)=>{

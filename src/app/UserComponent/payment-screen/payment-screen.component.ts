@@ -47,7 +47,7 @@ export class PaymentScreenComponent extends BaseComponent<PaymentScreenResponse>
     
     
     this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
-    this.Initilize();
+    this.InitilizeMenu();
     //this.paymentSelect = "Credit Card";
     this.getBasketInfo();
     

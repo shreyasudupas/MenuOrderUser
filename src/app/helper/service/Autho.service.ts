@@ -42,6 +42,13 @@ export class AuthService {
     });
   }
 
+  public CheckIfAdmin = (): Promise<boolean> => {
+    return this._userManager.getUser()
+    .then(user => {
+      return user?.profile.role === "admin";
+    });
+  }
+
   public GetUserRole(){
     return this._user?.profile.role;
   }

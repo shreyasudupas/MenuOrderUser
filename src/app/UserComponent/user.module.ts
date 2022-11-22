@@ -9,14 +9,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartIconComponent } from './cart-icon/cart-icon.component';
 import { CartInformationComponent } from './cart-information/cart-information.component';
 import { ProfileComponent } from './profile/profile.component';
-import { UserProfileComponent } from '../Utilities/user-profile/user-profile.component';
-import { MenuBarComponent } from '../Utilities/menu-bar/menu-bar.component';
 import { ModalComponent } from '../Utilities/modal/modal.component';
 import { PaymentScreenComponent } from './payment-screen/payment-screen.component';
 import { DropDownListComponent } from '../Utilities/DropDownList/drop-down-list.component';
 import { MenuDisplayComponent } from './menu-display/menu-display.component';
 import { AppUserGaurd } from '../helper/Gaurds/AppUserGaurd';
 import { ToastMessageComponent } from '../Utilities/toast-message/toast-message.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -27,8 +26,6 @@ import { ToastMessageComponent } from '../Utilities/toast-message/toast-message.
     CartIconComponent,
     CartInformationComponent,
     ProfileComponent,
-    UserProfileComponent,
-    MenuBarComponent,
     ModalComponent,
     PaymentScreenComponent,
     DropDownListComponent,
@@ -40,7 +37,8 @@ import { ToastMessageComponent } from '../Utilities/toast-message/toast-message.
     UserRoutingModule,
     PrimeNGModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers:[AppUserGaurd]
 })

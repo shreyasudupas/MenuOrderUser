@@ -19,7 +19,7 @@ export class BaseComponent<T> extends ResourceService<T>{
         
     }
 
-    public Initilize(){
+    public InitilizeMenu(){
         //get menu list
         this.activeMenuList = this._menuService.getActiveMenuItemInTheList(this.componentName);
 

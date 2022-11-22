@@ -55,7 +55,7 @@ export class MenuDisplayComponent extends BaseComponent<MenuDisplayReponse>{
             this.versionUrl = "";
             this.action = ""; 
 
-            this.Initilize();
+            this.InitilizeMenu();
 
             //set the params
             let menuParams = new HttpParams();

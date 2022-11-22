@@ -15,7 +15,20 @@ export class SigninRedirectCallbackComponent implements OnInit {
         console.log('SigninRedirectCallbackComponent loaded');
 
         this._authService.finishLogin().then(() => {
-            this._router.navigate(['/user'],{ replaceUrl:true });
+            //debugger
+            this._authService.CheckIfUserIsAppUser()
+            .then( res => {
+                if(res){
+                    this._router.navigate(['/user'],{ replaceUrl:true });
+                }
+            });
+
+            this._authService.CheckIfAdmin()
+            .then( res => {
+                if(res){
+                    this._router.navigate(['/admin'],{ replaceUrl:true });
+                }
+            });
         })
     }
 }
