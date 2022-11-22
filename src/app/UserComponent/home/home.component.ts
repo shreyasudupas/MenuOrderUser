@@ -42,13 +42,8 @@ export class HomeComponent extends BaseComponent<any> implements OnInit {
 
     //Get Location dropdown values from backend based on active address in IDS user form
     this.GetItem(null).subscribe((result:any)=>{
-      debugger
+      //debugger
       this.locations = result;
-
-      // //Once the API is called add the active location of user in form
-      // this.registerUserLocation.patchValue({
-      //   locality:this.userLocality
-      // });
     })
 
     // this.broadcastService.getUserLocality().subscribe(result=> {
@@ -58,15 +53,20 @@ export class HomeComponent extends BaseComponent<any> implements OnInit {
     // console.log('location get:'+ this.userLocality);
 
     //get user location
-    // this.broadcastService.getCurrentUserInfo().subscribe(user=>{
-    //   //debugger
-    //   //console.log(user);
-    //   if(user.address !== undefined){
-    //     let userAddress = user.address.find(a=>a.isActive == true);
+    this.broadcastService.getCurrentUserInfo().subscribe(user=>{
+      //debugger
+      //console.log(user);
+      if(user.address !== undefined){
+        let userAddress = user.address.find(a=>a.isActive == true);
 
-    //     if(userAddress.)
-    //   }
-    // });
+        if(userAddress.areaId !== undefined && userAddress.areaId !== null){
+
+          this.registerUserLocation.patchValue({
+              locality:userAddress.areaId
+            });
+        }
+      }
+    });
 
     this.registerUserLocation = this.formBuilder.group({
       locality: [this.userLocality,Validators.required]
