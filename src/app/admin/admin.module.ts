@@ -8,12 +8,14 @@ import { HomeComponent } from './components/home/admin-home.component';
 import { AdminGaurd } from '../helper/Gaurds/adminGaurd';
 import { SharedModule } from '../shared/shared.module';
 import { PrimeNGModule } from '../primeng.module';
+import { VendorComponent } from './components/vendor/vendor.component';
 
 
 @NgModule({
   declarations: [
     AdminDashboardComponent,
-    HomeComponent
+    HomeComponent,
+    VendorComponent
   ],
   imports: [
     CommonModule,

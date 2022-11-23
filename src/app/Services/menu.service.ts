@@ -62,6 +62,11 @@ export class MenuService{
                     routerLink: ['./home']
                 },
                 {
+                    label: 'Vendor',
+                    icon: 'pi pi-fw pi-calendar',
+                    routerLink:['./vendor']
+                },
+                {
                     label: 'Settings', 
                     icon: 'pi pi-fw pi-cog'
                 }
