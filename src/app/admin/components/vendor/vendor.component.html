@@ -1,5 +1,26 @@
 <div>
-    <p-card header="header">
-        Content
+    <p-card header="Vendor List">
+        
+        <p-table [value]="vendorList" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Edit</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-vendor>
+                <tr>
+                    <td>{{vendor.name}}</td>
+                    <td>{{vendor.category}}</td>
+                    <td>{{vendor.location}}</td>
+                    <td>{{vendor.type}}</td>
+                    <td> <p-button icon="pi pi-file-edit"></p-button> </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        
     </p-card>
 </div>

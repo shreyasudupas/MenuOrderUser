@@ -20,6 +20,13 @@ export class VendorComponent extends BaseComponent<void> implements OnInit{
     ){
         super(menuService,httpclient,broadcastService)
     }
+
+    vendorList:any = [
+        { id:1,name:'A2B',category:'Vegiterian',location:'Bangalore',type:'Restaurent' },
+        { id:2,name:'A2B',category:'Vegiterian/Non Veg',location:'Bangalore',type:'Fast Food' },
+        { id:3,name:'Test Cafe',category:'Vegiterian/Non Veg',location:'Bangalore',type:'Cafe' }
+    ]
+
     ngOnInit(): void {
         this.componentName = this.activatedRoute.snapshot.routeConfig?.component?.name;
 
